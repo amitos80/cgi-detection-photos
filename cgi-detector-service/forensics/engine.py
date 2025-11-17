@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from . import ela, cfa, hos, jpeg_ghost, rambino
+from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d
 
 
 def run_analysis(image_bytes: bytes):
@@ -21,6 +21,7 @@ def run_analysis(image_bytes: bytes):
     cfa_score = cfa.analyze_cfa(image_bytes)
     hos_score = hos.analyze_hos(image_bytes)
     jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(image_bytes)
+    geometric_score = geometric_3d.analyze_geometric_consistency(image_bytes)
 
     # Convert image_bytes to a NumPy array for RAMBiNo analysis
     try:
@@ -67,11 +68,12 @@ def run_analysis(image_bytes: bytes):
 
     # Define weights for each technique (these can be tuned)
     weights = {
-        'ela': 0.2,
-        'cfa': 0.2,
-        'hos': 0.2,
-        'jpeg_ghost': 0.2,
-        'rambino': 0.2
+        'ela': 0.18,
+        'cfa': 0.18,
+        'hos': 0.18,
+        'jpeg_ghost': 0.18,
+        'rambino': 0.18,
+        'geometric': 0.10
     }
 
     # Calculate the final weighted-average score
@@ -80,7 +82,8 @@ def run_analysis(image_bytes: bytes):
             cfa_score * weights['cfa'] +
             hos_score * weights['hos'] +
             jpeg_ghost_score * weights['jpeg_ghost'] +
-            rambino_score * weights['rambino']
+            rambino_score * weights['rambino'] +
+            geometric_score * weights['geometric']
     )
 
     # Determine the final prediction
@@ -121,6 +124,13 @@ def run_analysis(image_bytes: bytes):
             "score": rambino_score,  # normalized score
             "normal_range": [0.0, 0.1],  # Placeholder range, needs empirical tuning
             "insight": "Analyzes noise and texture patterns using bivariate distributions. High scores suggest CGI.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "3D Geometric Consistency",
+            "score": geometric_score,
+            "normal_range": [0.0, 0.3],
+            "insight": "Analyzes geometric properties including symmetry, smoothness, edge regularity, and gradient consistency. High scores indicate unnatural geometric patterns typical of CGI.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         }
     ]

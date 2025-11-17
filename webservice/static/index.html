@@ -292,11 +292,25 @@
                         const rangeLeft = min * 100;
                         const scoreLeft = metric.score * 100;
 
+                        // Detect whether this metric is normalized into [0, 1]
+                        const isNormalized =
+                            metric.score >= 0 && metric.score <= 1 &&
+                            min >= 0 && max <= 1;
+
                         reportHtml += `<p><strong>${metric.feature}</strong></p>`;
                         reportHtml += '<div class="infographic-bar">';
                         reportHtml += `<div class="normal-range" style="left: ${rangeLeft}%; width: ${rangeWidth}%;"></div>`;
                         reportHtml += `<div class="score-marker" style="left: ${scoreLeft}%;"></div>`;
                         reportHtml += '</div>';
+
+                        // Explicitly show the normal range and overall possible range
+                        reportHtml += `<p style="margin: 4px 0 12px 0; font-size: 0.9em; color: #555;">
+                            Normal range: ${min.toFixed(2)} – ${max.toFixed(2)}
+                            &nbsp;|&nbsp; Possible values: 0.00 – 1.00
+                            ${isNormalized
+                                ? ' (values are normalized to [0, 1] for consistent comparison across features).'
+                                : ''}
+                        </p>`;
                     });
 
                     reportDiv.innerHTML = reportHtml;
