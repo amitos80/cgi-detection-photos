@@ -92,13 +92,52 @@
             position: absolute;
             border-radius: 2px;
         }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            line-height: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Upload Image for CGI Detection</h1>
         <form id="uploadForm" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*" required>
+            <div id="fileInputWrapper">
+                <input type="file" name="file" accept="image/*" required>
+            </div>
             <input type="submit" value="Analyze Image">
         </form>
 
@@ -116,7 +155,8 @@
 
     <script>
         const uploadForm = document.getElementById('uploadForm');
-        const fileInput = uploadForm.querySelector('input[type="file"]');
+        const fileInputWrapper = document.getElementById('fileInputWrapper');
+        const fileInput = fileInputWrapper.querySelector('input[type="file"]');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
         const imagePreview = document.getElementById('imagePreview');
         const clearImageButton = document.getElementById('clearImageButton');
@@ -131,7 +171,7 @@
 
                 reader.onload = (e) => {
                     imagePreview.src = e.target.result;
-                    uploadForm.style.display = 'none';
+                    fileInputWrapper.style.display = 'none'; // Hide only the file input
                     imagePreviewContainer.style.display = 'block';
                     resultsDiv.innerHTML = ''; // Clear previous results
                     reportDiv.innerHTML = ''; // Clear previous report
@@ -142,7 +182,7 @@
 
         clearImageButton.addEventListener('click', () => {
             imagePreview.src = '#';
-            uploadForm.style.display = 'block';
+            fileInputWrapper.style.display = 'block'; // Show only the file input
             imagePreviewContainer.style.display = 'none';
             fileInput.value = ''; // Clear the selected file
             resultsDiv.innerHTML = ''; // Clear previous results
@@ -190,8 +230,17 @@
                     reportHtml += '<tr><th>Feature</th><th>Calculated Score</th><th>Insight</th></tr>';
                     
                     data.prediction.analysis_breakdown.forEach(metric => {
+                        const [min, max] = metric.normal_range;
+                        const tooltipText = `Normal range: ${min.toFixed(2)} - ${max.toFixed(2)}. Scores above this range suggest CGI or manipulation.`;
+
                         reportHtml += `<tr>
-                            <td><a href="${metric.url}" target="_blank">${metric.feature}</a></td>
+                            <td>
+                                <a href="${metric.url}" target="_blank">${metric.feature}</a>
+                                <div class="tooltip">
+                                    <span class="tooltip-icon">?</span>
+                                    <span class="tooltiptext">${tooltipText}</span>
+                                </div>
+                            </td>
                             <td>${metric.score.toFixed(2)}</td>
                             <td>${metric.insight}</td>
                         </tr>`;
