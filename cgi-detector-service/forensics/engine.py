@@ -80,17 +80,17 @@ def run_analysis(image_bytes: bytes):
 
     # --- Update the weights to include specialized detector ---
     weights = {
-        'ela': 0.14,
-        'cfa': 0.14,
-        'hos': 0.14,
-        'jpeg_ghost': 0.14,
-        'rambino': 0.14,
-        'geometric': 0.09,
-        'lighting': 0.09,
-        'specialized': 0.12
+        'ela': 0.18,
+        'cfa': 0.18,
+        'hos': 0.12,
+        'jpeg_ghost': 0.09,
+        'rambino': 0.18,
+        'geometric': 0.12,
+        'lighting': 0.12,
+        'specialized': 0.10
     }
     # Sum = 1.0
-
+    
     # Calculate the final weighted-average score
     final_score = (
         ela_score * weights['ela'] +
