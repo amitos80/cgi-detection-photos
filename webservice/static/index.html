@@ -248,13 +248,13 @@
 
                 const data = await response.json();
                 const prediction = data.prediction.prediction;
-                const confidence = (data.prediction.confidence).toFixed(2);
+                const confidence = (data.prediction.confidence * 100).toFixed(2);
 
                 let resultHtml = `<h2>Analysis Result for ${data.filename}:</h2>`;
                 if (prediction === 'cgi') {
                     resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI</span> with ${confidence}% confidence.</p>`;
                 } else {
-                    resultHtml += `<p>This image is likely <span class="prediction-real">Not-CGI</span> with ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>This image is likely <span class="prediction-real">Non-CGI</span> with ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
 
