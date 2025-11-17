@@ -17,11 +17,12 @@ The core components are:
 
 ## Detection Methods
 
-The engine currently combines the following three methods:
+The engine currently combines the following four methods:
 
 1.  **Error Level Analysis (ELA)**: This technique is effective at finding regions in an image that have a different compression history than the rest of the image, which is a common sign of digital splicing or editing.
 2.  **Color Filter Array (CFA) Analysis**: Real digital cameras leave a specific, periodic pattern of color correlations due to the physical layout of their sensors (e.g., a Bayer filter). CGI and manipulated regions lack this authentic "fingerprint."
 3.  **Higher-Order Wavelet Statistics (HOS)**: Natural images have very specific and predictable statistical distributions when decomposed using wavelet transforms. Synthetic images, on the other hand, tend to have "unnatural" or overly uniform statistics. This method is powerful for detecting images that are entirely computer-generated.
+4.  **JPEG Ghost Analysis**: This method identifies inconsistencies in JPEG compression history across different regions of an image, which is a strong indicator of image splicing or manipulation.
 
 ## Extending the Engine
 

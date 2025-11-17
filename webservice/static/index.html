@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>CGI Detection</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <!-- For broader compatibility, a favicon.ico should also be provided. -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -151,7 +153,7 @@
                     
                     data.prediction.analysis_breakdown.forEach(metric => {
                         reportHtml += `<tr>
-                            <td>${metric.feature}</td>
+                            <td><a href="${metric.url}" target="_blank">${metric.feature}</a></td>
                             <td>${metric.score.toFixed(2)}</td>
                             <td>${metric.insight}</td>
                         </tr>`;

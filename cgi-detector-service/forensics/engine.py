@@ -1,4 +1,4 @@
-from . import ela, cfa, hos
+from . import ela, cfa, hos, jpeg_ghost
 
 def run_analysis(image_bytes: bytes):
     """
@@ -16,19 +16,22 @@ def run_analysis(image_bytes: bytes):
     ela_score = ela.analyze_ela(image_bytes)
     cfa_score = cfa.analyze_cfa(image_bytes)
     hos_score = hos.analyze_hos(image_bytes)
+    jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(image_bytes)
 
     # Define weights for each technique (these can be tuned)
     weights = {
-        'ela': 0.4,
-        'cfa': 0.3,
-        'hos': 0.3
+        'ela': 0.25,
+        'cfa': 0.25,
+        'hos': 0.25,
+        'jpeg_ghost': 0.25
     }
 
     # Calculate the final weighted-average score
     final_score = (
         ela_score * weights['ela'] +
         cfa_score * weights['cfa'] +
-        hos_score * weights['hos']
+        hos_score * weights['hos'] +
+        jpeg_ghost_score * weights['jpeg_ghost']
     )
 
     # Determine the final prediction
@@ -40,19 +43,29 @@ def run_analysis(image_bytes: bytes):
             "feature": "Error Level Analysis (ELA)",
             "score": ela_score,
             "normal_range": [0.0, 0.2],
-            "insight": "Detects inconsistencies in JPEG compression artifacts. High scores suggest manipulation."
+            "insight": "Detects inconsistencies in JPEG compression artifacts. High scores suggest manipulation.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
         {
             "feature": "Color Filter Array (CFA)",
             "score": cfa_score,
             "normal_range": [0.0, 0.3],
-            "insight": "Analyzes low-level sensor patterns. High scores indicate a disruption of natural camera patterns."
+            "insight": "Analyzes low-level sensor patterns. High scores indicate a disruption of natural camera patterns.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
         {
             "feature": "Wavelet Statistics (HOS)",
             "score": hos_score,
             "normal_range": [0.0, 0.4],
-            "insight": "Measures statistical properties of the image. High scores suggest the image is synthetic."
+            "insight": "Measures statistical properties of the image. High scores suggest the image is synthetic.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "JPEG Ghost Analysis",
+            "score": jpeg_ghost_score,
+            "normal_range": [0.0, 0.2], # This range might need tuning based on empirical results
+            "insight": "Identifies inconsistencies in JPEG compression history, indicating potential image splicing.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/" # Placeholder URL, can be updated if a specific JPEG Ghost resource is preferred
         }
     ]
 
