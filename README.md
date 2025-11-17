@@ -6,10 +6,15 @@
 
 ## Project Architecture
 
-This project utilizes a two-service architecture for robust CGI detection:
+This project utilizes a two-service architecture for robust CGI detection, based on the principles of digital image forensics research by Professor Hany Farid.
 
 1.  **Node.js Webservice (Frontend & API Gateway):** This service handles user requests, serves the static frontend, and acts as an API gateway. It forwards uploaded images to the Python AI microservice for processing and relays the results back to the client.
-2.  **Python AI Microservice (CGI Detector):** This service is responsible for the core AI processing. It loads a pre-trained machine learning model (e.g., ResNet50) and provides an API endpoint to receive images, preprocess them, run predictions (CGI vs. Real), and return confidence scores.
+2.  **Python AI Microservice (CGI Detector):** This service is responsible for the core forensic analysis. Instead of a generic ML model, it uses a custom-built engine that combines several forensic techniques:
+    *   **Error Level Analysis (ELA):** Detects inconsistencies in JPEG compression artifacts.
+    *   **Color Filter Array (CFA) Analysis:** Identifies disruptions in the camera's sensor pattern.
+    *   **Higher-Order Wavelet Statistics (HOS):** Analyzes the statistical properties of the image to distinguish between natural and synthetic sources.
+    
+    The engine combines the scores from these methods to produce a unified, more reliable prediction.
 
 ## How to Run
 
