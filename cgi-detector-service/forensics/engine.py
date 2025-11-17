@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
-
+from . import specialized_detectors  # <-- ADD THIS IMPORT
 
 def run_analysis(image_bytes: bytes):
     """
@@ -67,26 +67,40 @@ def run_analysis(image_bytes: bytes):
     rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
     # --- end normalization ---
 
-    # Define weights for each technique (these can be tuned)
+    # --- Specialized Detectors ---
+    try:
+        specialized_result = specialized_detectors.analyze_specialized_cgi_types(image_bytes)
+        specialized_score = specialized_result.get('overall_score', 0.0)
+        specialized_detector_scores = specialized_result.get('detector_scores', {})  # Dict for breakdown
+        specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
+    except Exception as e:
+        specialized_score = 0.0
+        specialized_detector_scores = {}
+        specialized_likely_type = 'Unknown'
+
+    # --- Update the weights to include specialized detector ---
     weights = {
-        'ela': 0.16,
-        'cfa': 0.16,
-        'hos': 0.16,
-        'jpeg_ghost': 0.16,
-        'rambino': 0.16,
-        'geometric': 0.10,
-        'lighting': 0.10
+        'ela': 0.14,
+        'cfa': 0.14,
+        'hos': 0.14,
+        'jpeg_ghost': 0.14,
+        'rambino': 0.14,
+        'geometric': 0.09,
+        'lighting': 0.09,
+        'specialized': 0.12
     }
+    # Sum = 1.0
 
     # Calculate the final weighted-average score
     final_score = (
-            ela_score * weights['ela'] +
-            cfa_score * weights['cfa'] +
-            hos_score * weights['hos'] +
-            jpeg_ghost_score * weights['jpeg_ghost'] +
-            rambino_score * weights['rambino'] +
-            geometric_score * weights['geometric'] +
-            lighting_score * weights['lighting']
+        ela_score * weights['ela'] +
+        cfa_score * weights['cfa'] +
+        hos_score * weights['hos'] +
+        jpeg_ghost_score * weights['jpeg_ghost'] +
+        rambino_score * weights['rambino'] +
+        geometric_score * weights['geometric'] +
+        lighting_score * weights['lighting'] +
+        specialized_score * weights['specialized']
     )
 
     # Determine the final prediction
@@ -118,14 +132,14 @@ def run_analysis(image_bytes: bytes):
         {
             "feature": "JPEG Ghost Analysis",
             "score": jpeg_ghost_score,
-            "normal_range": [0.0, 0.2],  # This range might need tuning based on empirical results
+            "normal_range": [0.0, 0.2],
             "insight": "Identifies inconsistencies in JPEG compression history, indicating potential image splicing.",
-            "url": "https://farid.berkeley.edu/research/digital-forensics/"  # Placeholder URL
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
         {
             "feature": "RAMBiNo Statistical Analysis",
-            "score": rambino_score,  # normalized score
-            "normal_range": [0.0, 0.1],  # Placeholder range, needs empirical tuning
+            "score": rambino_score,
+            "normal_range": [0.0, 0.1],
             "insight": "Analyzes noise and texture patterns using bivariate distributions. High scores suggest CGI.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
@@ -140,8 +154,20 @@ def run_analysis(image_bytes: bytes):
             "feature": "Scene Lighting Consistency",
             "score": lighting_score,
             "normal_range": [0.0, 0.3],
-            "insight": "Analyzes lighting direction consistency across regions, shadow alignment, and lighting in high-contrast areas. High scores indicate inconsistent lighting typical of composite or CGI images.",
+            "insight": "Analyzes lighting direction consistency across regions, shadow alignment, and lighting in high-contrast areas. High scores indicate inconsistent lighting typical of composites or CGI.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "Specialized CGI/AIGC Detector",
+            "score": specialized_score,
+            "normal_range": [0.0, 0.4],
+            "insight": (
+                "Runs specialized detection for GAN, diffusion, face synthesis, and 3D rendering artifacts. "
+                "High scores indicate evidence of generative-AI or CGI. "
+                f"Type most likely: {specialized_likely_type}. "
+                f"Breakdown: {specialized_detector_scores}"
+            ),
+            "url": ""
         }
     ]
 
@@ -155,5 +181,9 @@ def run_analysis(image_bytes: bytes):
     # Attach truncated rambino features for inspection if available
     if rambino_features_list is not None:
         result["rambino_features"] = rambino_features_list
+
+    # Attach full specialized detector breakdown for inspection, if desired
+    result["specialized_detector_scores"] = specialized_detector_scores
+    result["specialized_likely_type"] = specialized_likely_type
 
     return result
