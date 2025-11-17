@@ -4,6 +4,44 @@
 
 **Digital forensics** in visual media is the science of uncovering traces left by image acquisition devices or manipulation software. Detecting fakes relies on the fact that every step in the imaging pipeline—from the camera sensor to the final software edit—leaves a unique statistical or physical artifact.
 
+## Project Architecture
+
+This project utilizes a two-service architecture for robust CGI detection:
+
+1.  **Node.js Webservice (Frontend & API Gateway):** This service handles user requests, serves the static frontend, and acts as an API gateway. It forwards uploaded images to the Python AI microservice for processing and relays the results back to the client.
+2.  **Python AI Microservice (CGI Detector):** This service is responsible for the core AI processing. It loads a pre-trained machine learning model (e.g., ResNet50) and provides an API endpoint to receive images, preprocess them, run predictions (CGI vs. Real), and return confidence scores.
+
+## How to Run
+
+To run the entire application, ensure you have Docker and Docker Compose installed. Then, navigate to the project root directory and execute the following command:
+
+```bash
+docker-compose up --build
+```
+
+This command will:
+*   Build the Docker images for both the Node.js webservice and the Python AI microservice.
+*   Start both services, allowing them to communicate over a shared Docker network.
+*   Expose the Node.js webservice on port `8000`.
+
+Once the services are up, open your web browser and navigate to `http://localhost:8000` to access the application.
+
+## API Response Structure
+
+The `/analyze` endpoint of the Node.js webservice now returns a JSON object with the following structure:
+
+```json
+{
+  "filename": "your_uploaded_image.jpg",
+  "prediction": {
+    "prediction": "cgi" | "real",
+    "confidence": 0.0 - 1.0
+  }
+}
+```
+
+---
+
 ## Deepfake Detection
 
 **Deepfakes** are highly realistic synthetic media generated using **deep learning models**, primarily **Generative Adversarial Networks (GANs)**. The main detection strategies exploit flaws in how AI recreates complex human physiology and the physical environment:
@@ -26,7 +64,7 @@ AI often struggles with complex or small human features. Forensic analysis looks
 
 General image manipulation, including splicing (copy-paste) or **Computer-Generated Imagery (CGI)** insertion, is detected by examining low-level artifacts:
 
-* **Noise Analysis (PRNU):** Every digital camera sensor has a unique microscopic pattern noise called **Photo-Response Non-Uniformity (PRNU)**. This is a unique "fingerprint." If a region of an image has a PRNU pattern that is different from the rest of the photo, it is likely a spliced or inserted fake.
+* **Noise Analysis (PRNU):** Every digital camera sensor has a unique microscopic pattern noise called **Photo-Response Non-Uniformity (PRNU)**. This is a unique "fingerprint." If a region of an image has a PRNU pattern that is different from a the rest of the photo, it is likely a spliced or inserted fake.
 * **Error Level Analysis (ELA):** ELA highlights areas of an image that have a different level of JPEG compression history. Spliced-in content, not compressed as often as the original image, will often stand out with a much lower "error level."
 * **Color Filter Array (CFA) Artifacts:** Digital cameras use a **CFA** (e.g., Bayer filter) to capture color and then use a process called **demosaicing** to interpolate the full-color image. This process leaves a unique, periodic statistical pattern. Any manipulation disrupts this pattern, which can be detected.
 * **Metadata (EXIF) Forensics:** Although metadata can be easily faked or stripped, the **Exchangeable Image File Format (EXIF)** can contain the camera model, date, time, and even the history of software used to process the file, providing initial clues.

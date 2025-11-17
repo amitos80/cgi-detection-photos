@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  webservice:
+    build:
+      context: ./webservice
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+      PYTHON_SERVICE_URL: http://cgi-detector-service:8000/predict
+    depends_on:
+      - cgi-detector-service
+    networks:
+      - cgi-detection-network
+
+  cgi-detector-service:
+    build:
+      context: ./cgi-detector-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    networks:
+      - cgi-detection-network
+
+networks:
+  cgi-detection-network:
+    driver: bridge

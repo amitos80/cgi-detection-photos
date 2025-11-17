@@ -1,13 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Analysis</title>
+    <title>CGI Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        input[type="file"] {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #e9ecef;
+        }
+        .prediction-cgi {
+            color: red;
+            font-weight: bold;
+        }
+        .prediction-real {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Upload Image for Analysis</h1>
-    <form action="/analyze" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
+    <div class="container">
+        <h1>Upload Image for CGI Detection</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <input type="submit" value="Analyze Image">
+        </form>
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Analyzing...';
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.details || 'Unknown error from server');
+                }
+
+                const data = await response.json();
+                const prediction = data.prediction.prediction;
+                const confidence = (data.prediction.confidence * 100).toFixed(2);
+
+                let resultHtml = `<h2>Analysis Result for ${data.filename}:</h2>`;
+                if (prediction === 'cgi') {
+                    resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI</span> with ${confidence}% confidence.</p>`;
+                } else {
+                    resultHtml += `<p>This image is likely <span class="prediction-real">Real</span> with ${confidence}% confidence.</p>`;
+                }
+                resultsDiv.innerHTML = resultHtml;
+
+            } catch (error) {
+                console.error('Error during analysis:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        });
+    </script>
 </body>
 </html>
