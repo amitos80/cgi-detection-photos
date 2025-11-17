@@ -15,6 +15,7 @@ This project utilizes a two-service architecture for robust CGI detection, based
     *   **Error Level Analysis (ELA):** Detects inconsistencies in JPEG compression artifacts.
     *   **Color Filter Array (CFA) Analysis:** Identifies disruptions in the camera's sensor pattern.
     *   **Higher-Order Wavelet Statistics (HOS):** Analyzes the statistical properties of the image to distinguish between natural and synthetic sources.
+    *   **JPEG Ghost Analysis:** Identifies inconsistencies in JPEG compression history, indicating potential image splicing.
     
     The engine combines the scores from these methods to produce a unified, more reliable prediction.
 
