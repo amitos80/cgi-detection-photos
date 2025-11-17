@@ -1,45 +1,36 @@
-# Development Plan: CGI Detection Service
+# Plan: Add New Features to CGI Detection Algorithm
 
-**Analysis:**
-The current service is a simple image feature extractor. To evolve it into a true CGI detector, we need to integrate a specialized machine learning model. The most practical approach is to create a dedicated Python microservice for the complex AI processing and have our existing Node.js service communicate with it. This plan outlines the steps to build this two-service architecture, update the frontend for a user-friendly display, and containerize the entire application for easy deployment.
+## Objective
 
-**Plan:**
+This plan outlines the addition of new forensic features to the CGI detection algorithm. The proposed features are based on techniques and concepts derived from the provided research sources and are intended to enhance the algorithm's accuracy and sophistication.
 
-1.  **Research and Procure a Pre-trained CGI Detection Model:**
-    *   Search for publicly available, pre-trained models for CGI vs. real image classification.
-    *   Prioritize models compatible with common Python libraries (e.g., TensorFlow/Keras, PyTorch, ONNX).
-    *   Download the model file and note its specific input requirements (image size, color channels, normalization).
+## Proposed Features
 
-2.  **Develop a Python AI Microservice:**
-    *   Create a new directory, `cgi-detector-service`, alongside the `webservice` directory.
-    *   Set up a lightweight Python web framework (e.g., FastAPI or Flask).
-    *   Write a Python script to load the pre-trained model.
-    *   Create a single API endpoint (e.g., `/predict`) that accepts an image file.
-    *   Implement image pre-processing logic within the endpoint to resize, normalize, and format the image to match the model's input requirements.
-    *   Run the processed image through the model to get a prediction (e.g., CGI/Real and a confidence score).
-    *   Return the prediction as a JSON response (e.g., `{"prediction": "cgi", "confidence": 0.95}`).
-    *   Add a `Dockerfile` for this new Python service.
+### 1. Advanced Noise and Texture Statistical Analysis
+*   **Inspiration:** `eacooper/RAMBiNo` toolbox (source: https://github.com/eacooper/RAMBiNo).
+*   **Concept:** Implement a statistical analysis module that examines the bivariate distributions of pixel data (or data in a transformed domain like wavelets). By using radial and angular marginalization, we can create a more detailed signature of an image's noise pattern to better distinguish between authentic camera sensor noise and CGI textures.
+*   **Implementation Steps:**
+    1.  Research and adapt the core statistical methods from the RAMBiNo paper for Python.
+    2.  Develop a new forensic module (`rambino.py`) in the `cgi-detector-service/forensics/` directory.
+    3.  Integrate the module into the main `engine.py` to be run as part of the overall analysis.
+    4.  Test against a known dataset of real and CGI images to validate the feature's effectiveness.
 
-3.  **Update the Node.js Webservice:**
-    *   Modify the `/analyze` endpoint in `webservice/src/index.ts`.
-    *   Instead of processing the image itself, it will now forward the uploaded image buffer to the Python AI microservice's `/predict` endpoint via an HTTP request.
-    *   It will wait for the JSON response from the Python service and then relay it back to the client.
-    *   Remove the now-unused `processImageBuffer` function and its dependencies (like `sharp`).
+### 2. 3D Geometric Consistency Analysis
+*   **Inspiration:** SPHARM software.
+*   **Concept:** For images containing well-defined objects (e.g., faces, cars), attempt to infer the 3D shape and analyze its geometric properties. CGI models often exhibit unnatural smoothness or perfect symmetry that can be detected with spherical harmonic analysis.
+*   **Implementation Steps (Research Spike):**
+    1.  Investigate and select a suitable Python library for shape-from-shading or single-view 3D reconstruction.
+    2.  Investigate Python libraries for spherical harmonic analysis of 3D meshes.
+    3.  Create a proof-of-concept script that can take an image, segment an object, estimate its 3D mesh, and perform the analysis.
+    4.  Based on the proof-of-concept, evaluate the feasibility of integrating this as a full feature.
 
-4.  **Enhance the Frontend for User-Friendly Results:**
-    *   Update the JavaScript in `webservice/static/index.html`.
-    *   On receiving the response from the `/analyze` endpoint, the script should parse the JSON.
-    *   Instead of printing the raw JSON, it should display a clear, human-readable result (e.g., "Result: This image is likely **CGI** (95% confidence)").
-    *   Add basic styling to highlight the result (e.g., green text for "Real", red for "CGI").
+### 3. Scene Lighting and Text Consistency
 
-5.  **Containerize and Orchestrate with Docker Compose:**
-    *   Create a `docker-compose.yml` file in the project root.
-    *   Define two services in the file: the `webservice` (Node.js) and the `cgi-detector-service` (Python).
-    *   Configure the services to build from their respective Dockerfiles and communicate with each other over a shared Docker network.
+*   **Inspiration:** `btlorch/license-plates` project (source: https://github.com/btlorch/license-plates/blob/master/README.md).
+*   **Concept:** Detect fine-grained text or patterns within an image and analyze the local lighting characteristics. Compare this local lighting to the estimated global scene lighting. Inconsistencies can be a strong indicator of a composite or CGI image.
+*   **Implementation Steps:**
+    1.  Integrate an OCR or text detection library to identify text regions.
+    2.  Research and implement techniques to estimate lighting direction from a small image patch.
+    3.  Research and implement a technique for estimating the dominant lighting direction for the entire scene.
+    4.  Develop a scoring mechanism to quantify the consistency between local and global lighting.
 
-6.  **Update Documentation:**
-    *   Update the main `README.md` and the `webservice/README.md` to reflect the new architecture.
-    *   Provide clear instructions on how to run the entire application using a single `docker-compose up` command.
-    *   Document the new API response structure.
-
-7.  **Present for Approval:** Present the new, comprehensive plan to the user for review and approval.
