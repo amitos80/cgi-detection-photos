@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d
+from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 
 
 def run_analysis(image_bytes: bytes):
@@ -22,6 +22,7 @@ def run_analysis(image_bytes: bytes):
     hos_score = hos.analyze_hos(image_bytes)
     jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(image_bytes)
     geometric_score = geometric_3d.analyze_geometric_consistency(image_bytes)
+    lighting_score = lighting_text.analyze_lighting_consistency(image_bytes)
 
     # Convert image_bytes to a NumPy array for RAMBiNo analysis
     try:
@@ -68,12 +69,13 @@ def run_analysis(image_bytes: bytes):
 
     # Define weights for each technique (these can be tuned)
     weights = {
-        'ela': 0.18,
-        'cfa': 0.18,
-        'hos': 0.18,
-        'jpeg_ghost': 0.18,
-        'rambino': 0.18,
-        'geometric': 0.10
+        'ela': 0.16,
+        'cfa': 0.16,
+        'hos': 0.16,
+        'jpeg_ghost': 0.16,
+        'rambino': 0.16,
+        'geometric': 0.10,
+        'lighting': 0.10
     }
 
     # Calculate the final weighted-average score
@@ -83,7 +85,8 @@ def run_analysis(image_bytes: bytes):
             hos_score * weights['hos'] +
             jpeg_ghost_score * weights['jpeg_ghost'] +
             rambino_score * weights['rambino'] +
-            geometric_score * weights['geometric']
+            geometric_score * weights['geometric'] +
+            lighting_score * weights['lighting']
     )
 
     # Determine the final prediction
@@ -131,6 +134,13 @@ def run_analysis(image_bytes: bytes):
             "score": geometric_score,
             "normal_range": [0.0, 0.3],
             "insight": "Analyzes geometric properties including symmetry, smoothness, edge regularity, and gradient consistency. High scores indicate unnatural geometric patterns typical of CGI.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "Scene Lighting Consistency",
+            "score": lighting_score,
+            "normal_range": [0.0, 0.3],
+            "insight": "Analyzes lighting direction consistency across regions, shadow alignment, and lighting in high-contrast areas. High scores indicate inconsistent lighting typical of composite or CGI images.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         }
     ]
