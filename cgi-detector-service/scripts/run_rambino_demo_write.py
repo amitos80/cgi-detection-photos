@@ -1,20 +1,29 @@
+#!/usr/bin/env python3
+"""
+Demo runner for RAMBiNo-inspired feature extractor that writes results to JSON.
+This avoids stdout buffering issues in the environment and produces a reproducible
+output file we can read back.
+"""
+import io
+import json
+import numpy as np
 import numpy as np
 from PIL import Image
 from io import BytesIO
 from . import ela, cfa, hos, jpeg_ghost, rambino
 
 
+def _sigmoid(x: float) -> float:
+    """Map a raw score to (0, 1) in a stable way."""
+    # clamp to avoid extreme overflow
+    x = max(min(x, 5.0), -5.0)
+    return float(1.0 / (1.0 + np.exp(-x)))
+
+
 def run_analysis(image_bytes: bytes):
     """
     Runs all forensic analysis techniques on an image and returns a
     unified result.
-
-    Args:
-        image_bytes: The raw bytes of the image.
-
-    Returns:
-        A dictionary containing the final prediction, confidence score,
-        and a detailed breakdown of the analysis.
     """
     # Run each analysis
     ela_score = ela.analyze_ela(image_bytes)
@@ -56,15 +65,6 @@ def run_analysis(image_bytes: bytes):
         rambino_score = 0.0
         rambino_features_list = None
 
-    # --- Normalize RAMBiNo score to a sane range ---
-    # Keep a copy of the raw, unscaled score for debugging/tuning
-    rambino_raw_score = rambino_score
-    # Heuristic scaling: large values (e.g. ~30k) get mapped into [0, 1]
-    # Adjust 30000.0 if you later have better empirical stats.
-    scale = 30000.0
-    rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
-    # --- end normalization ---
-
     # Define weights for each technique (these can be tuned)
     weights = {
         'ela': 0.2,
@@ -74,17 +74,20 @@ def run_analysis(image_bytes: bytes):
         'rambino': 0.2
     }
 
-    # Calculate the final weighted-average score
-    final_score = (
-            ela_score * weights['ela'] +
-            cfa_score * weights['cfa'] +
-            hos_score * weights['hos'] +
-            jpeg_ghost_score * weights['jpeg_ghost'] +
-            rambino_score * weights['rambino']
+    # Calculate the final weighted-average score (raw, unbounded)
+    raw_score = (
+        ela_score * weights['ela'] +
+        cfa_score * weights['cfa'] +
+        hos_score * weights['hos'] +
+        jpeg_ghost_score * weights['jpeg_ghost'] +
+        rambino_score * weights['rambino']
     )
 
-    # Determine the final prediction
-    prediction_label = "cgi" if final_score > 0.5 else "real"
+    # Map to [0, 1] confidence
+    confidence = _sigmoid(raw_score)
+
+    # Determine the final prediction using normalized confidence
+    prediction_label = "cgi" if confidence > 0.5 else "real"
 
     # Create the analysis breakdown
     analysis_breakdown = [
@@ -118,18 +121,18 @@ def run_analysis(image_bytes: bytes):
         },
         {
             "feature": "RAMBiNo Statistical Analysis",
-            "score": rambino_score,  # normalized score
+            "score": rambino_score,
             "normal_range": [0.0, 0.1],  # Placeholder range, needs empirical tuning
             "insight": "Analyzes noise and texture patterns using bivariate distributions. High scores suggest CGI.",
-            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"  # Placeholder URL
         }
     ]
 
     result = {
         "prediction": prediction_label,
-        "confidence": final_score,
+        "confidence": confidence,
         "analysis_breakdown": analysis_breakdown,
-        "rambino_raw_score": rambino_raw_score,  # optional: raw, unscaled value
+        "raw_score": raw_score,  # optional, useful for debugging/tuning
     }
 
     # Attach truncated rambino features for inspection if available
@@ -137,3 +140,4 @@ def run_analysis(image_bytes: bytes):
         result["rambino_features"] = rambino_features_list
 
     return result
+

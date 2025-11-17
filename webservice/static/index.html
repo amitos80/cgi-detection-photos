@@ -231,7 +231,7 @@
 
             const form = event.target;
             const formData = new FormData(form);
-            
+
             resultsDiv.innerHTML = 'Analyzing...';
             reportDiv.innerHTML = '';
 
@@ -248,7 +248,7 @@
 
                 const data = await response.json();
                 const prediction = data.prediction.prediction;
-                const confidence = (data.prediction.confidence * 100).toFixed(2);
+                const confidence = (data.prediction.confidence).toFixed(2);
 
                 let resultHtml = `<h2>Analysis Result for ${data.filename}:</h2>`;
                 if (prediction === 'cgi') {
@@ -261,11 +261,11 @@
                 // Generate the detailed report
                 if (data.prediction.analysis_breakdown) {
                     let reportHtml = '<h3>Forensic Analysis Breakdown</h3>';
-                    
+
                     // Create table
                     reportHtml += '<table class="report-table">';
                     reportHtml += '<tr><th>Feature</th><th>Calculated Score</th><th>Insight</th></tr>';
-                    
+
                     data.prediction.analysis_breakdown.forEach(metric => {
                         const [min, max] = metric.normal_range;
                         const tooltipText = `Normal range: ${min.toFixed(2)} - ${max.toFixed(2)}. Scores above this range suggest CGI or manipulation.`;
