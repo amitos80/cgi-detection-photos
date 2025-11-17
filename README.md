@@ -2,7 +2,9 @@
 
 ![Deepfake Detection Cover](./.github/cover.png)
 
-**Digital forensics** in visual media is the science of uncovering traces left by image acquisition devices or manipulation software. Detecting fakes relies on the fact that every step in the imaging pipeline—from the camera sensor to the final software edit—leaves a unique statistical or physical artifact.
+This project is a web-based application for detecting digital forgeries in images, with a focus on identifying Computer-Generated Imagery (CGI). It uses a sophisticated backend engine based on the digital image forensics research of Professor Hany Farid.
+
+When an image is uploaded, the application performs a series of forensic tests and presents a detailed report, including a final prediction, a confidence score, and a breakdown of each test's results. The report includes a table with insights and a simple infographic to help visualize the findings.
 
 ## Project Architecture
 
@@ -40,7 +42,27 @@ The `/analyze` endpoint of the Node.js webservice now returns a JSON object with
   "filename": "your_uploaded_image.jpg",
   "prediction": {
     "prediction": "cgi" | "real",
-    "confidence": 0.0 - 1.0
+    "confidence": 0.0 - 1.0,
+    "analysis_breakdown": [
+      {
+        "feature": "Error Level Analysis (ELA)",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.2],
+        "insight": "Detects inconsistencies in JPEG compression artifacts. High scores suggest manipulation."
+      },
+      {
+        "feature": "Color Filter Array (CFA)",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.3],
+        "insight": "Analyzes low-level sensor patterns. High scores indicate a disruption of natural camera patterns."
+      },
+      {
+        "feature": "Wavelet Statistics (HOS)",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.4],
+        "insight": "Measures statistical properties of the image. High scores suggest the image is synthetic."
+      }
+    ]
   }
 }
 ```
@@ -127,3 +149,4 @@ This is a powerful technique for distinguishing between statistically "natural" 
 
 
 #### Credits: Professor Hany Farid's research on digital image forensic - https://farid.berkeley.edu/
+*   **TED Talk Video:** [How to spot fake AI photos](https://www.ted.com/talks/hany_farid_how_to_spot_fake_ai_photos)

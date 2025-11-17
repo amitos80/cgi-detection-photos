@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from .forensics import engine
+from forensics import engine
 
 app = FastAPI()
 

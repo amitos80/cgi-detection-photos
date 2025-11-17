@@ -53,6 +53,43 @@
             color: green;
             font-weight: bold;
         }
+        #report {
+            margin-top: 20px;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .report-table th {
+            background-color: #f2f2f2;
+        }
+        .infographic-bar {
+            height: 20px;
+            width: 100%;
+            background-color: #ddd;
+            position: relative;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        .normal-range {
+            height: 100%;
+            background-color: #a5d6a7;
+            position: absolute;
+            border-radius: 4px;
+        }
+        .score-marker {
+            height: 100%;
+            width: 4px;
+            background-color: #ef5350;
+            position: absolute;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +102,9 @@
         <div id="results">
             <!-- Results will be displayed here -->
         </div>
+        <div id="report">
+            <!-- Detailed report will be displayed here -->
+        </div>
     </div>
 
     <script>
@@ -74,7 +114,9 @@
             const form = event.target;
             const formData = new FormData(form);
             const resultsDiv = document.getElementById('results');
+            const reportDiv = document.getElementById('report');
             resultsDiv.innerHTML = 'Analyzing...';
+            reportDiv.innerHTML = '';
 
             try {
                 const response = await fetch('/analyze', {
@@ -98,6 +140,41 @@
                     resultHtml += `<p>This image is likely <span class="prediction-real">Real</span> with ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
+
+                // Generate the detailed report
+                if (data.prediction.analysis_breakdown) {
+                    let reportHtml = '<h3>Forensic Analysis Breakdown</h3>';
+                    
+                    // Create table
+                    reportHtml += '<table class="report-table">';
+                    reportHtml += '<tr><th>Feature</th><th>Calculated Score</th><th>Insight</th></tr>';
+                    
+                    data.prediction.analysis_breakdown.forEach(metric => {
+                        reportHtml += `<tr>
+                            <td>${metric.feature}</td>
+                            <td>${metric.score.toFixed(2)}</td>
+                            <td>${metric.insight}</td>
+                        </tr>`;
+                    });
+                    reportHtml += '</table>';
+
+                    // Create infographics
+                    reportHtml += '<h4 style="margin-top: 20px;">Visual Analysis</h4>';
+                    data.prediction.analysis_breakdown.forEach(metric => {
+                        const [min, max] = metric.normal_range;
+                        const rangeWidth = (max - min) * 100;
+                        const rangeLeft = min * 100;
+                        const scoreLeft = metric.score * 100;
+
+                        reportHtml += `<p><strong>${metric.feature}</strong></p>`;
+                        reportHtml += '<div class="infographic-bar">';
+                        reportHtml += `<div class="normal-range" style="left: ${rangeLeft}%; width: ${rangeWidth}%;"></div>`;
+                        reportHtml += `<div class="score-marker" style="left: ${scoreLeft}%;"></div>`;
+                        reportHtml += '</div>';
+                    });
+
+                    reportDiv.innerHTML = reportHtml;
+                }
 
             } catch (error) {
                 console.error('Error during analysis:', error);

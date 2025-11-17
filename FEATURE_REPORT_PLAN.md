@@ -2,29 +2,30 @@
 
 **Analysis:**
 
-The goal is to display a detailed report after image analysis, including a graphical representation of the findings. The current model provides a single confidence score, which is insufficient for a detailed infographic with "calculated" vs. "normal" values.
+The goal is to enhance the user experience by providing a detailed, visually intuitive report after an image analysis is complete. The current implementation only provides a final prediction and a single confidence score, which lacks the depth required for a comprehensive report.
 
-To address this, the plan will simulate a more advanced analysis on the backend. The Python service will be updated to return a fictional breakdown of analysis metrics. The frontend will then be enhanced to display this information in two ways: a clear, easy-to-read table and a simple, lightweight graphical representation using styled HTML elements to mimic an infographic, thus avoiding the need for heavy charting libraries.
+To build this feature, the backend Python service must be updated to provide a more granular breakdown of its analysis. The current forensic engine already calculates individual scores for ELA, CFA, and HOS, so the foundation is already in place. We will expose this data and add context, such as a "normal range" for each metric.
+
+On the frontend, we will implement both of the user's requests: a clear, easy-to-read table that explains the insights, and a simple, lightweight graphical representation (infographic) for each metric. This will be achieved using styled HTML elements to avoid introducing heavy charting libraries, ensuring the application remains fast and lean.
 
 **Plan:**
 
-1.  **Update the Python AI Microservice (`cgi-detector-service/main.py`):**
-    *   Modify the `/predict` endpoint to include a new key, `analysis_breakdown`, in its JSON response.
-    *   This key will contain an array of objects, where each object represents a fictional analysis metric.
-    *   Each metric object will have the following structure: `{"feature": "Metric Name", "score": 0.0-1.0, "normal_range": [min, max], "insight": "Brief explanation."}`.
-    *   The data for this breakdown will be hardcoded for now, changing based on the dummy "cgi" or "real" prediction to simulate a real analysis.
+1.  **Update the Python AI Microservice (`cgi-detector-service/forensics/engine.py`):**
+    *   The `run_analysis` function already calculates individual scores. This step will focus on enriching the `analysis_breakdown` it returns.
+    *   For each metric (ELA, CFA, HOS), a `normal_range` key will be defined. This will be a two-element array (e.g., `[0.0, 0.3]`) representing the typical score range for a "real" photograph.
+    *   An `insight` key will also be added, providing a brief, user-friendly explanation of what that specific forensic test measures.
+    *   The final JSON response structure passed through `main.py` will now contain all the necessary data for the frontend to build the report.
 
 2.  **Enhance the Frontend (`webservice/static/index.html`):**
-    *   Add a new container element to the HTML to hold the analysis report.
-    *   In the JavaScript `submit` event listener, after receiving a successful response, parse the `analysis_breakdown` array.
-    *   **Table Display:** Dynamically generate an HTML table from the `analysis_breakdown` data. The table will have columns for "Feature," "Calculated Score," and "Insight."
-    *   **Infographic Display:** For each feature in the breakdown, create a simple graphical bar. This will be implemented using styled `<div>` elements:
-        *   A container `div` will represent the full 0.0 to 1.0 range.
-        *   An inner `div` will represent the `normal_range`, styled as a shaded background area.
-        *   Another inner `div` or marker will be positioned based on the `score`, visually showing where the calculated value falls in relation to the normal range.
+    *   Add a new container element to the HTML, `<div id="report"></div>`, which will hold the detailed analysis report.
+    *   Update the CSS to style the new report elements, including the table and the infographic bars.
+    *   In the JavaScript `submit` event listener, after receiving a successful response, the code will parse the `analysis_breakdown` array from the JSON.
+    *   **Table Display:** The script will dynamically generate an HTML `<table>`. It will iterate through the `analysis_breakdown` data and create a row for each forensic test, with columns for "Feature," "Calculated Score," and "Insight."
+    *   **Infographic Display:** For each feature, the script will also generate a simple graphical bar using styled `<div>` elements:
+        *   A main container `div` will act as the background bar, representing the full range (0.0 to 1.0).
+        *   An inner `div` will be positioned and sized to represent the `normal_range`, styled as a shaded background area.
+        *   A separate marker `div` (e.g., a vertical line or a dot) will be positioned using the `score` to visually indicate the calculated value in relation to the normal range.
 
-3.  **Update Node.js Webservice (`webservice/src/index.ts`):**
-    *   No changes are required. The service already relays the full JSON response from the Python service, so the new `analysis_breakdown` data will be passed through automatically.
-
-4.  **Update Documentation:**
-    *   Briefly update the main `README.md` to mention the new analysis report feature in the project description.
+3.  **Update Documentation:**
+    *   Update the main `README.md` to include a description of the new detailed analysis report feature.
+    *   Update the "API Response Structure" section in the `README.md` to reflect the new, richer `analysis_breakdown` object in the JSON response.
