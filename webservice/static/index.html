@@ -22,11 +22,18 @@
             max-width: 600px;
             margin: 20px auto;
         }
+        #drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #drop-zone.dragover {
+            background-color: #e9ecef;
+        }
         input[type="file"] {
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 4px;
-            margin-right: 10px;
+            display: none;
         }
         input[type="submit"] {
             background-color: #007bff;
@@ -135,10 +142,11 @@
     <div class="container">
         <h1>Upload Image for CGI Detection</h1>
         <form id="uploadForm" enctype="multipart/form-data">
-            <div id="fileInputWrapper">
+            <div id="drop-zone">
+                <p>Drag & drop an image here, or click to select a file</p>
                 <input type="file" name="file" accept="image/*" required>
             </div>
-            <input type="submit" value="Analyze Image">
+            <input type="submit" value="Analyze Image" id="analyzeButton" style="display: none;">
         </form>
 
         <div id="imagePreviewContainer" style="display: none; position: relative; margin-top: 20px;">
@@ -155,35 +163,64 @@
 
     <script>
         const uploadForm = document.getElementById('uploadForm');
-        const fileInputWrapper = document.getElementById('fileInputWrapper');
-        const fileInput = fileInputWrapper.querySelector('input[type="file"]');
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = dropZone.querySelector('input[type="file"]');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
         const imagePreview = document.getElementById('imagePreview');
         const clearImageButton = document.getElementById('clearImageButton');
+        const analyzeButton = document.getElementById('analyzeButton');
         const resultsDiv = document.getElementById('results');
         const reportDiv = document.getElementById('report');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFiles(files);
+            }
+        });
 
         fileInput.addEventListener('change', (event) => {
             const files = event.target.files;
             if (files && files.length > 0) {
-                const file = files[0];
-                const reader = new FileReader();
-
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                    fileInputWrapper.style.display = 'none'; // Hide only the file input
-                    imagePreviewContainer.style.display = 'block';
-                    resultsDiv.innerHTML = ''; // Clear previous results
-                    reportDiv.innerHTML = ''; // Clear previous report
-                };
-                reader.readAsDataURL(file);
+                handleFiles(files);
             }
         });
 
+        function handleFiles(files) {
+            const file = files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                dropZone.style.display = 'none';
+                imagePreviewContainer.style.display = 'block';
+                analyzeButton.style.display = 'block'; // Show the analyze button
+                resultsDiv.innerHTML = ''; // Clear previous results
+                reportDiv.innerHTML = ''; // Clear previous report
+            };
+            reader.readAsDataURL(file);
+        }
+
         clearImageButton.addEventListener('click', () => {
             imagePreview.src = '#';
-            fileInputWrapper.style.display = 'block'; // Show only the file input
+            dropZone.style.display = 'block';
             imagePreviewContainer.style.display = 'none';
+            analyzeButton.style.display = 'none'; // Hide the analyze button
             fileInput.value = ''; // Clear the selected file
             resultsDiv.innerHTML = ''; // Clear previous results
             reportDiv.innerHTML = ''; // Clear previous report
@@ -217,7 +254,7 @@
                 if (prediction === 'cgi') {
                     resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI</span> with ${confidence}% confidence.</p>`;
                 } else {
-                    resultHtml += `<p>This image is likely <span class="prediction-real">Real</span> with ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>This image is likely <span class="prediction-real">Not-CGI</span> with ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
 
