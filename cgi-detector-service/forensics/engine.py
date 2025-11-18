@@ -4,6 +4,27 @@ from io import BytesIO
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
 
+def downsize_image_to_480p(image: Image.Image) -> Image.Image:
+    """
+    Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
+
+    Args:
+        image: A PIL Image object.
+
+    Returns:
+        A new PIL Image object resized to 480p or smaller if the original height is less than 480p.
+    """
+    max_height = 480
+    width, height = image.size
+
+    if height <= max_height:
+        return image  # No downsizing needed if already 480p or smaller
+
+    # Calculate the new width while maintaining the aspect ratio
+    new_width = int(width * (max_height / height))
+    resized_image = image.resize((new_width, max_height), Image.LANCZOS)
+    return resized_image
+
 def run_analysis(image_bytes: bytes):
     """
     Runs all forensic analysis techniques on an image and returns a
@@ -16,17 +37,32 @@ def run_analysis(image_bytes: bytes):
         A dictionary containing the final prediction, confidence score,
         and a detailed breakdown of the analysis.
     """
+    # Open and downsize the image
+    try:
+        original_image = Image.open(BytesIO(image_bytes))
+        downsized_image = downsize_image_to_480p(original_image)
+
+        # Convert the downsized image back to bytes for analysis functions
+        buffered = BytesIO()
+        downsized_image.save(buffered, format="PNG")  # Use PNG to avoid re-compression artifacts for analysis
+        processed_image_bytes = buffered.getvalue()
+    except Exception as e:
+        # Handle potential errors during image processing/downsizing
+        print(f"Error processing or downsizing image: {e}")
+        # Fallback to original image_bytes if downsizing fails
+        processed_image_bytes = image_bytes
+
     # Run each analysis
-    ela_score = ela.analyze_ela(image_bytes)
-    cfa_score = cfa.analyze_cfa(image_bytes)
-    hos_score = hos.analyze_hos(image_bytes)
-    jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(image_bytes)
-    geometric_score = geometric_3d.analyze_geometric_consistency(image_bytes)
-    lighting_score = lighting_text.analyze_lighting_consistency(image_bytes)
+    ela_score = ela.analyze_ela(processed_image_bytes)
+    cfa_score = cfa.analyze_cfa(processed_image_bytes)
+    hos_score = hos.analyze_hos(processed_image_bytes)
+    jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(processed_image_bytes)
+    geometric_score = geometric_3d.analyze_geometric_consistency(processed_image_bytes)
+    lighting_score = lighting_text.analyze_lighting_consistency(processed_image_bytes)
 
     # Convert image_bytes to a NumPy array for RAMBiNo analysis
     try:
-        image = Image.open(BytesIO(image_bytes)).convert('L')  # Convert to grayscale
+        image = Image.open(BytesIO(processed_image_bytes)).convert('L')  # Convert to grayscale
         image_data = np.array(image)
     except Exception:
         image_data = None
@@ -84,13 +120,13 @@ def run_analysis(image_bytes: bytes):
         'cfa': 0.18,
         'hos': 0.12,
         'jpeg_ghost': 0.09,
-        'rambino': 0.18,
+        'rambino': 0.09,
         'geometric': 0.12,
-        'lighting': 0.12,
-        'specialized': 0.10
+        'lighting': 0.13,
+        'specialized': 0.09
     }
     # Sum = 1.0
-    
+
     # Calculate the final weighted-average score
     final_score = (
         ela_score * weights['ela'] +
@@ -104,7 +140,28 @@ def run_analysis(image_bytes: bytes):
     )
 
     # Determine the final prediction
-    prediction_label = "cgi" if final_score > 0.5 else "real"
+    # Summing features that are out of normal range - meaning cgi
+    features_point_cgi = 0
+    if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
+
+    if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
+
+    if hos_score > 0.4: features_point_cgi = features_point_cgi + 1
+
+    if jpeg_ghost_score > 0.2: features_point_cgi = features_point_cgi + 1
+
+    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
+
+    if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
+
+    if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
+
+    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
+
+    if features_point_cgi > 3:
+        prediction_label = 'cgi'
+    else:
+        prediction_label = "cgi" if final_score > 0.5 else "real"
 
     # Create the analysis breakdown
     analysis_breakdown = [
@@ -170,6 +227,7 @@ def run_analysis(image_bytes: bytes):
             "url": ""
         }
     ]
+
 
     result = {
         "prediction": prediction_label,

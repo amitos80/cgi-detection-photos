@@ -156,6 +156,9 @@
         <div id="results">
             <!-- Results will be displayed here -->
         </div>
+        <div id="analysisDuration">
+            <!-- Analysis duration will be displayed here -->
+        </div>
         <div id="report">
             <!-- Detailed report will be displayed here -->
         </div>
@@ -229,11 +232,13 @@
         uploadForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
+            const startTime = performance.now(); // Start timer
             const form = event.target;
             const formData = new FormData(form);
 
             resultsDiv.innerHTML = 'Analyzing...';
             reportDiv.innerHTML = '';
+            document.getElementById('analysisDuration').innerHTML = ''; // Clear previous duration
 
             try {
                 const response = await fetch('/analyze', {
@@ -247,6 +252,17 @@
                 }
 
                 const data = await response.json();
+
+                // Stop timer and display duration
+                const endTime = performance.now();
+                const frontendDuration = ((endTime - startTime) / 1000).toFixed(2);
+                
+                let durationHtml = `<p>Total time (from click to render): ${frontendDuration} seconds.</p>`;
+                if (data.prediction && data.prediction.analysis_duration) {
+                    durationHtml += `<p>Backend analysis time: ${data.prediction.analysis_duration} seconds.</p>`;
+                }
+                document.getElementById('analysisDuration').innerHTML = durationHtml;
+
                 const prediction = data.prediction.prediction;
                 const confidence = (data.prediction.confidence * 100).toFixed(2);
 
@@ -254,7 +270,7 @@
                 if (prediction === 'cgi') {
                     resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI</span> with ${confidence}% confidence.</p>`;
                 } else {
-                    resultHtml += `<p>This image is likely <span class="prediction-real">Non-CGI</span> with ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>Cannot be certain <span class="prediction-real">Non-CGI</span> ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
 

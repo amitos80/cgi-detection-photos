@@ -24,57 +24,32 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 async def read_index():
     return FileResponse(os.path.join(static_dir, 'index.html'))
 
-def process_image_base64(b64: str) -> list[float]:
-    """
-    Decode a base64 image and compute a simple feature vector:
-    - per-channel mean and standard deviation (R,G,B) -> 6 values
-    - per-channel histogram with 16 bins each -> 48 values
-    Total -> 54 floats
-    """
-    img_bytes = base64.b64decode(b64)
-    img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
-    arr = np.asarray(img).astype(np.float32) / 255.0  # Normalize to 0-1 for consistent feature scaling
-
-    # per-channel mean/std
-    means = arr.mean(axis=(0, 1)).tolist()
-    stds = arr.std(axis=(0, 1)).tolist()
-
-    # histograms (16 bins per channel), normalized
-    hist_bins = 16
-    hists = []
-    # For histogram, skimage expects integer image (0-255), so convert back for this step
-    arr_uint8 = (arr * 255).astype(np.uint8)
-    for c in range(3):
-        # Use skimage's histogram function, source_range='image' for 0-255 input
-        hist, _ = exposure.histogram(arr_uint8[..., c], nbins=hist_bins, source_range='image')
-        hist = hist.astype(np.float32)
-        if hist.sum() > 0:
-            hist = hist / hist.sum()
-        hists.extend(hist.tolist())
-
-    feature_vector = means + stds + hists
-    return [float(x) for x in feature_vector]
+import httpx
 
 @app.post("/analyze")
 async def analyze_image(file: UploadFile = File(...)):
-    # read file bytes
-    contents = await file.read()
-    # optional: save to temp if needed
-    unique_filename = str(uuid.uuid4())
-    file_path = os.path.join(TEMP_DIR, unique_filename)
-    with open(file_path, "wb") as f:
-        f.write(contents)
+    
+    # Get the service URL from environment variables, with a fallback for local dev
+    cgi_detector_url = os.environ.get("PYTHON_SERVICE_URL", "http://localhost:8001/predict")
 
-    try:
-        # Build base64 representation (if you need to pass through APIs)
-        b64 = base64.b64encode(contents).decode("ascii")
+    files = {'file': (file.filename, await file.read(), file.content_type)}
+    
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(cgi_detector_url, files=files, timeout=300.0)
+            response.raise_for_status()  # Raise an exception for bad status codes
+            
+            # The cgi-detector-service returns a JSON response with the analysis
+            prediction_data = response.json()
+            
+            return {
+                "filename": file.filename,
+                "prediction": prediction_data
+            }
 
-        # Call the in-Python processor instead of spawning MATLAB
-        feature_vector = process_image_base64(b64)
-
-        return {"filename": file.filename, "feature_vector": feature_vector}
-    except Exception as e:
-        return {"error": "Processing failed", "details": str(e)}
-    finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        except httpx.RequestError as e:
+            # Handle connection errors, timeouts, etc.
+            return {"error": "Could not connect to the analysis service", "details": str(e)}
+        except Exception as e:
+            # Handle other exceptions, including non-JSON responses
+            return {"error": "An unexpected error occurred", "details": str(e)}
