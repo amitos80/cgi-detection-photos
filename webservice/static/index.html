@@ -54,6 +54,15 @@
             border-radius: 4px;
             background-color: #e9ecef;
         }
+        #analysisDuration {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border: 1px solid #d4edda;
+            border-radius: 4px;
+            background-color: #f0fdf4;
+            color: #155724;
+            font-weight: bold;
+        }
         .prediction-cgi {
             color: red;
             font-weight: bold;
@@ -162,6 +171,20 @@
         <div id="report">
             <!-- Detailed report will be displayed here -->
         </div>
+
+        <!-- Reporting Section -->
+        <div id="reportingContainer" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; background-color: #f9f9f9;">
+            <button id="showReportFormButton">Report Incorrect Result</button>
+            <form id="reportForm" style="display: none; margin-top: 10px;">
+                <label for="correctionType">This image was incorrectly identified. It is actually:</label>
+                <select name="correctionType" id="correctionType" required>
+                    <option value="false_cgi">A real photo (falsely marked as CGI)</option>
+                    <option value="false_real">A CGI image (falsely marked as Real)</option>
+                </select>
+                <button type="submit" style="margin-left: 10px;">Submit Report</button>
+            </form>
+            <div id="reportStatus"></div>
+        </div>
     </div>
 
     <script>
@@ -174,6 +197,13 @@
         const analyzeButton = document.getElementById('analyzeButton');
         const resultsDiv = document.getElementById('results');
         const reportDiv = document.getElementById('report');
+        const reportingContainer = document.getElementById('reportingContainer');
+        const showReportFormButton = document.getElementById('showReportFormButton');
+        const reportForm = document.getElementById('reportForm');
+        const reportStatus = document.getElementById('reportStatus');
+
+        let lastAnalysisResult = null;
+        let lastImageFile = null;
 
         dropZone.addEventListener('click', () => fileInput.click());
 
@@ -205,40 +235,50 @@
         });
 
         function handleFiles(files) {
-            const file = files[0];
+            lastImageFile = files[0]; // Store the file
             const reader = new FileReader();
 
             reader.onload = (e) => {
                 imagePreview.src = e.target.result;
                 dropZone.style.display = 'none';
                 imagePreviewContainer.style.display = 'block';
-                analyzeButton.style.display = 'block'; // Show the analyze button
-                resultsDiv.innerHTML = ''; // Clear previous results
-                reportDiv.innerHTML = ''; // Clear previous report
+                analyzeButton.style.display = 'block';
+                resultsDiv.innerHTML = '';
+                reportDiv.innerHTML = '';
+                reportingContainer.style.display = 'none'; // Hide reporting section
+                reportForm.style.display = 'none';
+                showReportFormButton.style.display = 'block';
+                reportStatus.innerHTML = '';
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(lastImageFile);
         }
 
         clearImageButton.addEventListener('click', () => {
             imagePreview.src = '#';
             dropZone.style.display = 'block';
             imagePreviewContainer.style.display = 'none';
-            analyzeButton.style.display = 'none'; // Hide the analyze button
-            fileInput.value = ''; // Clear the selected file
-            resultsDiv.innerHTML = ''; // Clear previous results
-            reportDiv.innerHTML = ''; // Clear previous report
+            analyzeButton.style.display = 'none';
+            fileInput.value = '';
+            resultsDiv.innerHTML = '';
+            reportDiv.innerHTML = '';
+            reportingContainer.style.display = 'none'; // Hide reporting section
+            lastAnalysisResult = null;
+            lastImageFile = null;
         });
 
         uploadForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const startTime = performance.now(); // Start timer
+            const startTime = performance.now();
             const form = event.target;
             const formData = new FormData(form);
 
             resultsDiv.innerHTML = 'Analyzing...';
             reportDiv.innerHTML = '';
-            document.getElementById('analysisDuration').innerHTML = ''; // Clear previous duration
+            document.getElementById('analysisDuration').innerHTML = '';
+            reportingContainer.style.display = 'none'; // Hide until analysis is done
+            reportStatus.innerHTML = '';
+
 
             try {
                 const response = await fetch('/analyze', {
@@ -252,14 +292,14 @@
                 }
 
                 const data = await response.json();
+                lastAnalysisResult = data.prediction; // Store the prediction object
 
-                // Stop timer and display duration
                 const endTime = performance.now();
                 const frontendDuration = ((endTime - startTime) / 1000).toFixed(2);
                 
-                let durationHtml = `<p>Total time (from click to render): ${frontendDuration} seconds.</p>`;
+                let durationHtml = `<p><strong>Total time (click to render):</strong> ${frontendDuration} seconds.</p>`;
                 if (data.prediction && data.prediction.analysis_duration) {
-                    durationHtml += `<p>Backend analysis time: ${data.prediction.analysis_duration} seconds.</p>`;
+                    durationHtml += `<p><strong>Backend analysis time:</strong> ${data.prediction.analysis_duration} seconds.</p>`;
                 }
                 document.getElementById('analysisDuration').innerHTML = durationHtml;
 
@@ -274,18 +314,13 @@
                 }
                 resultsDiv.innerHTML = resultHtml;
 
-                // Generate the detailed report
                 if (data.prediction.analysis_breakdown) {
                     let reportHtml = '<h3>Forensic Analysis Breakdown</h3>';
-
-                    // Create table
                     reportHtml += '<table class="report-table">';
                     reportHtml += '<tr><th>Feature</th><th>Calculated Score</th><th>Insight</th></tr>';
-
                     data.prediction.analysis_breakdown.forEach(metric => {
                         const [min, max] = metric.normal_range;
                         const tooltipText = `Normal range: ${min.toFixed(2)} - ${max.toFixed(2)}. Scores above this range suggest CGI or manipulation.`;
-
                         reportHtml += `<tr>
                             <td>
                                 <a href="${metric.url}" target="_blank">${metric.feature}</a>
@@ -299,42 +334,71 @@
                         </tr>`;
                     });
                     reportHtml += '</table>';
-
-                    // Create infographics
                     reportHtml += '<h4 style="margin-top: 20px;">Visual Analysis</h4>';
                     data.prediction.analysis_breakdown.forEach(metric => {
                         const [min, max] = metric.normal_range;
                         const rangeWidth = (max - min) * 100;
                         const rangeLeft = min * 100;
                         const scoreLeft = metric.score * 100;
-
-                        // Detect whether this metric is normalized into [0, 1]
-                        const isNormalized =
-                            metric.score >= 0 && metric.score <= 1 &&
-                            min >= 0 && max <= 1;
-
+                        const isNormalized = metric.score >= 0 && metric.score <= 1 && min >= 0 && max <= 1;
                         reportHtml += `<p><strong>${metric.feature}</strong></p>`;
                         reportHtml += '<div class="infographic-bar">';
                         reportHtml += `<div class="normal-range" style="left: ${rangeLeft}%; width: ${rangeWidth}%;"></div>`;
                         reportHtml += `<div class="score-marker" style="left: ${scoreLeft}%;"></div>`;
                         reportHtml += '</div>';
-
-                        // Explicitly show the normal range and overall possible range
                         reportHtml += `<p style="margin: 4px 0 12px 0; font-size: 0.9em; color: #555;">
                             Normal range: ${min.toFixed(2)} – ${max.toFixed(2)}
                             &nbsp;|&nbsp; Possible values: 0.00 – 1.00
-                            ${isNormalized
-                                ? ' (values are normalized to [0, 1] for consistent comparison across features).'
-                                : ''}
+                            ${isNormalized ? ' (values are normalized to [0, 1] for consistent comparison across features).' : ''}
                         </p>`;
                     });
-
                     reportDiv.innerHTML = reportHtml;
                 }
+
+                reportingContainer.style.display = 'block'; // Show the reporting container
 
             } catch (error) {
                 console.error('Error during analysis:', error);
                 resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        });
+
+        showReportFormButton.addEventListener('click', () => {
+            reportForm.style.display = 'block';
+            showReportFormButton.style.display = 'none';
+        });
+
+        reportForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!lastImageFile || !lastAnalysisResult) {
+                reportStatus.innerHTML = '<p style="color: red;">Error: No analysis result to report.</p>';
+                return;
+            }
+
+            reportStatus.innerHTML = 'Submitting report...';
+
+            const formData = new FormData();
+            formData.append('file', lastImageFile);
+            formData.append('userCorrection', document.getElementById('correctionType').value);
+            formData.append('originalPrediction', JSON.stringify(lastAnalysisResult));
+
+            try {
+                const response = await fetch('/report', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.details || 'Failed to submit report');
+                }
+
+                reportStatus.innerHTML = '<p style="color: green;">Thank you for your feedback!</p>';
+                reportForm.style.display = 'none';
+
+            } catch (error) {
+                console.error('Error submitting report:', error);
+                reportStatus.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
             }
         });
     </script>

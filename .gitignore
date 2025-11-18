@@ -229,3 +229,6 @@ yarn.lock
 .tanstack
 
 .idea/
+
+# Feedback data for model improvement
+feedback_data/
