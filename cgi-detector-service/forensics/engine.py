@@ -116,14 +116,14 @@ def run_analysis(image_bytes: bytes):
 
     # --- Update the weights to include specialized detector ---
     weights = {
-        'ela': 0.18,
-        'cfa': 0.18,
-        'hos': 0.12,
-        'jpeg_ghost': 0.09,
-        'rambino': 0.09,
-        'geometric': 0.12,
-        'lighting': 0.13,
-        'specialized': 0.09
+        'ela': 0.10,
+        'cfa': 0.10,
+        'hos': 0.15,
+        'jpeg_ghost': 0.15,
+        'rambino': 0.10,
+        'geometric': 0.15,
+        'lighting': 0.15,
+        'specialized': 0.10
     }
     # Sum = 1.0
 
@@ -142,27 +142,28 @@ def run_analysis(image_bytes: bytes):
     # Determine the final prediction
     # Summing features that are out of normal range - meaning cgi
     features_point_cgi = 0
-    if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
+    # if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
+    #
+    # if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
+    #
+    # if hos_score > 0.4: features_point_cgi = features_point_cgi + 1
+    #
+    # if jpeg_ghost_score > 0.2: features_point_cgi = features_point_cgi + 1
+    #
+    # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
+    #
+    # if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
+    #
+    # if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
+    #
+    # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
+    #
+    # if features_point_cgi > 4:
+    #     prediction_label = 'cgi'
+    # else:
+    #     prediction_label = "cgi" if final_score > 0.5 else "real"
 
-    if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
-
-    if hos_score > 0.4: features_point_cgi = features_point_cgi + 1
-
-    if jpeg_ghost_score > 0.2: features_point_cgi = features_point_cgi + 1
-
-    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
-
-    if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
-
-    if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
-
-    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
-
-    if features_point_cgi > 3:
-        prediction_label = 'cgi'
-    else:
-        prediction_label = "cgi" if final_score > 0.5 else "real"
-
+    prediction_label = "cgi" if final_score > 0.5 else "real"
     # Create the analysis breakdown
     analysis_breakdown = [
         {

@@ -296,8 +296,8 @@
 
                 const endTime = performance.now();
                 const frontendDuration = ((endTime - startTime) / 1000).toFixed(2);
-                
-                let durationHtml = `<p><strong>Total time (click to render):</strong> ${frontendDuration} seconds.</p>`;
+
+                let durationHtml = ``;
                 if (data.prediction && data.prediction.analysis_duration) {
                     durationHtml += `<p><strong>Backend analysis time:</strong> ${data.prediction.analysis_duration} seconds.</p>`;
                 }
