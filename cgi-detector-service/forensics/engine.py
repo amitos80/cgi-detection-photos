@@ -142,9 +142,9 @@ def run_analysis(image_bytes: bytes):
     # Determine the final prediction
     # Summing features that are out of normal range - meaning cgi
     features_point_cgi = 0
-    # if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
-    #
-    # if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
+    if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
+
+    if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
     #
     # if hos_score > 0.4: features_point_cgi = features_point_cgi + 1
     #
@@ -152,18 +152,19 @@ def run_analysis(image_bytes: bytes):
     #
     # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
     #
-    # if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
+    if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
     #
-    # if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
+    if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
     #
     # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
     #
-    # if features_point_cgi > 4:
-    #     prediction_label = 'cgi'
-    # else:
-    #     prediction_label = "cgi" if final_score > 0.5 else "real"
+    # prediction_label = "cgi" if final_score > 0.5 else "real"
+    if features_point_cgi >= 3:
+        prediction_label = 'cgi'
+    else:
+        prediction_label = "cgi" if final_score > 0.5 else "real"
 
-    prediction_label = "cgi" if final_score > 0.5 else "real"
+
     # Create the analysis breakdown
     analysis_breakdown = [
         {

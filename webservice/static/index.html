@@ -162,6 +162,16 @@
             <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 100%; height: auto; border-radius: 8px;"/>
             <button id="clearImageButton" style="position: absolute; top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.7); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 18px; cursor: pointer;">&times;</button>
         </div>
+
+        <!-- Progress Indicator -->
+        <div id="progressContainer" style="display: none; margin-top: 20px;">
+            <h4>Analyzing Image...</h4>
+            <div id="progressBar" style="width: 100%; background-color: #ddd; border-radius: 4px;">
+                <div id="progressBarFill" style="width: 0%; height: 20px; background-color: #007bff; border-radius: 4px; text-align: center; color: white; line-height: 20px;"></div>
+            </div>
+            <p id="progressText" style="text-align: center; margin-top: 5px;"></p>
+        </div>
+
         <div id="results">
             <!-- Results will be displayed here -->
         </div>
@@ -201,9 +211,26 @@
         const showReportFormButton = document.getElementById('showReportFormButton');
         const reportForm = document.getElementById('reportForm');
         const reportStatus = document.getElementById('reportStatus');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const progressText = document.getElementById('progressText');
 
         let lastAnalysisResult = null;
         let lastImageFile = null;
+        let progressInterval = null;
+
+        const analysisSteps = [
+            "Initializing Analysis...",
+            "Running Error Level Analysis (ELA)",
+            "Analyzing Color Filter Array (CFA)",
+            "Calculating Wavelet Statistics (HOS)",
+            "Scanning for JPEG Ghost Artifacts",
+            "Executing RAMBiNo Statistical Analysis",
+            "Checking 3D Geometric Consistency",
+            "Verifying Scene Lighting Consistency",
+            "Applying Specialized CGI/AIGC Detectors",
+            "Finalizing Report..."
+        ];
 
         dropZone.addEventListener('click', () => fileInput.click());
 
@@ -253,6 +280,37 @@
             reader.readAsDataURL(lastImageFile);
         }
 
+        function startProgressSimulator() {
+            let currentStep = 0;
+            progressContainer.style.display = 'block';
+            
+            progressInterval = setInterval(() => {
+                currentStep++;
+                const progressPercentage = Math.min(95, (currentStep / analysisSteps.length) * 100); // Don't go to 100%
+                
+                progressBarFill.style.width = `${progressPercentage}%`;
+                progressBarFill.innerText = `${Math.round(progressPercentage)}%`;
+                
+                if(currentStep < analysisSteps.length) {
+                    progressText.innerText = `Step ${currentStep}/${analysisSteps.length - 1}: ${analysisSteps[currentStep]}`;
+                } else {
+                    progressText.innerText = "Waiting for final server response...";
+                }
+
+            }, 2000); // Update every 2 seconds
+        }
+
+        function stopProgressSimulator() {
+            clearInterval(progressInterval);
+            progressBarFill.style.width = `100%`;
+            progressBarFill.innerText = `100%`;
+            progressText.innerText = "Analysis Complete!";
+            // Hide the progress bar after a short delay
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 1000);
+        }
+
         clearImageButton.addEventListener('click', () => {
             imagePreview.src = '#';
             dropZone.style.display = 'block';
@@ -269,16 +327,16 @@
         uploadForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const startTime = performance.now();
             const form = event.target;
             const formData = new FormData(form);
 
-            resultsDiv.innerHTML = 'Analyzing...';
+            // Clear previous results and start progress simulator
+            resultsDiv.innerHTML = '';
             reportDiv.innerHTML = '';
             document.getElementById('analysisDuration').innerHTML = '';
-            reportingContainer.style.display = 'none'; // Hide until analysis is done
+            reportingContainer.style.display = 'none';
             reportStatus.innerHTML = '';
-
+            startProgressSimulator();
 
             try {
                 const response = await fetch('/analyze', {
@@ -293,9 +351,6 @@
 
                 const data = await response.json();
                 lastAnalysisResult = data.prediction; // Store the prediction object
-
-                const endTime = performance.now();
-                const frontendDuration = ((endTime - startTime) / 1000).toFixed(2);
 
                 let durationHtml = ``;
                 if (data.prediction && data.prediction.analysis_duration) {
@@ -360,6 +415,8 @@
             } catch (error) {
                 console.error('Error during analysis:', error);
                 resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            } finally {
+                stopProgressSimulator();
             }
         });
 
