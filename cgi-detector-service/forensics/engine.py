@@ -105,7 +105,7 @@ def run_analysis(image_bytes: bytes):
 
     # --- Specialized Detectors ---
     try:
-        specialized_result = specialized_detectors.analyze_specialized_cgi_types(image_bytes)
+        specialized_result = specialized_detectors.analyze_specialized_cgi_types(processed_image_bytes)
         specialized_score = specialized_result.get('overall_score', 0.0)
         specialized_detector_scores = specialized_result.get('detector_scores', {})  # Dict for breakdown
         specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
