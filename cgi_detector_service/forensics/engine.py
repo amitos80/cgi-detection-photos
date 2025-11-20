@@ -4,26 +4,57 @@ from PIL import Image
 from io import BytesIO
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
-def downsize_image_to_480p(image: Image.Image) -> Image.Image:
+def adaptive_downsize_image(image: Image.Image) -> Image.Image:
     """
-    Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
+    Adaptively downsizes the input image to balance performance and data integrity.
+
+    The function follows these rules:
+    1. If the longest edge is already smaller than TARGET_LONG_EDGE, no resizing is done.
+    2. It attempts to resize the longest edge to TARGET_LONG_EDGE.
+    3. It ensures that the shortest edge does not fall below MINIMUM_SHORT_EDGE.
 
     Args:
         image: A PIL Image object.
 
     Returns:
-        A new PIL Image object resized to 480p or smaller if the original height is less than 480p.
+        A new, resized PIL Image object, or the original image if no resizing was needed.
     """
-    max_height = 480
+    TARGET_LONG_EDGE = 800
+    MINIMUM_SHORT_EDGE = 256
+
     width, height = image.size
+    longest_edge = max(width, height)
+    shortest_edge = min(width, height)
 
-    if height <= max_height:
-        return image  # No downsizing needed if already 480p or smaller
+    # Rule 1: No action needed if the image is already small enough
+    if longest_edge <= TARGET_LONG_EDGE:
+        return image
 
-    # Calculate the new width while maintaining the aspect ratio
-    new_width = int(width * (max_height / height))
-    resized_image = image.resize((new_width, max_height), Image.LANCZOS)
-    return resized_image
+    # Rule 2: Attempt to resize based on the longest edge
+    if width > height:
+        # Landscape or square
+        new_width = TARGET_LONG_EDGE
+        new_height = int(height * (TARGET_LONG_EDGE / width))
+    else:
+        # Portrait
+        new_height = TARGET_LONG_EDGE
+        new_width = int(width * (TARGET_LONG_EDGE / height))
+
+    # Rule 3: Validate against the minimum short edge
+    new_shortest_edge = min(new_width, new_height)
+    if new_shortest_edge < MINIMUM_SHORT_EDGE:
+        # This resize is too aggressive, recalculate based on the minimum short edge
+        if width > height:
+            # Landscape or square
+            new_height = MINIMUM_SHORT_EDGE
+            new_width = int(width * (MINIMUM_SHORT_EDGE / height))
+        else:
+            # Portrait
+            new_width = MINIMUM_SHORT_EDGE
+            new_height = int(height * (MINIMUM_SHORT_EDGE / width))
+
+    return image.resize((new_width, new_height), Image.LANCZOS)
+
 
 def run_analysis(image_bytes: bytes):
     """
@@ -40,11 +71,12 @@ def run_analysis(image_bytes: bytes):
     # Open and downsize the image
     try:
         original_image = Image.open(BytesIO(image_bytes))
-        downsized_image = downsize_image_to_480p(original_image)
+        downsized_image = adaptive_downsize_image(original_image)
 
         # Convert the downsized image back to bytes for analysis functions
         buffered = BytesIO()
-        downsized_image.save(buffered, format="PNG")  # Use PNG to avoid re-compression artifacts for analysis
+        # Use PNG to avoid re-compression artifacts for analysis
+        downsized_image.save(buffered, format="PNG")
         processed_image_bytes = buffered.getvalue()
     except Exception as e:
         # Handle potential errors during image processing/downsizing

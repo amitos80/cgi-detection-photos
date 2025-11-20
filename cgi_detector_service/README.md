@@ -15,7 +15,18 @@ The core components are:
     *   **`cfa.py`**: Implements **Color Filter Array (CFA) Analysis**, which looks for disruptions in the camera's unique sensor pattern.
     *   **`hos.py`**: Implements **Higher-Order Wavelet Statistics (HOS)**, which analyzes the image's statistical properties to identify synthetic origins.
 
+### Image Preprocessing
+
+Before any forensic analysis is performed, incoming images are adaptively downsized to optimize performance and preserve critical high-frequency forensic artifacts. This adaptive strategy ensures that:
+
+*   Images with a longest edge already at or below `800` pixels are not resized.
+*   Larger images are scaled down so their longest edge is `800` pixels, while maintaining aspect ratio.
+*   A minimum shortest edge of `256` pixels is enforced. If scaling to `800` pixels on the longest side would make the shortest side fall below `256` pixels, the image is instead scaled such that its shortest side is `256` pixels.
+
+This approach prevents excessive data destruction, especially for images with extreme aspect ratios, ensuring that vital pixel-level information for forensic detection is retained.
+
 ## Detection Methods
+
 
 The engine currently combines the following four methods:
 
