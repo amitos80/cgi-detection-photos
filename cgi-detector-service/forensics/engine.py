@@ -1,9 +1,9 @@
+import sys
 import numpy as np
 from PIL import Image
 from io import BytesIO
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
-
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     """
     Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
@@ -150,7 +150,7 @@ def run_analysis(image_bytes: bytes):
     #
     # if jpeg_ghost_score > 0.2: features_point_cgi = features_point_cgi + 1
     #
-    # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
+    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
     #
     if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
     #
@@ -159,11 +159,18 @@ def run_analysis(image_bytes: bytes):
     # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
     #
     # prediction_label = "cgi" if final_score > 0.5 else "real"
-    if features_point_cgi >= 3:
-        prediction_label = 'cgi'
-    else:
+    prediction_label = "cgi"
+    if features_point_cgi < 4:
         prediction_label = "cgi" if final_score > 0.5 else "real"
 
+    print("features_point_cgi ")
+    print(features_point_cgi)
+    print("final_score ")
+    print(final_score)
+    print("prediction_label ")
+    print(prediction_label)
+
+    # prediction_label = "cgi" if final_score > 0.5 else "real"
 
     # Create the analysis breakdown
     analysis_breakdown = [

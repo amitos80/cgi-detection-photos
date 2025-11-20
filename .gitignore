@@ -232,3 +232,4 @@ yarn.lock
 
 # Feedback data for model improvement
 feedback_data/
+.aider*
