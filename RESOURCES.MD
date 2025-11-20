@@ -14,6 +14,8 @@
 > 2. **NEW DATASET**: We are excited to introduce our **brand-new deepfake dataset** called DF40, comprising **40 distinct deepfake techniques, even the just released SoTAs**. DF40 is designed for seamless integration into the workflow of DeepfakeBench, allowing you to train or test just as you would with other datasets like Celeb-DF and FF++. Please refer to [DF40 dataset](https://github.com/YZY-stack/DF40) for details.
 >    
 > 3. The pre-trained weights of 3D R50 for training I3D, FTCN, and AltFreezing are [here](https://github.com/SCLBD/DeepfakeBench/releases/download/v1.0.3/I3D_8x8_R50.pth)
+>
+> 4. Hany Farid's digital forensics research [here](https://farid.berkeley.edu/)
 
 
 

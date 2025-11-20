@@ -68,8 +68,8 @@ npm test
     {
       "filename": "your_uploaded_image.jpg",
       "prediction": {
-        "prediction": "cgi" | "real",
-        "confidence": 0.0 - 1.0
+        "prediction": "cgi" | "real" | "No Estimation",
+        "confidence": 0.0 - 1.0,
       }
     }
     ```

@@ -283,14 +283,14 @@
         function startProgressSimulator() {
             let currentStep = 0;
             progressContainer.style.display = 'block';
-            
+
             progressInterval = setInterval(() => {
                 currentStep++;
                 const progressPercentage = Math.min(95, (currentStep / analysisSteps.length) * 100); // Don't go to 100%
-                
+
                 progressBarFill.style.width = `${progressPercentage}%`;
                 progressBarFill.innerText = `${Math.round(progressPercentage)}%`;
-                
+
                 if(currentStep < analysisSteps.length) {
                     progressText.innerText = `Step ${currentStep}/${analysisSteps.length - 1}: ${analysisSteps[currentStep]}`;
                 } else {
@@ -363,9 +363,9 @@
 
                 let resultHtml = `<h2>Analysis Result for ${data.filename}:</h2>`;
                 if (prediction === 'cgi') {
-                    resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI</span> with ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI </span> with ${confidence}% confidence.</p>`;
                 } else {
-                    resultHtml += `<p>Cannot be certain <span class="prediction-real">Non-CGI</span> ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>Cannot be certain <span class="prediction-real">Cannot determine</span> ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
 

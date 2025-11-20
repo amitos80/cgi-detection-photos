@@ -2,6 +2,7 @@ import sys
 import numpy as np
 from PIL import Image
 from io import BytesIO
+from concurrent.futures import ThreadPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
@@ -52,67 +53,99 @@ def run_analysis(image_bytes: bytes):
         # Fallback to original image_bytes if downsizing fails
         processed_image_bytes = image_bytes
 
-    # Run each analysis
-    ela_score = ela.analyze_ela(processed_image_bytes)
-    cfa_score = cfa.analyze_cfa(processed_image_bytes)
-    hos_score = hos.analyze_hos(processed_image_bytes)
-    jpeg_ghost_score = jpeg_ghost.analyze_jpeg_ghost(processed_image_bytes)
-    geometric_score = geometric_3d.analyze_geometric_consistency(processed_image_bytes)
-    lighting_score = lighting_text.analyze_lighting_consistency(processed_image_bytes)
+    # Initialize a dictionary to hold future results from parallel tasks.
+    futures = {}
+    # Use ThreadPoolExecutor for concurrent execution of forensic analysis functions.
+    # This allows multiple CPU-bound tasks to run in separate threads,
+    # potentially reducing overall execution time.
+    with ThreadPoolExecutor() as executor:
+        # Submit each analysis function to the executor.
+        # Each .submit() call returns a Future object representing the eventual result.
+        futures['ela'] = executor.submit(ela.analyze_ela, processed_image_bytes)
+        futures['cfa'] = executor.submit(cfa.analyze_cfa, processed_image_bytes)
+        futures['hos'] = executor.submit(hos.analyze_hos, processed_image_bytes)
+        futures['jpeg_ghost'] = executor.submit(jpeg_ghost.analyze_jpeg_ghost, processed_image_bytes)
+        futures['geometric'] = executor.submit(geometric_3d.analyze_geometric_consistency, processed_image_bytes)
+        futures['lighting'] = executor.submit(lighting_text.analyze_lighting_consistency, processed_image_bytes)
+        futures['specialized_detector'] = executor.submit(specialized_detectors.analyze_specialized_cgi_types, processed_image_bytes)
 
-    # Convert image_bytes to a NumPy array for RAMBiNo analysis
-    try:
-        image = Image.open(BytesIO(processed_image_bytes)).convert('L')  # Convert to grayscale
-        image_data = np.array(image)
-    except Exception:
-        image_data = None
-
-    rambino_score = 0.0
-    rambino_features_list = None
-    try:
-        if image_data is not None:
-            # compute both the analysis summary and the raw feature vector
-            rambino_result = rambino.analyze_rambino_features(image_data)
-            # also compute raw features (may be large) but truncate before returning
+        # RAMBiNo analysis requires specific image preprocessing (grayscale conversion to NumPy array).
+        # This helper function encapsulates the RAMBiNo-specific logic, including image conversion,
+        # and is submitted as a separate task to the executor.
+        def run_rambino_analysis(image_bytes_for_rambino):
             try:
-                raw_feats = rambino.compute_rambino_features(image_data)
-                # keep a truncated view (first 128 elements) to avoid huge payloads
-                max_return = 128
-                rambino_features_list = raw_feats.flatten()[:max_return].astype(float).tolist()
+                image = Image.open(BytesIO(image_bytes_for_rambino)).convert('L')  # Convert to grayscale
+                image_data = np.array(image)
             except Exception:
+                image_data = None
+                return {'score': 0.0, 'features': None, 'raw_score': 0.0}
+
+            rambino_score = 0.0
+            rambino_features_list = None
+            try:
+                if image_data is not None:
+                    rambino_result = rambino.analyze_rambino_features(image_data)
+                    try:
+                        raw_feats = rambino.compute_rambino_features(image_data)
+                        max_return = 128
+                        rambino_features_list = raw_feats.flatten()[:max_return].astype(float).tolist()
+                    except Exception:
+                        rambino_features_list = None
+
+                    if isinstance(rambino_result, dict):
+                        if "error" in rambino_result:
+                            rambino_score = 0.0
+                        else:
+                            rambino_score = float(rambino_result.get("rambino_feature_mean_noise", 0.0))
+                    else:
+                        rambino_score = float(np.mean(rambino_result))
+            except Exception:
+                rambino_score = 0.0
                 rambino_features_list = None
 
-            if isinstance(rambino_result, dict):
-                if "error" in rambino_result:
-                    rambino_score = 0.0
-                else:
-                    rambino_score = float(rambino_result.get("rambino_feature_mean_noise", 0.0))
-            else:
-                # If the analysis returned raw features, fall back to mean
-                rambino_score = float(np.mean(rambino_result))
-    except Exception:
-        rambino_score = 0.0
+            rambino_raw_score = rambino_score
+            scale = 30000.0
+            rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
+            return {'score': rambino_score, 'features': rambino_features_list, 'raw_score': rambino_raw_score}
+
+        futures['rambino'] = executor.submit(run_rambino_analysis, processed_image_bytes)
+
+        # Collect results from all futures.
+        # .result() blocks until the corresponding task is complete.
+        # Exception handling is included for robust error management in each analysis.
+        results = {}
+        rambino_raw_score = 0.0
         rambino_features_list = None
-
-    # --- Normalize RAMBiNo score to a sane range ---
-    # Keep a copy of the raw, unscaled score for debugging/tuning
-    rambino_raw_score = rambino_score
-    # Heuristic scaling: large values (e.g. ~30k) get mapped into [0, 1]
-    # Adjust 30000.0 if you later have better empirical stats.
-    scale = 30000.0
-    rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
-    # --- end normalization ---
-
-    # --- Specialized Detectors ---
-    try:
-        specialized_result = specialized_detectors.analyze_specialized_cgi_types(processed_image_bytes)
-        specialized_score = specialized_result.get('overall_score', 0.0)
-        specialized_detector_scores = specialized_result.get('detector_scores', {})  # Dict for breakdown
-        specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
-    except Exception as e:
-        specialized_score = 0.0
         specialized_detector_scores = {}
         specialized_likely_type = 'Unknown'
+
+        for name, future in futures.items():
+            try:
+                if name == 'rambino':
+                    rambino_result = future.result()
+                    results['rambino'] = rambino_result['score']
+                    rambino_raw_score = rambino_result['raw_score']
+                    rambino_features_list = rambino_result['features']
+                elif name == 'specialized_detector':
+                    specialized_result = future.result()
+                    results['specialized'] = specialized_result.get('overall_score', 0.0)
+                    specialized_detector_scores = specialized_result.get('detector_scores', {})
+                    specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
+                else:
+                    results[name] = future.result()
+            except Exception as e:
+                print(f"Error running {name} analysis: {e}")
+                results[name] = 0.0 # Default/error value
+
+    # Assign collected scores to individual variables for downstream calculations.
+    ela_score = results.get('ela', 0.0)
+    cfa_score = results.get('cfa', 0.0)
+    hos_score = results.get('hos', 0.0)
+    jpeg_ghost_score = results.get('jpeg_ghost', 0.0)
+    geometric_score = results.get('geometric', 0.0)
+    lighting_score = results.get('lighting', 0.0)
+    rambino_score = results.get('rambino', 0.0)
+    specialized_score = results.get('specialized', 0.0)
 
     # --- Update the weights to include specialized detector ---
     weights = {
@@ -139,39 +172,50 @@ def run_analysis(image_bytes: bytes):
         specialized_score * weights['specialized']
     )
 
+    diversion = (ela_score - 0.2 +
+                 cfa_score - 0.3 +
+                 hos_score - 0.4 +
+                 rambino_score - 0.1 +
+                 geometric_score - 0.3 +
+                 jpeg_ghost_score - 0.2 +
+                 specialized_score - 0.4 +
+                 lighting_score - 0.3)
+
+    w_diversion = (0.10 * (ela_score - 0.2) +
+                   0.10 * (cfa_score - 0.3) +
+                   0.15 * (hos_score - 0.4) +
+                   0.15 * (rambino_score - 0.1) +
+                   0.10 * (geometric_score - 0.3) +
+                   0.15 * (jpeg_ghost_score - 0.2) + 0.15 *
+                   (specialized_score - 0.4) +
+                   0.10 * (lighting_score - 0.3))
+
     # Determine the final prediction
-    # Summing features that are out of normal range - meaning cgi
-    features_point_cgi = 0
-    if ela_score > 0.2: features_point_cgi = features_point_cgi + 1
+    prediction_label = "cgi" if diversion > 1.5 else "real"
 
-    if cfa_score > 0.3: features_point_cgi = features_point_cgi + 1
-    #
-    # if hos_score > 0.4: features_point_cgi = features_point_cgi + 1
-    #
-    # if jpeg_ghost_score > 0.2: features_point_cgi = features_point_cgi + 1
-    #
-    if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
-    #
-    if geometric_score > 0.3: features_point_cgi = features_point_cgi + 1
-    #
-    if lighting_score > 0.3: features_point_cgi = features_point_cgi + 1
-    #
-    # if rambino_score > 0.1: features_point_cgi = features_point_cgi + 1
-    #
-    # prediction_label = "cgi" if final_score > 0.5 else "real"
-    prediction_label = "cgi"
-    if features_point_cgi < 4:
-        prediction_label = "cgi" if final_score > 0.5 else "real"
-
-    print("features_point_cgi ")
-    print(features_point_cgi)
-    print("final_score ")
-    print(final_score)
-    print("prediction_label ")
-    print(prediction_label)
+    print("ela_score ")
+    print(ela_score)
+    print("cfa_score ")
+    print(cfa_score)
+    print("hos_score ")
+    print(hos_score)
+    print("jpeg_ghost_score ")
+    print(jpeg_ghost_score)
+    print("rambino_score ")
+    print(rambino_score)
+    print("geometric_score ")
+    print(geometric_score)
+    print("lighting_score ")
+    print(lighting_score)
+    print("specialized_score ")
+    print(specialized_score)
+    print("diversion ")
+    print(diversion)
+    print("weighted diversion ")
+    print(w_diversion)
 
     # prediction_label = "cgi" if final_score > 0.5 else "real"
-
+    prediction_label = "cgi" if w_diversion > 0.1 else "real"
     # Create the analysis breakdown
     analysis_breakdown = [
         {

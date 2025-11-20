@@ -10,7 +10,7 @@ The core components are:
 
 *   **`main.py`**: The FastAPI application entry point. It defines the `/predict` endpoint that receives image uploads and orchestrates the analysis.
 *   **`forensics/`**: A Python module containing the individual analysis algorithms and the unified scoring engine.
-    *   **`engine.py`**: The central orchestrator. It runs the input image through all available forensic methods, combines their scores using a weighted average, and formats the final JSON response.
+    *   **`engine.py`**: The central orchestrator. It runs the input image through all available forensic methods **concurrently using a `ThreadPoolExecutor`**, combines their scores using a weighted average, and formats the final JSON response. This parallel execution significantly improves performance by reducing the overall analysis time.
     *   **`ela.py`**: Implements **Error Level Analysis (ELA)**, which detects inconsistencies in JPEG compression levels.
     *   **`cfa.py`**: Implements **Color Filter Array (CFA) Analysis**, which looks for disruptions in the camera's unique sensor pattern.
     *   **`hos.py`**: Implements **Higher-Order Wavelet Statistics (HOS)**, which analyzes the image's statistical properties to identify synthetic origins.
