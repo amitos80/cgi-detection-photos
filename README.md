@@ -140,12 +140,87 @@ This method leverages the unique way a digital camera's sensor captures color in
 
 ### 4. Higher-Order Statistical Analysis
 
+
+
+
+
 This is a powerful technique for distinguishing between statistically "natural" images and statistically "unnatural" synthetic images.
 
+
+
 | Aspect Detected | Reasoning/Thought Process |
+
 | :--- | :--- |
+
 | **Statistical Model Deviations** | While deepfakes look visually realistic, Generative AI models often fail to perfectly replicate the complex, non-linear dependencies between pixels found in real, natural images. |
+
 | **Wavelet Analysis (HOS)** | Analysis is often performed using **Higher-Order Statistics (HOS)** in the wavelet domain. A **real photograph**'s statistical distributions conform to known mathematical models for natural scenes. A **synthetic image** exhibits subtle, systematic statistical deviations or "over-regularity" that flags it as algorithmically generated. |
+
+
+
+---
+
+
+
+### 5. 3D Geometric Consistency
+
+
+
+This method analyzes geometric properties within the image.
+
+
+
+| Aspect Detected | Reasoning/Thought Process |
+
+| :--- | :--- |
+
+| **Symmetry and Smoothness** | Real-world objects often exhibit natural variations and imperfections. CGI, especially early or less sophisticated forms, can show unnaturally perfect symmetry, overly smooth surfaces, or repetitive patterns that betray their synthetic origin. |
+
+| **Edge Regularity and Gradient Consistency** | The way edges transition and color gradients flow in an image can reveal manipulation. Inconsistent edge rendering or unnatural gradient changes across different parts of an object or scene can indicate that elements were digitally inserted or generated. |
+
+
+
+---
+
+
+
+### 6. Scene Lighting Consistency
+
+
+
+This method focuses on the physics of light within a scene.
+
+
+
+| Aspect Detected | Reasoning/Thought Process |
+
+| :--- | :--- |
+
+| **Lighting Direction Alignment** | All objects in a naturally lit scene should show shadows and highlights consistent with a common light source direction. If different objects or regions within an image appear to be lit from varying directions, it's a strong indicator of a composite image or CGI. |
+
+| **Shadow Accuracy and Softness** | Shadows provide critical clues about light sources. Analysis includes checking if shadows are cast correctly relative to objects, if their length and angle are consistent, and if the softness or sharpness of shadow edges matches the expected light source properties within the scene. Inconsistencies suggest manipulation. |
+
+
+
+---
+
+
+
+### 7. Specialized CGI/AIGC Detection
+
+
+
+This method employs advanced techniques to identify artifacts specific to different generation methods.
+
+
+
+| Aspect Detected | Reasoning/Thought Process |
+
+| :--- | :--- |
+
+| **GAN/Diffusion Artifacts** | Generative Adversarial Networks (GANs) and Diffusion Models, while powerful, leave subtle statistical "fingerprints" in the images they produce. These can include characteristic noise patterns, frequency spectrum anomalies, or specific textural irregularities that are imperceptible to the human eye but detectable by specialized algorithms. |
+
+| **Face Synthesis and 3D Rendering Artifacts** | Dedicated detectors can target known imperfections in AI-generated faces (e.g., distorted backgrounds, inconsistent accessories, repetitive textures) or patterns typical of 3D rendering engines (e.g., perfectly smooth surfaces, uncanny material properties, aliasing artifacts in specific contexts). |
 
 
 
