@@ -2,9 +2,10 @@ import sys
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
+from . import deepfake_detector, reflection_consistency, double_quantization
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     """
     Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
@@ -58,7 +59,7 @@ def run_analysis(image_bytes: bytes):
     # Use ThreadPoolExecutor for concurrent execution of forensic analysis functions.
     # This allows multiple CPU-bound tasks to run in separate threads,
     # potentially reducing overall execution time.
-    with ThreadPoolExecutor() as executor:
+    with ProcessPoolExecutor() as executor:
         # Submit each analysis function to the executor.
         # Each .submit() call returns a Future object representing the eventual result.
         futures['ela'] = executor.submit(ela.analyze_ela, processed_image_bytes)
@@ -68,6 +69,9 @@ def run_analysis(image_bytes: bytes):
         futures['geometric'] = executor.submit(geometric_3d.analyze_geometric_consistency, processed_image_bytes)
         futures['lighting'] = executor.submit(lighting_text.analyze_lighting_consistency, processed_image_bytes)
         futures['specialized_detector'] = executor.submit(specialized_detectors.analyze_specialized_cgi_types, processed_image_bytes)
+        futures['deepfake'] = executor.submit(deepfake_detector.detect_deepfake, processed_image_bytes)
+        futures['reflection_inconsistency'] = executor.submit(reflection_consistency.detect_reflection_inconsistencies, processed_image_bytes)
+        futures['double_quantization'] = executor.submit(double_quantization.detect_double_quantization, processed_image_bytes)
 
         # RAMBiNo analysis requires specific image preprocessing (grayscale conversion to NumPy array).
         # This helper function encapsulates the RAMBiNo-specific logic, including image conversion,
@@ -146,19 +150,25 @@ def run_analysis(image_bytes: bytes):
     lighting_score = results.get('lighting', 0.0)
     rambino_score = results.get('rambino', 0.0)
     specialized_score = results.get('specialized', 0.0)
+    deepfake_score = results.get('deepfake', {}).get('confidence', 0.0)
+    reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
+    double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
 
-    # --- Update the weights to include specialized detector ---
+    # --- Update the weights to include specialized detector and new methods---
     weights = {
-        'ela': 0.10,
-        'cfa': 0.10,
-        'hos': 0.15,
-        'jpeg_ghost': 0.15,
-        'rambino': 0.10,
-        'geometric': 0.15,
-        'lighting': 0.15,
-        'specialized': 0.10
+        'ela': 0.08,
+        'cfa': 0.08,
+        'hos': 0.12,
+        'jpeg_ghost': 0.12,
+        'rambino': 0.08,
+        'geometric': 0.12,
+        'lighting': 0.12,
+        'specialized': 0.08,
+        'deepfake': 0.08, # New weight
+        'reflection_inconsistency': 0.06, # New weight
+        'double_quantization': 0.06 # New weight
     }
-    # Sum = 1.0
+    # Sum = 1.0 (approximately)
 
     # Calculate the final weighted-average score
     final_score = (
@@ -169,7 +179,10 @@ def run_analysis(image_bytes: bytes):
         rambino_score * weights['rambino'] +
         geometric_score * weights['geometric'] +
         lighting_score * weights['lighting'] +
-        specialized_score * weights['specialized']
+        specialized_score * weights['specialized'] +
+        deepfake_score * weights['deepfake'] +
+        reflection_score * weights['reflection_inconsistency'] +
+        double_quantization_score * weights['double_quantization']
     )
 
     diversion = (ela_score - 0.2 +
@@ -188,7 +201,10 @@ def run_analysis(image_bytes: bytes):
                    0.10 * (geometric_score - 0.3) +
                    0.15 * (jpeg_ghost_score - 0.2) + 0.15 *
                    (specialized_score - 0.4) +
-                   0.10 * (lighting_score - 0.3))
+                   0.10 * (lighting_score - 0.3) +
+                   0.08 * (deepfake_score - 0.5) +
+                   0.06 * (reflection_score - 0.6) +
+                   0.06 * (double_quantization_score - 0.7))
 
     # Determine the final prediction
     prediction_label = "cgi" if diversion > 1.5 else "real"
@@ -209,6 +225,12 @@ def run_analysis(image_bytes: bytes):
     print(lighting_score)
     print("specialized_score ")
     print(specialized_score)
+    print("deepfake_score ")
+    print(deepfake_score)
+    print("reflection_score ")
+    print(reflection_score)
+    print("double_quantization_score ")
+    print(double_quantization_score)
     print("diversion ")
     print(diversion)
     print("weighted diversion ")
@@ -278,6 +300,27 @@ def run_analysis(image_bytes: bytes):
                 f"Breakdown: {specialized_detector_scores}"
             ),
             "url": ""
+        },
+        {
+            "feature": "Deepfake Detection",
+            "score": deepfake_score,
+            "normal_range": [0.0, 0.5],
+            "insight": "Detects AI-generated manipulation in faces or motion. High scores suggest a deepfake.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/deepfakes/"
+        },
+        {
+            "feature": "Reflection Inconsistency",
+            "score": reflection_score,
+            "normal_range": [0.0, 0.6],
+            "insight": "Analyzes images for inconsistencies in reflections. High scores suggest image manipulation.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/photo-forensics/"
+        },
+        {
+            "feature": "Video Double Quantization",
+            "score": double_quantization_score,
+            "normal_range": [0.0, 0.7],
+            "insight": "Detects re-encoding artifacts in video frames. High scores suggest video manipulation.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/video-forensics/"
         }
     ]
 
