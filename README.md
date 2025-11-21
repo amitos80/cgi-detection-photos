@@ -36,7 +36,7 @@ This command will:
 *   Start both services, allowing them to communicate over a shared Docker network.
 *   Expose the Node.js webservice on port `8000`.
 
-Once the services are up, open your web browser and navigate to `http://localhost:8000` to access the application.
+Once the services are up, open your web browser and navigate to `http://localhost:8000` to access the application:)
 
 ## API Response Structure
 
