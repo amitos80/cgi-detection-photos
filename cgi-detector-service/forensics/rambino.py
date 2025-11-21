@@ -96,7 +96,8 @@ def compute_rambino_features(image, wavelet: str = "db2", level: int = 2, bins: 
 
     Returns a 1D float32 numpy array.
     """
-    np.random.seed(42) # Ensure deterministic patch sampling    gray = _load_gray(image)
+    np.random.seed(77) # Ensure deterministic patch sampling ##
+    gray = _load_gray(image)
     details = _wavelet_details(gray, wavelet=wavelet, level=level)
     offsets = [(0, 1), (1, 0), (1, 1), (1, -1)]
     features: List[np.ndarray] = []

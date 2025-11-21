@@ -194,20 +194,17 @@ def run_analysis(image_bytes: bytes):
                  specialized_score - 0.4 +
                  lighting_score - 0.3)
 
-    w_diversion = (0.10 * (ela_score - 0.2) +
-                   0.10 * (cfa_score - 0.3) +
+    w_diversion = (0.125 * (ela_score - 0.2) +
+                   0.125 * (cfa_score - 0.3) +
                    0.15 * (hos_score - 0.4) +
-                   0.15 * (rambino_score - 0.1) +
+                   0.5 * (rambino_score - 0.1) +
                    0.10 * (geometric_score - 0.3) +
-                   0.15 * (jpeg_ghost_score - 0.2) + 0.15 *
-                   (specialized_score - 0.4) +
-                   0.10 * (lighting_score - 0.3) +
+                   0.15 * (jpeg_ghost_score - 0.2) +
+                   0.15 * (specialized_score - 0.4) +
+                   0.15 * (lighting_score - 0.3) +
                    0.08 * (deepfake_score - 0.5) +
                    0.06 * (reflection_score - 0.6) +
                    0.06 * (double_quantization_score - 0.7))
-
-    # Determine the final prediction
-    prediction_label = "cgi" if diversion > 1.5 else "real"
 
     print("ela_score ")
     print(ela_score)
@@ -237,7 +234,7 @@ def run_analysis(image_bytes: bytes):
     print(w_diversion)
 
     # prediction_label = "cgi" if final_score > 0.5 else "real"
-    prediction_label = "cgi" if w_diversion > 0.1 else "real"
+    prediction_label = "cgi" if w_diversion > 0.021 else "real"
     # Create the analysis breakdown
     analysis_breakdown = [
         {
