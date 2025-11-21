@@ -5,7 +5,9 @@ from io import BytesIO
 from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
 from . import specialized_detectors  # <-- ADD THIS IMPORT
-from . import deepfake_detector, reflection_consistency, double_quantization
+from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
+
+_ml_model = ml_predictor.load_model() # Load ML model once at startup
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     """
     Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
@@ -154,57 +156,17 @@ def run_analysis(image_bytes: bytes):
     reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
     double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
 
-    # --- Update the weights to include specialized detector and new methods---
-    weights = {
-        'ela': 0.08,
-        'cfa': 0.08,
-        'hos': 0.12,
-        'jpeg_ghost': 0.12,
-        'rambino': 0.08,
-        'geometric': 0.12,
-        'lighting': 0.12,
-        'specialized': 0.08,
-        'deepfake': 0.08, # New weight
-        'reflection_inconsistency': 0.06, # New weight
-        'double_quantization': 0.06 # New weight
-    }
-    # Sum = 1.0 (approximately)
+    # Create feature vector for ML model
+    ml_features = [
+        ela_score, cfa_score, hos_score, jpeg_ghost_score, rambino_score,
+        geometric_score, lighting_score, specialized_score,
+        deepfake_score, reflection_score, double_quantization_score
+    ]
 
-    # Calculate the final weighted-average score
-    final_score = (
-        ela_score * weights['ela'] +
-        cfa_score * weights['cfa'] +
-        hos_score * weights['hos'] +
-        jpeg_ghost_score * weights['jpeg_ghost'] +
-        rambino_score * weights['rambino'] +
-        geometric_score * weights['geometric'] +
-        lighting_score * weights['lighting'] +
-        specialized_score * weights['specialized'] +
-        deepfake_score * weights['deepfake'] +
-        reflection_score * weights['reflection_inconsistency'] +
-        double_quantization_score * weights['double_quantization']
-    )
-
-    diversion = (ela_score - 0.2 +
-                 cfa_score - 0.3 +
-                 hos_score - 0.4 +
-                 rambino_score - 0.1 +
-                 geometric_score - 0.3 +
-                 jpeg_ghost_score - 0.2 +
-                 specialized_score - 0.4 +
-                 lighting_score - 0.3)
-
-    w_diversion = (0.125 * (ela_score - 0.2) +
-                   0.125 * (cfa_score - 0.3) +
-                   0.15 * (hos_score - 0.4) +
-                   0.5 * (rambino_score - 0.1) +
-                   0.10 * (geometric_score - 0.3) +
-                   0.15 * (jpeg_ghost_score - 0.2) +
-                   0.15 * (specialized_score - 0.4) +
-                   0.15 * (lighting_score - 0.3) +
-                   0.08 * (deepfake_score - 0.5) +
-                   0.06 * (reflection_score - 0.6) +
-                   0.06 * (double_quantization_score - 0.7))
+    # Make prediction using the loaded ML model
+    ml_prediction_result = ml_predictor.predict(_ml_model, ml_features)
+    prediction_label = ml_prediction_result["prediction_label"]
+    final_score = ml_prediction_result["confidence"]
 
     print("ela_score ")
     print(ela_score)
@@ -228,13 +190,8 @@ def run_analysis(image_bytes: bytes):
     print(reflection_score)
     print("double_quantization_score ")
     print(double_quantization_score)
-    print("diversion ")
-    print(diversion)
-    print("weighted diversion ")
-    print(w_diversion)
-
-    # prediction_label = "cgi" if final_score > 0.5 else "real"
-    prediction_label = "cgi" if w_diversion > 0.021 else "real"
+    print(f"ML Predicted Label: {prediction_label}")
+    print(f"ML Confidence: {final_score:.4f}")
     # Create the analysis breakdown
     analysis_breakdown = [
         {
