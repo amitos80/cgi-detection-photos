@@ -300,6 +300,8 @@ def _analyze_high_contrast_regions(gray_image: np.ndarray) -> float:
         edge_density = ndimage.convolve(edges.astype(float), kernel.astype(float))
 
         # Find high-edge-density regions (potential text/patterns)
+        if edge_density[edge_density > 0].size == 0:
+            return 0.0
         high_density_threshold = np.percentile(edge_density[edge_density > 0], 90)
         text_like_regions = edge_density > high_density_threshold
 

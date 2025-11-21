@@ -3,9 +3,11 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 from concurrent.futures import ProcessPoolExecutor
-from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text
+from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, jpeg_dimples
 from . import specialized_detectors  # <-- ADD THIS IMPORT
-from . import deepfake_detector, reflection_consistency, double_quantization
+from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
+
+_ml_model = ml_predictor.load_model() # Load ML model once at startup
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     """
     Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.
@@ -26,6 +28,42 @@ def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     new_width = int(width * (max_height / height))
     resized_image = image.resize((new_width, max_height), Image.LANCZOS)
     return resized_image
+
+def run_rambino_analysis(image_bytes_for_rambino):
+    try:
+        image = Image.open(BytesIO(image_bytes_for_rambino)).convert('L')  # Convert to grayscale
+        image_data = np.array(image)
+    except Exception:
+        image_data = None
+        return {'score': 0.0, 'features': None, 'raw_score': 0.0}
+
+    rambino_score = 0.0
+    rambino_features_list = None
+    try:
+        if image_data is not None:
+            rambino_result = rambino.analyze_rambino_features(image_data)
+            try:
+                raw_feats = rambino.compute_rambino_features(image_data)
+                max_return = 128
+                rambino_features_list = raw_feats.flatten()[:max_return].astype(float).tolist()
+            except Exception:
+                rambino_features_list = None
+
+            if isinstance(rambino_result, dict):
+                if "error" in rambino_result:
+                    rambino_score = 0.0
+                else:
+                    rambino_score = float(rambino_result.get("rambino_feature_mean_noise", 0.0))
+            else:
+                rambino_score = float(np.mean(rambino_result))
+    except Exception:
+        rambino_score = 0.0
+        rambino_features_list = None
+
+    rambino_raw_score = rambino_score
+    scale = 30000.0
+    rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
+    return {'score': rambino_score, 'features': rambino_features_list, 'raw_score': rambino_raw_score}
 
 def run_analysis(image_bytes: bytes):
     """
@@ -66,6 +104,7 @@ def run_analysis(image_bytes: bytes):
         futures['cfa'] = executor.submit(cfa.analyze_cfa, processed_image_bytes)
         futures['hos'] = executor.submit(hos.analyze_hos, processed_image_bytes)
         futures['jpeg_ghost'] = executor.submit(jpeg_ghost.analyze_jpeg_ghost, processed_image_bytes)
+        futures['jpeg_dimples'] = executor.submit(jpeg_dimples.detect_jpeg_dimples, processed_image_bytes)
         futures['geometric'] = executor.submit(geometric_3d.analyze_geometric_consistency, processed_image_bytes)
         futures['lighting'] = executor.submit(lighting_text.analyze_lighting_consistency, processed_image_bytes)
         futures['specialized_detector'] = executor.submit(specialized_detectors.analyze_specialized_cgi_types, processed_image_bytes)
@@ -76,42 +115,6 @@ def run_analysis(image_bytes: bytes):
         # RAMBiNo analysis requires specific image preprocessing (grayscale conversion to NumPy array).
         # This helper function encapsulates the RAMBiNo-specific logic, including image conversion,
         # and is submitted as a separate task to the executor.
-        def run_rambino_analysis(image_bytes_for_rambino):
-            try:
-                image = Image.open(BytesIO(image_bytes_for_rambino)).convert('L')  # Convert to grayscale
-                image_data = np.array(image)
-            except Exception:
-                image_data = None
-                return {'score': 0.0, 'features': None, 'raw_score': 0.0}
-
-            rambino_score = 0.0
-            rambino_features_list = None
-            try:
-                if image_data is not None:
-                    rambino_result = rambino.analyze_rambino_features(image_data)
-                    try:
-                        raw_feats = rambino.compute_rambino_features(image_data)
-                        max_return = 128
-                        rambino_features_list = raw_feats.flatten()[:max_return].astype(float).tolist()
-                    except Exception:
-                        rambino_features_list = None
-
-                    if isinstance(rambino_result, dict):
-                        if "error" in rambino_result:
-                            rambino_score = 0.0
-                        else:
-                            rambino_score = float(rambino_result.get("rambino_feature_mean_noise", 0.0))
-                    else:
-                        rambino_score = float(np.mean(rambino_result))
-            except Exception:
-                rambino_score = 0.0
-                rambino_features_list = None
-
-            rambino_raw_score = rambino_score
-            scale = 30000.0
-            rambino_score = float(np.clip(rambino_raw_score / scale, 0.0, 1.0))
-            return {'score': rambino_score, 'features': rambino_features_list, 'raw_score': rambino_raw_score}
-
         futures['rambino'] = executor.submit(run_rambino_analysis, processed_image_bytes)
 
         # Collect results from all futures.
@@ -146,6 +149,7 @@ def run_analysis(image_bytes: bytes):
     cfa_score = results.get('cfa', 0.0)
     hos_score = results.get('hos', 0.0)
     jpeg_ghost_score = results.get('jpeg_ghost', 0.0)
+    jpeg_dimples_score = results.get('jpeg_dimples', 0.0)
     geometric_score = results.get('geometric', 0.0)
     lighting_score = results.get('lighting', 0.0)
     rambino_score = results.get('rambino', 0.0)
@@ -154,57 +158,17 @@ def run_analysis(image_bytes: bytes):
     reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
     double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
 
-    # --- Update the weights to include specialized detector and new methods---
-    weights = {
-        'ela': 0.08,
-        'cfa': 0.08,
-        'hos': 0.12,
-        'jpeg_ghost': 0.12,
-        'rambino': 0.08,
-        'geometric': 0.12,
-        'lighting': 0.12,
-        'specialized': 0.08,
-        'deepfake': 0.08, # New weight
-        'reflection_inconsistency': 0.06, # New weight
-        'double_quantization': 0.06 # New weight
-    }
-    # Sum = 1.0 (approximately)
+    # Create feature vector for ML model
+    ml_features = [
+        ela_score, cfa_score, hos_score, jpeg_ghost_score, jpeg_dimples_score, rambino_score,
+        geometric_score, lighting_score, specialized_score,
+        deepfake_score, reflection_score, double_quantization_score
+    ]
 
-    # Calculate the final weighted-average score
-    final_score = (
-        ela_score * weights['ela'] +
-        cfa_score * weights['cfa'] +
-        hos_score * weights['hos'] +
-        jpeg_ghost_score * weights['jpeg_ghost'] +
-        rambino_score * weights['rambino'] +
-        geometric_score * weights['geometric'] +
-        lighting_score * weights['lighting'] +
-        specialized_score * weights['specialized'] +
-        deepfake_score * weights['deepfake'] +
-        reflection_score * weights['reflection_inconsistency'] +
-        double_quantization_score * weights['double_quantization']
-    )
-
-    diversion = (ela_score - 0.2 +
-                 cfa_score - 0.3 +
-                 hos_score - 0.4 +
-                 rambino_score - 0.1 +
-                 geometric_score - 0.3 +
-                 jpeg_ghost_score - 0.2 +
-                 specialized_score - 0.4 +
-                 lighting_score - 0.3)
-
-    w_diversion = (0.125 * (ela_score - 0.2) +
-                   0.125 * (cfa_score - 0.3) +
-                   0.15 * (hos_score - 0.4) +
-                   0.5 * (rambino_score - 0.1) +
-                   0.10 * (geometric_score - 0.3) +
-                   0.15 * (jpeg_ghost_score - 0.2) +
-                   0.15 * (specialized_score - 0.4) +
-                   0.15 * (lighting_score - 0.3) +
-                   0.08 * (deepfake_score - 0.5) +
-                   0.06 * (reflection_score - 0.6) +
-                   0.06 * (double_quantization_score - 0.7))
+    # Make prediction using the loaded ML model
+    ml_prediction_result = ml_predictor.predict(_ml_model, ml_features)
+    prediction_label = ml_prediction_result["prediction_label"]
+    final_score = ml_prediction_result["confidence"]
 
     print("ela_score ")
     print(ela_score)
@@ -214,6 +178,8 @@ def run_analysis(image_bytes: bytes):
     print(hos_score)
     print("jpeg_ghost_score ")
     print(jpeg_ghost_score)
+    print("jpeg_dimples_score ")
+    print(jpeg_dimples_score)
     print("rambino_score ")
     print(rambino_score)
     print("geometric_score ")
@@ -228,13 +194,8 @@ def run_analysis(image_bytes: bytes):
     print(reflection_score)
     print("double_quantization_score ")
     print(double_quantization_score)
-    print("diversion ")
-    print(diversion)
-    print("weighted diversion ")
-    print(w_diversion)
-
-    # prediction_label = "cgi" if final_score > 0.5 else "real"
-    prediction_label = "cgi" if w_diversion > 0.021 else "real"
+    print(f"ML Predicted Label: {prediction_label}")
+    print(f"ML Confidence: {final_score:.4f}")
     # Create the analysis breakdown
     analysis_breakdown = [
         {
@@ -263,6 +224,13 @@ def run_analysis(image_bytes: bytes):
             "score": jpeg_ghost_score,
             "normal_range": [0.0, 0.2],
             "insight": "Identifies inconsistencies in JPEG compression history, indicating potential image splicing.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "JPEG Dimples Analysis",
+            "score": jpeg_dimples_score,
+            "normal_range": [0.0, 0.2],
+            "insight": "Detects periodic artifacts from JPEG compression. Disruption of these patterns indicates manipulation.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
         {
