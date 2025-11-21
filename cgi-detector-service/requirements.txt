@@ -6,3 +6,4 @@ scikit-image==0.22.0
 PyWavelets==1.5.0
 numpy
 scipy
+pystego
