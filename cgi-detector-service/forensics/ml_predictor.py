@@ -204,9 +204,11 @@ def retrain_with_feedback():
 
     # Get base training data (e.g., from an initial fixed dataset or generated dummy data)
     base_features, base_labels = _get_base_training_data()
+    print(f"Base features shape: {base_features.shape}, Base labels shape: {base_labels.shape}")
 
     # Load all feedback data
     feedback_features, feedback_labels = load_feedback_data()
+    print(f"Feedback features shape: {feedback_features.shape}, Feedback labels shape: {feedback_labels.shape}")
 
     # Combine base data with feedback data
     combined_features = base_features
@@ -222,6 +224,8 @@ def retrain_with_feedback():
             combined_labels = np.concatenate((combined_labels, feedback_labels))
         else:
             print(f"Warning: Feedback features shape {feedback_features.shape} does not match base features shape {combined_features.shape}. Skipping feedback integration.")
+
+    print(f"Combined features shape for training: {combined_features.shape}, Combined labels shape: {combined_labels.shape}")
 
     if combined_features.size > 0:
         train_and_save_model(combined_features, combined_labels)
@@ -278,47 +282,6 @@ def train_and_save_model(features: np.ndarray, labels: np.ndarray):
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(model, MODEL_PATH)
     print(f"RandomForestClassifier ML model saved to {MODEL_PATH}")
-
-def retrain_with_feedback():
-    """
-    Orchestrates retraining the ML model using existing dummy data and any accumulated feedback data.
-    """
-    print("Retraining ML model with feedback data...")
-    # Load feedback data
-    feedback_features, feedback_labels = load_feedback_data()
-
-    # Generate dummy data if no feedback and no initial model exists
-    if feedback_features.size == 0 and not os.path.exists(MODEL_PATH):
-        print("No feedback data and no existing model. Generating dummy data for initial training.")
-        initial_features = np.random.rand(100, 12)  # 100 samples, 12 features
-        initial_labels = np.random.randint(0, 2, 100)  # Binary labels
-    elif os.path.exists(MODEL_PATH) and feedback_features.size == 0: # If model exists but no feedback, use dummy data (or a more sophisticated approach to load previous data)
-        print("No new feedback. Using dummy data for retraining (should be replaced with actual historical data).")
-        initial_features = np.random.rand(100, 12)  # For demonstration, ideally load existing dataset
-        initial_labels = np.random.randint(0, 2, 100)
-    else:
-        initial_features = np.array([])
-        initial_labels = np.array([])
-
-    # Combine initial data with feedback data
-    if initial_features.size > 0 and feedback_features.size > 0:
-        combined_features = np.vstack((initial_features, feedback_features))
-        combined_labels = np.concatenate((initial_labels, feedback_labels))
-    elif feedback_features.size > 0:
-        combined_features = feedback_features
-        combined_labels = feedback_labels
-    elif initial_features.size > 0:
-        combined_features = initial_features
-        combined_labels = initial_labels
-    else:
-        print("No data available for training. Skipping retraining.")
-        return
-
-    if combined_features.size > 0: # Only train if there is data
-        train_and_save_model(combined_features, combined_labels)
-        print("ML model trained and saved after retraining. Will be reloaded externally.")
-    else:
-        print("No combined features for training. Skipping model update.")
 
 def predict(model, features: list) -> dict:
     """
