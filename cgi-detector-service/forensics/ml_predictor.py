@@ -187,14 +187,26 @@ def load_feedback_data():
 def _get_base_training_data():
     """
     Provides a base set of features and labels for initial model training.
-    In a real scenario, this would load a pre-existing, validated dataset.
-    For this prototype, it generates dummy data if no model exists.
+    If a model exists, it loads it to extend the training data. Otherwise,
+    it generates dummy data.
     """
-    print("Generating initial dummy training data...")
-    # For demonstration, generate 100 samples with 12 features
-    base_features = np.random.rand(100, 12)
-    base_labels = np.random.randint(0, 2, 100)  # Binary labels
-    return base_features, base_labels
+    training_data_path = MODEL_PATH.replace('.joblib', '_training_data.joblib')
+    if os.path.exists(training_data_path):
+        print(f"Loading base training data from {training_data_path}...")
+        try:
+            training_data = joblib.load(training_data_path)
+            return training_data['features'], training_data['labels']
+        except Exception as e:
+            print(f"Could not load training data, starting fresh: {e}")
+            # Fallback to dummy data if loading fails
+            base_features = np.random.rand(100, 12)
+            base_labels = np.random.randint(0, 2, 100)
+            return base_features, base_labels
+    else:
+        print("Generating initial dummy training data...")
+        base_features = np.random.rand(100, 12)
+        base_labels = np.random.randint(0, 2, 100)
+        return base_features, base_labels
 
 def retrain_with_feedback():
     """
@@ -211,19 +223,16 @@ def retrain_with_feedback():
     print(f"Feedback features shape: {feedback_features.shape}, Feedback labels shape: {feedback_labels.shape}")
 
     # Combine base data with feedback data
-    combined_features = base_features
-    combined_labels = base_labels
-
     if feedback_features.size > 0:
-        # Ensure consistent feature dimensions if combining with an empty base_features
-        if combined_features.size == 0 and base_features.size == 0: # Only if _get_base_training_data returns empty initially
+        if base_features.size > 0:
+            combined_features = np.vstack((base_features, feedback_features))
+            combined_labels = np.concatenate((base_labels, feedback_labels))
+        else:
             combined_features = feedback_features
             combined_labels = feedback_labels
-        elif feedback_features.shape[1] == combined_features.shape[1]: # Ensure feature dimensions match for vstack
-            combined_features = np.vstack((combined_features, feedback_features))
-            combined_labels = np.concatenate((combined_labels, feedback_labels))
-        else:
-            print(f"Warning: Feedback features shape {feedback_features.shape} does not match base features shape {combined_features.shape}. Skipping feedback integration.")
+    else:
+        combined_features = base_features
+        combined_labels = base_labels
 
     print(f"Combined features shape for training: {combined_features.shape}, Combined labels shape: {combined_labels.shape}")
 
@@ -266,7 +275,7 @@ def reload_model():
 
 def train_and_save_model(features: np.ndarray, labels: np.ndarray):
     """
-    Trains a RandomForestClassifier and saves it to a file.
+    Trains a RandomForestClassifier and saves it and its training data to files.
     """
     print("Training RandomForestClassifier ML model...")
     # Split data for demonstration
@@ -282,6 +291,11 @@ def train_and_save_model(features: np.ndarray, labels: np.ndarray):
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(model, MODEL_PATH)
     print(f"RandomForestClassifier ML model saved to {MODEL_PATH}")
+    
+    # Save training data
+    training_data_path = MODEL_PATH.replace('.joblib', '_training_data.joblib')
+    joblib.dump({'features': features, 'labels': labels}, training_data_path)
+    print(f"Training data saved to {training_data_path}")
 
 def predict(model, features: list) -> dict:
     """

@@ -75,48 +75,25 @@ async def report_incorrect_result(
     userCorrection: str = Form(...),
     originalPrediction: str = Form(...)
 ):
-    try:
-        # 1. Generate a unique filename to prevent conflicts and sanitize input
-        file_extension = os.path.splitext(file.filename)[1]
-        unique_filename = f"{uuid.uuid4()}{file_extension}"
-        image_save_path = os.path.join(FEEDBACK_IMAGES_DIR, unique_filename)
+    
+    # Get the service URL from environment variables, with a fallback for local dev
+    cgi_detector_feedback_url = os.environ.get("PYTHON_SERVICE_URL_FEEDBACK", "http://localhost:8001/feedback")
 
-        # 2. Save the image file
-        with open(image_save_path, "wb") as f:
-            f.write(await file.read())
+    contents = await file.read()
+    files = {'file': (file.filename, contents, file.content_type)}
+    data = {
+        'userCorrection': userCorrection,
+        'originalPrediction': originalPrediction
+    }
 
-        # 3. Prepare the report metadata
-        report_id = str(uuid.uuid4())
-        report_data = {
-            "reportId": report_id,
-            "timestamp": datetime.utcnow().isoformat(),
-            "savedImageFilename": unique_filename,
-            "userCorrection": userCorrection,
-            "originalPrediction": json.loads(originalPrediction)
-        }
-
-        # 4. Safely append the report to the JSON log file with file locking
+    async with httpx.AsyncClient() as client:
         try:
-            with open(REPORTS_FILE, "r+") as f:
-                fcntl.flock(f, fcntl.LOCK_EX) # Exclusive lock
-                try:
-                    reports = json.load(f)
-                except json.JSONDecodeError:
-                    reports = [] # File is empty or corrupted, start a new list
-                
-                reports.append(report_data)
-                f.seek(0)
-                f.truncate()
-                json.dump(reports, f, indent=2)
-                fcntl.flock(f, fcntl.LOCK_UN) # Unlock
-        except FileNotFoundError:
-            # If the file doesn't exist, create it
-            with open(REPORTS_FILE, "w") as f:
-                fcntl.flock(f, fcntl.LOCK_EX)
-                json.dump([report_data], f, indent=2)
-                fcntl.flock(f, fcntl.LOCK_UN)
+            response = await client.post(cgi_detector_feedback_url, files=files, data=data, timeout=300.0)
+            response.raise_for_status()
+            
+            return response.json()
 
-        return {"message": "Report submitted successfully", "reportId": report_id}
-
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": "Failed to process report", "details": str(e)})
+        except httpx.RequestError as e:
+            return JSONResponse(status_code=503, content={"error": "Could not connect to the feedback service", "details": str(e)})
+        except Exception as e:
+            return JSONResponse(status_code=500, content={"error": "An unexpected error occurred", "details": str(e)})

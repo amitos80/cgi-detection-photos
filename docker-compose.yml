@@ -8,6 +8,7 @@ services:
     environment:
       NODE_ENV: production
       PYTHON_SERVICE_URL: http://cgi-detector-service:8000/predict
+      PYTHON_SERVICE_URL_FEEDBACK: http://cgi-detector-service:8000/feedback
     depends_on:
       - cgi-detector-service
     networks:

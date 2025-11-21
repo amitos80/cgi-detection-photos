@@ -179,33 +179,20 @@ def run_analysis(image_bytes: bytes):
     prediction_label = ml_prediction_result["prediction_label"]
     final_score = ml_prediction_result["confidence"]
 
-    print("ela_score ")
-    print(ela_score)
-    print("cfa_score ")
-    print(cfa_score)
-    print("hos_score ")
-    print(hos_score)
-    print("jpeg_ghost_score ")
-    print(jpeg_ghost_score)
-    print("jpeg_dimples_score ")
-    print(jpeg_dimples_score)
-    print("rambino_score ")
-    print(rambino_score)
-    print("geometric_score ")
-    print(geometric_score)
-    print("lighting_score ")
-    print(lighting_score)
-    print("specialized_score ")
-    print(specialized_score)
-    print("deepfake_score ")
-    print(deepfake_score)
-    print("reflection_score ")
-    print(reflection_score)
-    print("double_quantization_score ")
-    print(double_quantization_score)
-    print(f"ML Predicted Label: {prediction_label}")
-    print(f"ML Confidence: {final_score:.4f}")
-    # Create the analysis breakdown
+    print(f"DEBUG: ela_score: {ela_score}")
+    print(f"DEBUG: cfa_score: {cfa_score}")
+    print(f"DEBUG: hos_score: {hos_score}")
+    print(f"DEBUG: jpeg_ghost_score: {jpeg_ghost_score}")
+    print(f"DEBUG: jpeg_dimples_score: {jpeg_dimples_score}")
+    print(f"DEBUG: rambino_score: {rambino_score}")
+    print(f"DEBUG: geometric_score: {geometric_score}")
+    print(f"DEBUG: lighting_score: {lighting_score}")
+    print(f"DEBUG: specialized_score: {specialized_score}")
+    print(f"DEBUG: deepfake_score: {deepfake_score}")
+    print(f"DEBUG: reflection_score: {reflection_score}")
+    print(f"DEBUG: double_quantization_score: {double_quantization_score}")
+
+    # Make prediction using the loaded ML model
     analysis_breakdown = [
         {
             "feature": "Error Level Analysis (ELA)",
