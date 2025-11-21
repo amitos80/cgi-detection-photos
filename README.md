@@ -53,21 +53,91 @@ The `/analyze` endpoint of the Node.js webservice now returns a JSON object with
         "feature": "Error Level Analysis (ELA)",
         "score": 0.0 - 1.0,
         "normal_range": [0.0, 0.2],
-        "insight": "Detects inconsistencies in JPEG compression artifacts. High scores suggest manipulation."
+        "insight": "Detects inconsistencies in JPEG compression artifacts. High scores suggest manipulation.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
       },
       {
         "feature": "Color Filter Array (CFA)",
         "score": 0.0 - 1.0,
         "normal_range": [0.0, 0.3],
-        "insight": "Analyzes low-level sensor patterns. High scores indicate a disruption of natural camera patterns."
+        "insight": "Analyzes low-level sensor patterns. High scores indicate a disruption of natural camera patterns.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
       },
       {
         "feature": "Wavelet Statistics (HOS)",
         "score": 0.0 - 1.0,
         "normal_range": [0.0, 0.4],
-        "insight": "Measures statistical properties of the image. High scores suggest the image is synthetic."
+        "insight": "Measures statistical properties of the image. High scores suggest the image is synthetic.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "JPEG Ghost Analysis",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.2],
+        "insight": "Identifies inconsistencies in JPEG compression history, indicating potential image splicing.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "JPEG Dimples Analysis",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.2],
+        "insight": "Detects periodic artifacts from JPEG compression. Disruption of these patterns indicates manipulation.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "RAMBiNo Statistical Analysis",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.1],
+        "insight": "Analyzes noise and texture patterns using bivariate distributions. High scores suggest CGI.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "3D Geometric Consistency",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.3],
+        "insight": "Analyzes geometric properties including symmetry, smoothness, edge regularity, and gradient consistency. High scores indicate unnatural geometric patterns typical of CGI.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "Scene Lighting Consistency",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.3],
+        "insight": "Analyzes lighting direction consistency across regions, shadow alignment, and lighting in high-contrast areas. High scores indicate inconsistent lighting typical of composites or CGI.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/"
+      },
+      {
+        "feature": "Specialized CGI/AIGC Detector",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.4],
+        "insight": "Runs specialized detection for GAN, diffusion, face synthesis, and 3D rendering artifacts. High scores indicate evidence of generative-AI or CGI. Type most likely: [type]. Breakdown: [scores]",
+        "url": ""
+      },
+      {
+        "feature": "Deepfake Detection",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.5],
+        "insight": "Detects AI-generated manipulation in faces or motion. High scores suggest a deepfake.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/deepfakes/"
+      },
+      {
+        "feature": "Reflection Inconsistency",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.6],
+        "insight": "Analyzes images for inconsistencies in reflections. High scores suggest image manipulation.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/photo-forensics/"
+      },
+      {
+        "feature": "Video Double Quantization",
+        "score": 0.0 - 1.0,
+        "normal_range": [0.0, 0.7],
+        "insight": "Detects re-encoding artifacts in video frames. High scores suggest video manipulation.",
+        "url": "https://farid.berkeley.edu/research/digital-forensics/video-forensics/"
       }
-    ]
+    ],
+    "rambino_raw_score": 0.0,  // Raw, unscaled RAMBiNo score
+    "rambino_features": [],    // Truncated list of RAMBiNo features (if available)
+    "specialized_detector_scores": {}, // Detailed scores from specialized detectors
+    "specialized_likely_type": "Unknown" // Most likely type detected by specialized CGI/AIGC detector
   }
 }
 ```
