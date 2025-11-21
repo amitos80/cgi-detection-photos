@@ -7,7 +7,16 @@ from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, j
 from . import specialized_detectors  # <-- ADD THIS IMPORT
 from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
 
-_ml_model = ml_predictor.load_model() # Load ML model once at startup
+_ml_model = ml_predictor.get_model() # Load ML model once at startup via get_model
+
+def reload_ml_model():
+    """
+    Reloads the ML model into the engine from ml_predictor.
+    """
+    global _ml_model
+    _ml_model = ml_predictor.reload_model()
+    print("ML model reloaded in engine.")
+
 def downsize_image_to_480p(image: Image.Image) -> Image.Image:
     """
     Downsizes the input image to a maximum height of 480 pixels, maintaining aspect ratio.

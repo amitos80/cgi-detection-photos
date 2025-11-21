@@ -365,7 +365,7 @@
                 if (prediction === 'cgi') {
                     resultHtml += `<p>This image is likely <span class="prediction-cgi">CGI </span> with ${confidence}% confidence.</p>`;
                 } else {
-                    resultHtml += `<p>Cannot be certain <span class="prediction-real">Non-CGI</span> ${confidence}% confidence.</p>`;
+                    resultHtml += `<p>This image is likely <span class="prediction-real">Non-CGI</span> ${confidence}% confidence.</p>`;
                 }
                 resultsDiv.innerHTML = resultHtml;
 
