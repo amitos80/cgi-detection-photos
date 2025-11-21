@@ -184,47 +184,48 @@ def load_feedback_data():
 
     return np.array(all_features), np.array(all_labels)
 
+def _get_base_training_data():
+    """
+    Provides a base set of features and labels for initial model training.
+    In a real scenario, this would load a pre-existing, validated dataset.
+    For this prototype, it generates dummy data if no model exists.
+    """
+    print("Generating initial dummy training data...")
+    # For demonstration, generate 100 samples with 12 features
+    base_features = np.random.rand(100, 12)
+    base_labels = np.random.randint(0, 2, 100)  # Binary labels
+    return base_features, base_labels
+
 def retrain_with_feedback():
     """
-    Orchestrates retraining the ML model using existing dummy data and any accumulated feedback data.
+    Orchestrates retraining the ML model using the base training data and all accumulated feedback data.
     """
     print("Retraining ML model with feedback data...")
-    # Load feedback data
+
+    # Get base training data (e.g., from an initial fixed dataset or generated dummy data)
+    base_features, base_labels = _get_base_training_data()
+
+    # Load all feedback data
     feedback_features, feedback_labels = load_feedback_data()
 
-    # Generate dummy data if no feedback and no initial model exists
-    if feedback_features.size == 0 and not os.path.exists(MODEL_PATH):
-        print("No feedback data and no existing model. Generating dummy data for initial training.")
-        initial_features = np.random.rand(100, 12)  # 100 samples, 12 features
-        initial_labels = np.random.randint(0, 2, 100)  # Binary labels
-    elif os.path.exists(MODEL_PATH) and feedback_features.size == 0: # If model exists but no feedback, use dummy data (or a more sophisticated approach to load previous data)
-        print("No new feedback. Using dummy data for retraining (should be replaced with actual historical data).")
-        initial_features = np.random.rand(100, 12)  # For demonstration, ideally load existing dataset
-        initial_labels = np.random.randint(0, 2, 100)
-    else:
-        initial_features = np.array([])
-        initial_labels = np.array([])
+    # Combine base data with feedback data
+    combined_features = base_features
+    combined_labels = base_labels
 
-    # Combine initial data with feedback data
-    if initial_features.size > 0 and feedback_features.size > 0:
-        combined_features = np.vstack((initial_features, feedback_features))
-        combined_labels = np.concatenate((initial_labels, feedback_labels))
-    elif feedback_features.size > 0:
-        combined_features = feedback_features
-        combined_labels = feedback_labels
-    elif initial_features.size > 0:
-        combined_features = initial_features
-        combined_labels = initial_labels
-    else:
-        print("No data available for training. Skipping retraining.")
-        return
+    if feedback_features.size > 0:
+        # Ensure consistent feature dimensions if combining with an empty base_features
+        if combined_features.size == 0 and base_features.size == 0: # Only if _get_base_training_data returns empty initially
+            combined_features = feedback_features
+            combined_labels = feedback_labels
+        elif feedback_features.shape[1] == combined_features.shape[1]: # Ensure feature dimensions match for vstack
+            combined_features = np.vstack((combined_features, feedback_features))
+            combined_labels = np.concatenate((combined_labels, feedback_labels))
+        else:
+            print(f"Warning: Feedback features shape {feedback_features.shape} does not match base features shape {combined_features.shape}. Skipping feedback integration.")
 
     if combined_features.size > 0:
         train_and_save_model(combined_features, combined_labels)
-        # After retraining, reload the model to ensure the engine uses the latest version
-        global _current_ml_model # Access the global model instance
-        _current_ml_model = load_model() # Reload model into the global variable
-        print("ML model reloaded after retraining.")
+        print("ML model trained and saved after retraining.")
     else:
         print("No combined features for training. Skipping model update.")
 
