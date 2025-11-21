@@ -1,15 +1,11 @@
-# Plan: Add New Features to CGI Detection Algorithm
+# Current Task: Fix Docker Build Error for `cgi-detector-service`
 
 ## Objective
+Resolve the `ImportError: libgthread-2.0.so.0` during `docker-compose up --build` for the `cgi-detector-service` by installing `libglib2.0-0` in the Dockerfile.
 
-This plan outlines the addition of new forensic features to the CGI detection algorithm. The proposed features are based on techniques and concepts derived from the provided research sources and are intended to enhance the algorithm's accuracy and sophistication.
-
-
+## Plan Status
+- **Fixing Docker Build Error** is completed.
+- The `Dockerfile` for `cgi-detector-service` has been updated to install `libglib2.0-0`.
 
 ## Next Steps:
-
-All core features are complete. Future enhancements could include:
-- Fine-tuning weights based on empirical testing
-- Adding more specialized detectors for specific CGI types
-- Machine learning integration for adaptive weight adjustment
-- Performance optimizations for faster analysis
+- The user should now attempt to run `docker-compose up --build` again to verify the fix.

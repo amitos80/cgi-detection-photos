@@ -14,7 +14,7 @@
 > 2. **NEW DATASET**: We are excited to introduce our **brand-new deepfake dataset** called DF40, comprising **40 distinct deepfake techniques, even the just released SoTAs**. DF40 is designed for seamless integration into the workflow of DeepfakeBench, allowing you to train or test just as you would with other datasets like Celeb-DF and FF++. Please refer to [DF40 dataset](https://github.com/YZY-stack/DF40) for details.
 >    
 > 3. The pre-trained weights of 3D R50 for training I3D, FTCN, and AltFreezing are [here](https://github.com/SCLBD/DeepfakeBench/releases/download/v1.0.3/I3D_8x8_R50.pth)
->
+> 
 > 4. Hany Farid's digital forensics research [here](https://farid.berkeley.edu/)
 
 
@@ -42,8 +42,6 @@ Welcome to *DeepfakeBench*, your one-stop solution for deepfake detection! Here 
 
 ---
 
-
-
 >  😊 **DeepfakeBench-v2 Updates:**
 > 
 > 1. **36 Detectors are supported**: *DeepfakeBench*, currently, supports a total of **36** detection methods (28 image detectors + 8 video detectors).
@@ -53,9 +51,9 @@ Welcome to *DeepfakeBench*, your one-stop solution for deepfake detection! Here 
 > 3. **Data Preprocessing**: *DeepfakeBench* currently provides **LMDB** for more faster and effective IO.
 > 
 > 4. **Multi-GPUs Training**: *DeepfakeBench* offers **DDP** for multiple GPUs training.
->
+> 
 > 5. **Integrated Framework**: *DeepfakeBench* offers an integrated framework, including training, data loading, and evaluation at both the image and video levels.
->
+> 
 > 6. **More Evaluation Metrics**: *DeepfakeBench* facilitates a more comprehensive evaluation by including the following metrics: frame-level AUC, video-level AUC, ACC (fake and real), EER, PR, and AP.
 
 ---
@@ -147,11 +145,11 @@ Note we used Docker version `19.03.14` in our setup. We highly recommend using t
 All datasets used in DeepfakeBench can be downloaded from their own websites or repositories and preprocessed accordingly.
 For convenience, we also provide the data we use in our research, including:
 
-| Types                     | Links| Notes|       
+| Types                     | Links| Notes|
 | -------------------------|------- | ----------------------- |
-| **Rgb-format Datasets**  | [Baidu, Password: ogjn](https://pan.baidu.com/s/1NAMUHcZvsIm7l6hMHeEQjQ?pwd=ogjn), [Google Drive](https://drive.google.com/drive/folders/1N4X3rvx9IhmkEZK-KIk4OxBrQb9BRUcs?usp=drive_link) | Preprocessed data|       
-| **Lmdb-format Datasets** | [Baidu, Password: g3gj](https://pan.baidu.com/s/1riMCN5iXTJ2g9fQjtlZswg?pwd=g3gj)| LMDB database for each dataset|       
-| **Json Configurations**  | [Baidu, Password: dcwv](https://pan.baidu.com/s/1d7PTV2GK-fpGibcbtnQDqQ?pwd=dcwv), [Google Drive](https://drive.google.com/drive/folders/1ZV3fz5MZZU5BTB5neziN6i8Yv0Z21_LO?usp=drive_link)| Data arrangement|       
+| **Rgb-format Datasets**  | [Baidu, Password: ogjn](https://pan.baidu.com/s/1NAMUHcZvsIm7l6hMHeEQjQ?pwd=ogjn), [Google Drive](https://drive.google.com/drive/folders/1N4X3rvx9IhmkEZK-KIk4OxBrQb9BRUcs?usp=drive_link) | Preprocessed data|
+| **Lmdb-format Datasets** | [Baidu, Password: g3gj](https://pan.baidu.com/s/1riMCN5iXTJ2g9fQjtlZswg?pwd=g3gj)| LMDB database for each dataset|
+| **Json Configurations**  | [Baidu, Password: dcwv](https://pan.baidu.com/s/1d7PTV2GK-fpGibcbtnQDqQ?pwd=dcwv), [Google Drive](https://drive.google.com/drive/folders/1ZV3fz5MZZU5BTB5neziN6i8Yv0Z21_LO?usp=drive_link)| Data arrangement|
      
 All the downloaded datasets are already **preprocessed** to cropped faces (32 frames per video) with their masks and landmarks, which can be **directly deployed to evaluate our benchmark**.
 
@@ -195,75 +193,75 @@ datasets
 |   |   ├── lock.mdb
 ├── rgb
 |   ├── FaceForensics++
-|   │   ├── original_sequences
-|   │   │   ├── youtube
-|   │   │   │   ├── c23
-|   │   │   │   │   ├── videos
-|   │   │   │   │   │   └── *.mp4
-|   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   ├── original_sequences
+|   |   │   ├── youtube
+|   |   │   │   ├── c23
+|   |   │   │   │   ├── videos
+|   |   │   │   │   │   └── *.mp4
+|   |   │   │   │   └── frames (if you download my processed data)
+|   |   |   |   |   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   │   └── landmarks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   └── c40
-|   │   │   │   │   ├── videos
-|   │   │   │   │   │   └── *.mp4
-|   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   │   │   │   │   └── *.png
+|   |   │   │   │   └── landmarks (if you download my processed data)
+|   |   │   │   │       └── *.npy
+|   |   │   │   └── c40
+|   |   │   │   │   ├── videos
+|   |   │   │   │   │   └── *.mp4
+|   |   │   │   │   └── frames (if you download my processed data)
+|   |   │   │   │   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   │   └── landmarks (if you download my processed data)
-|   │   │   │   │       └── *.npy
-|   │   │   ├── actors
-|   │   │   │   ├── c23
-|   │   │   │   │   ├── videos
-|   │   │   │   │   │   └── *.mp4
-|   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   │   │   │   │   └── *.png
+|   |   │   │   │   └── landmarks (if you download my processed data)
+|   |   │   │   │       └── *.npy
+|   |   │   ├── actors
+|   |   │   │   ├── c23
+|   |   │   │   │   ├── videos
+|   |   │   │   │   │   └── *.mp4
+|   |   │   │   │   └── frames (if you download my processed data)
+|   |   │   │   │   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   │   └── landmarks (if you download my processed data)
-|   │   │   │   │       └── *.npy
-|   │   │   │   └── c40
-|   │   │   │   │   ├── videos
-|   │   │   │   │   │   └── *.mp4
-|   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   │   │   │   │   └── *.png
+|   |   │   │   │   └── landmarks (if you download my processed data)
+|   |   │   │   │       └── *.npy
+|   |   │   │   └── c40
+|   |   │   │   │   ├── videos
+|   |   │   │   │   │   └── *.mp4
+|   |   │   │   │   └── frames (if you download my processed data)
+|   |   │   │   │   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   │   └── landmarks (if you download my processed data)
-|   │   │   │   │       └── *.npy
+|   |   │   │   │   │   └── *.png
+|   |   │   │   │   └── landmarks (if you download my processed data)
+|   |   │   │   │       └── *.npy
 |   │   ├── manipulated_sequences
 |   │   │   ├── Deepfakes
 |   │   │   │   ├── c23
 |   │   │   │   │   └── videos
 |   │   │   │   │   │   └── *.mp4
 |   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   │   │   │   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
-|   │   │   │   │   │   └── *.png
-|   │   │   │   │   └── landmarks (if you download my processed data)
-|   │   │   │   │       └── *.npy
-|   │   │   │   └── c40
-|   │   │   │   │   ├── videos
-|   │   │   │   │   │   └── *.mp4
-|   │   │   │   │   └── frames (if you download my processed data)
-|   │   │   │   │   │   └── *.png
+|   |   │   │   │   │   └── *.png
+|   |   │   │   │   └── landmarks (if you download my processed data)
+|   |   │   │   │       └── *.npy
+|   |   │   │   └── c40
+|   |   │   │   │   ├── videos
+|   |   │   │   │   │   └── *.mp4
+|   |   │   │   │   └── frames (if you download my processed data)
+|   |   │   │   │   │   └── *.png
 |   |   |   |   |   └── masks (if you download my processed data)
 │   │   │   │   |   │   └── *.png
 │   │   │   │   |   └── landmarks (if you download my processed data)
 │   │   │   |   │       └── *.npy
 │   │   |   ├── Face2Face
 │   |   │   │   ├── ...
-|   │   │   ├── FaceSwap
-|   │   │   │   ├── ...
-|   │   │   ├── NeuralTextures
-|   │   │   │   ├── ...
-|   │   │   ├── FaceShifter
-|   │   │   │   ├── ...
-|   │   │   └── DeepFakeDetection
-|   │   │       ├── ...
+│   │   │   ├── FaceSwap
+│   │   │   │   ├── ...
+│   │   │   ├── NeuralTextures
+│   │   │   │   ├── ...
+│   │   │   ├── FaceShifter
+│   │   │   │   ├── ...
+│   │   │   └── DeepFakeDetection
+│   │   │       ├── ...
 Other datasets are similar to the above structure
 ```
 
@@ -385,7 +383,7 @@ To demonstrate the effectiveness of different detectors, we present **partial re
 For a comprehensive overview of the results, we strongly recommend referring to our [paper](https://arxiv.org/abs/2307.01426). These resources provide a detailed analysis of the training outcomes and offer a deeper understanding of the methodology and findings.
 
 
-| Type     | Detector   | Backbone  | FF++\_c23 | FF++\_c40 | FF-DF   | FF-F2F  | FF-FS   | FF-NT   | Avg.     | Top3 | CDFv1   | CDFv2   | DF-1.0  | DFD     | DFDC    | DFDCP   | Fsh     | UADFV   | Avg.    | Top3 |
+| Type     | Detector   | Backbone  | FF++_c23 | FF++_c40 | FF-DF   | FF-F2F  | FF-FS   | FF-NT   | Avg.     | Top3 | CDFv1   | CDFv2   | DF-1.0  | DFD     | DFDC    | DFDCP   | Fsh     | UADFV   | Avg.    | Top3 |
 |----------|------------|-----------|------------|------------|---------|---------|---------|---------|----------|------|---------|---------|---------|---------|---------|---------|---------|---------|---------|------|
 | Naive    | Meso4      | MesoNet   | 0.6077     | 0.5920     | 0.6771  | 0.6170  | 0.5946  | 0.5701  | 0.6097   | 0    | 0.7358  | 0.6091  | 0.9113  | 0.5481  | 0.5560  | 0.5994  | 0.5660  | 0.7150  | 0.6551 | 1    |
 | Naive    | MesoIncep  | MesoNet   | 0.7583     | 0.7278     | 0.8542  | 0.8087  | 0.7421  | 0.6517  | 0.7571   | 0    | 0.7366  | 0.6966  | 0.9233  | 0.6069  | 0.6226  | 0.7561  | 0.6438  | 0.9049  | 0.7364 | 3    |
@@ -408,30 +406,6 @@ In the above table, "Avg." donates the average AUC for within-domain and cross-d
 
 
 Also, we provide all experimental results in [Link (code: qjpd)](https://pan.baidu.com/s/1Mgo5rW08B3ee_8ZBC3EXJA?pwd=qjpd). You can use these results for further analysis using the code in [`./analysis`](`./analysis`) folder.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -517,3 +491,33 @@ This repository is licensed by [The Chinese University of Hong Kong, Shenzhen](h
 This project is built by the Secure Computing Lab of Big Data (SCLBD) at The School of Data Science (SDS) of The Chinese University of Hong Kong, Shenzhen, directed by Professor [Baoyuan Wu](https://sites.google.com/site/baoyuanwu2015/home). SCLBD focuses on the research of trustworthy AI, including backdoor learning, adversarial examples, federated learning, fairness, etc.
 
 If you have any suggestions, comments, or wish to contribute code or propose methods, we warmly welcome your input. Please contact us at wubaoyuan@cuhk.edu.cn or yanzhiyuan1114@gmail.com. We look forward to collaborating with you in pushing the boundaries of deepfake detection.
+```
+
+## Online Datasets for Forensic Image Analysis (Real vs. CGI/Fake)
+
+Here are several GitHub repositories and related datasets that address the classification of real versus computer-generated (CGI) or otherwise fake images, relevant for forensic image analysis:
+
+*   **ArtiFact: A Large-Scale Dataset with Artificial (Fake) and Factual (Real) Images** ([GitHub Link](https://github.com/grip-unina/artifact))
+    *   **Source:** [1] github.com
+    *   **Description:** This dataset is specifically designed for generalizable and robust synthetic image detection, containing nearly 2.5 million images, including both real and fake images generated by various GANs, Diffusion models, and other generators. It covers diverse categories such as Human/Human Faces, Animal/Animal Faces, Places, Vehicles, and Art.
+
+*   **CGvsPhoto** ([GitHub Link](https://github.com/NicoRahm/CGvsPhoto))
+    *   **Source:** [2] github.com (found under the `image-forensics` GitHub topic)
+    *   **Description:** This project explicitly focuses on "Computer Graphics vs Real Photographic Images: A Deep-learning approach," making it highly relevant to your query.
+
+*   **Real and Fake image classification using Deep Learning and CNN** ([GitHub Link](https://github.com/devzohaib/Real-and-Fake-Image-Classsification))
+    *   **Source:** [3] github.com
+    *   **Description:** This repository utilizes a dataset comprising 70,000 real faces from Flickr and 70,000 fake faces generated by StyleGAN, suitable for "real vs. fake" image classification, particularly for faces.
+
+*   **Real-vs-Fake-Image-Classification** ([GitHub Link](https://github.com/Arvind2903/Real-vs-Fake-Image-Classification))
+    *   **Source:** [4] github.com
+    *   **Description:** This project aims to classify images as "fake" or "real" using deep learning and transfer learning techniques to distinguish between manipulated and authentic images.
+
+*   **Deepfake-image-classification (Real vs. Fake Face Detection with Inception ResNet V1)** ([GitHub Link](https://github.com/mahe115/Deepfake-image-classification))
+    *   **Source:** [5] github.com
+    *   **Description:** This project uses a dataset of 140,000 images (equally split between real and fake faces) to differentiate between real and fake face images.
+
+*   **Image-Forgery-Datasets-List** ([GitHub Link](https://github.com/greatzh/Image-Forgery-Datasets-List)) and **Image-Forensic-Resources** ([GitHub Link](https://github.com/thuyngch/Image-Forensic-Resources))
+    *   **Source:** [6] github.com, [7] github.com
+    *   **Description:** These repositories provide comprehensive lists and collections of various image tampering and forgery datasets, some of which include "real" and "forged" images, and may contain links to more specific CGI datasets.
+```

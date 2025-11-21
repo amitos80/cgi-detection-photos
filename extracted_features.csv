@@ -1,0 +1,11 @@
+Error Level Analysis (ELA),Color Filter Array (CFA),Wavelet Statistics (HOS),JPEG Ghost Analysis,RAMBiNo Statistical Analysis,3D Geometric Consistency,Scene Lighting Consistency,Specialized CGI/AIGC Detector,Deepfake Detection,Reflection Inconsistency,Video Double Quantization,rambino_raw_score,specialized_gan,specialized_diffusion,specialized_face_synthesis,specialized_3d_render,label,filepath
+0.0,1.0,0.1,0.0,1.0,0.3,0.0,0.5937577639751551,0.5,0.6,0.7,1313759.0,0.7,0.5791925465838508,0.7,0.35,0,./dummy_dataset/real/real_image_4.png
+0.3333333253860474,1.0,0.1,0.0,1.0,0.3,0.0,0.40389534883720923,0.5,0.6,0.7,1354991.625,0.7,0.1796511627906975,0.35,0.35,0,./dummy_dataset/real/real_image_1.png
+0.1666666626930237,1.0,0.1,0.0,1.0,0.3,0.0,0.5027167630057803,0.5,0.6,0.7,1329673.875,0.7,0.27572254335260105,0.7,0.35,0,./dummy_dataset/real/real_image_0.png
+0.3333333253860474,1.0,0.1,0.0,1.0,0.3,0.0,0.5056216216216215,0.5,0.6,0.7,1329673.875,0.7,0.2854054054054051,0.7,0.35,0,./dummy_dataset/real/real_image_2.png
+0.027308332920074462,1.0,0.1,0.0,1.0,0.3,0.0,0.5008988764044943,0.5,0.6,0.7,1327720.0,0.7,0.26966292134831454,0.7,0.35,0,./dummy_dataset/real/real_image_3.png
+0.34533541202545165,1.0,0.1,0.0,1.0,0.3,0.0,0.465,0.5,0.6,0.7,1334297.375,0.7,0.14999999999999997,0.7,0.35,1,./dummy_dataset/fake/fake_image_4.png
+0.1666666626930237,1.0,0.1,0.0,1.0,0.3,0.0,0.48157894736842094,0.5,0.6,0.7,1327798.75,0.7,0.20526315789473668,0.7,0.35,1,./dummy_dataset/fake/fake_image_2.png
+0.3333333253860474,1.0,0.1,0.0,1.0,0.3,0.0,0.4392340425531915,0.5,0.6,0.7,1354991.625,0.7,0.29744680851063826,0.35,0.35,1,./dummy_dataset/fake/fake_image_3.png
+0.1666666626930237,1.0,0.1,0.0,1.0,0.3,0.0,0.5027125506072874,0.5,0.6,0.7,1354991.625,0.7,0.2757085020242913,0.7,0.35,1,./dummy_dataset/fake/fake_image_1.png
+0.1666666626930237,1.0,0.1,0.0,1.0,0.3,0.0,0.4309090909090908,0.5,0.6,0.7,1354991.625,0.7,0.2696969696969694,0.35,0.35,1,./dummy_dataset/fake/fake_image_0.png
