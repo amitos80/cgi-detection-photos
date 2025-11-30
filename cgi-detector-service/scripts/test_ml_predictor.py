@@ -23,8 +23,8 @@ def test_ml_predictor_load_and_predict():
     model = ml_predictor.load_model()
     assert model is not None, "ML model should be loaded or created."
 
-    # Create dummy features for prediction (e.g., 11 features as used in engine.py)
-    sample_features = np.random.rand(11) 
+    # Create dummy features for prediction (12 features as used in engine.py and ml_predictor.py)
+    sample_features = np.random.rand(12) 
     prediction_result = ml_predictor.predict(model, sample_features)
 
     print(f"Sample features: {sample_features}")

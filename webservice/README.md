@@ -1,79 +1,73 @@
-# CGI Detection Photos Webservice (Node.js Version)
+# React + TypeScript + Vite
 
-This Node.js webservice acts as the frontend and API gateway for the CGI detection application. It serves the static web interface and forwards image analysis requests to the Python AI microservice.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## What This Means for Our Current Code
+Currently, two official plugins are available:
 
-The Node.js server now primarily handles file uploads and acts as a proxy, forwarding the image buffer to the `cgi-detector-service` (Python AI microservice) for actual CGI detection. It then relays the prediction result back to the client.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Prerequisites
+## React Compiler
 
-To run this service locally for development or testing (outside of Docker Compose):
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-*   Node.js (v18 or later)
-*   npm
+## Expanding the ESLint configuration
 
-For running the entire application, refer to the main `README.md` in the project root for Docker Compose instructions.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Installation (for local development)
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-1.  Navigate to the `webservice` directory:
-    ```bash
-    cd webservice
-    ```
-2.  Install the dependencies:
-    ```bash
-    npm install
-    ```
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Building the Application
-
-To compile the TypeScript code to JavaScript (for local development or before Docker build), run:
-
-```bash
-npm run build
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-This will output the compiled JavaScript files to the `dist` directory.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Running the Application (for local development)
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-To start the server (using `ts-node` for development), run the following command:
-
-```bash
-npm start
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-The server will start on `http://localhost:8000`.
-
-## Running Tests
-
-To run the unit tests, use:
-
-```bash
-npm test
-```
-
-## API Endpoints
-
-*   `GET /`: Serves the main HTML page (`static/index.html`).
-*   `POST /analyze`: Accepts an image file upload, forwards it to the Python AI microservice, and returns the prediction.
-    *   **Method:** `POST`
-    *   **Endpoint:** `/analyze`
-    *   **Content-Type:** `multipart/form-data`
-    *   **Form Field:** `file` (for the image file)
-    *   **Response:** JSON object containing `filename` and `prediction`.
-
-    ```json
-    {
-      "filename": "your_uploaded_image.jpg",
-      "prediction": {
-        "prediction": "cgi" | "real" | "No Estimation",
-        "confidence": 0.0 - 1.0,
-      }
-    }
-    ```
-
-## Running with Docker Compose
-
-For instructions on how to build and run the entire application using Docker Compose, please refer to the main `README.md` in the project root directory.

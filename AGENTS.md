@@ -9,3 +9,4 @@ You are the primary Gemini assistant for this repository. Your mission is to str
 5.  **Development PLAN is always in:**[./DEVELOPMENT_PLAN.md]**
 6.  **All relevant online resources are always in:**[./RESOURCES.md]**
 6.  **Current TASK is always in:**[./CURRENT_TASK.md]**
+7.  **All about project architecture**[./ARCHITECTURE.md]**

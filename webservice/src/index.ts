@@ -1,13 +1,17 @@
-import express from 'express';
-import path from 'path';
+import express, { type Request, type Response } from 'express';
+import path, { dirname } from 'path';
 import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = process.env.PORT || 8000;
+
+// ES Module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Configure multer for file uploads
 const upload = multer({ dest: path.join(__dirname, '../temp') });
@@ -16,14 +20,15 @@ const upload = multer({ dest: path.join(__dirname, '../temp') });
 const tempDir = path.join(__dirname, '../temp');
 fs.mkdir(tempDir, { recursive: true }).catch(console.error);
 
-// Serve static files from the 'static' directory
-app.use(express.static(path.join(__dirname, '../static')));
+// Serve static files from the React build output directory
+app.use(express.static(path.join(__dirname, '../../dist')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../static/index.html'));
+// Serve the React app's index.html for all routes
+app.get('*', (res: Response) => {
+  res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
-app.post('/analyze', upload.single('file'), async (req, res) => {
+app.post('/analyze', upload.single('file'), async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded.' });
   }
@@ -64,7 +69,7 @@ app.post('/analyze', upload.single('file'), async (req, res) => {
   }
 });
 
-app.post('/report', upload.single('file'), async (req, res) => {
+app.post('/report', upload.single('file'), async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded for report.' });
   }

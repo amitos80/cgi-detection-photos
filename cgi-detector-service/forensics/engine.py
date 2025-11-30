@@ -138,17 +138,33 @@ def run_analysis(image_bytes: bytes):
         for name, future in futures.items():
             try:
                 if name == 'rambino':
-                    rambino_result = future.result()
-                    results['rambino'] = rambino_result['score']
-                    rambino_raw_score = rambino_result['raw_score']
-                    rambino_features_list = rambino_result['features']
+                    try:
+                        rambino_result = future.result()
+                        results['rambino'] = rambino_result['score']
+                        rambino_raw_score = rambino_result['raw_score']
+                        rambino_features_list = rambino_result['features']
+                    except Exception as e:
+                        print(f"Error running rambino analysis subprocess: {e}")
+                        results['rambino'] = 0.0
+                        rambino_raw_score = 0.0
+                        rambino_features_list = None
                 elif name == 'specialized_detector':
-                    specialized_result = future.result()
-                    results['specialized'] = specialized_result.get('overall_score', 0.0)
-                    specialized_detector_scores = specialized_result.get('detector_scores', {})
-                    specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
+                    try:
+                        specialized_result = future.result()
+                        results['specialized'] = specialized_result.get('overall_score', 0.0)
+                        specialized_detector_scores = specialized_result.get('detector_scores', {})
+                        specialized_likely_type = specialized_result.get('likely_type', 'Unknown')
+                    except Exception as e:
+                        print(f"Error running specialized_detector analysis subprocess: {e}")
+                        results['specialized'] = 0.0
+                        specialized_detector_scores = {}
+                        specialized_likely_type = 'Unknown'
                 else:
-                    results[name] = future.result()
+                    try:
+                        results[name] = future.result()
+                    except Exception as e:
+                        print(f"Error running {name} analysis subprocess: {e}")
+                        results[name] = 0.0 # Default/error value
             except Exception as e:
                 print(f"Error running {name} analysis: {e}")
                 results[name] = 0.0 # Default/error value
@@ -173,6 +189,9 @@ def run_analysis(image_bytes: bytes):
         geometric_score, lighting_score, specialized_score,
         deepfake_score, reflection_score, double_quantization_score
     ]
+
+    # Replace any NaN values in ml_features with 0.0 to prevent prediction errors
+    ml_features = [0.0 if np.isnan(f) else f for f in ml_features]
 
     # Make prediction using the loaded ML model
     ml_prediction_result = ml_predictor.predict(_ml_model, ml_features)

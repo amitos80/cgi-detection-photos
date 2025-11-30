@@ -1,6 +1,6 @@
 import time
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request, Form
-from forensics import engine
+from forensics import engine, ml_predictor
 
 app = FastAPI()
 
@@ -13,17 +13,19 @@ async def add_process_time_header(request: Request, call_next):
     print(f"Request to {request.url.path} completed in {process_time:.4f} seconds")
     return response
 
-@app.post("/predict")
+@app.post("/analyze")
 async def predict_cgi(file: UploadFile = File(...)):
     """
     Receives an uploaded image, runs it through the forensic analysis engine,
     and returns the results including analysis duration.
     """
+    start_time = time.time()
     contents = await file.read()
 
     try:
-        start_time = time.time()
+        print(f"DEBUG: Starting engine.run_analysis...")
         results = engine.run_analysis(contents)
+        print(f"DEBUG: engine.run_analysis returned. Type: {type(results)}, Keys: {results.keys() if isinstance(results, dict) else 'N/A'}")
         end_time = time.time()
         
         analysis_duration = round(end_time - start_time, 2)
@@ -31,11 +33,14 @@ async def predict_cgi(file: UploadFile = File(...)):
         print(f"Image analysis completed in {analysis_duration:.2f} seconds")
 
     except Exception as e:
+        print(f"ERROR: An exception occurred during analysis: {e}")
+        import traceback
+        traceback.print_exc() # Print the full traceback
         raise HTTPException(status_code=500, detail=f"An error occurred during analysis: {e}")
 
     return results
 
-@app.post("/feedback")
+@app.post("/report")
 async def receive_feedback(
     file: UploadFile = File(...),
     userCorrection: str = Form(...),

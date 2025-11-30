@@ -2,7 +2,7 @@ services:
   webservice:
     build:
       context: ./webservice
-      dockerfile: Dockerfile
+      dockerfile: original_backend_files/Dockerfile
     ports:
       - "8000:8000"
     environment:
