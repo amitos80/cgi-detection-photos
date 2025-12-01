@@ -20,7 +20,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, text, isVisible }) 
       <div className="w-full bg-gray-200 rounded-full h-4 relative overflow-hidden dark:bg-dark-600">
         <div
           className="bg-primary h-full rounded-full text-center text-white text-xs font-semibold flex items-center justify-center transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
+          style={{ width: `${progress}%`, backgroundColor: 'var(--secondary-DEFAULT)' }}
         >
           {Math.round(progress) > 5 ? `${Math.round(progress)}%` : ''}
         </div>

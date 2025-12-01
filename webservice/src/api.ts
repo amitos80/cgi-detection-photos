@@ -20,16 +20,15 @@ export interface PredictionResult {
 // This interface represents the actual flat structure returned by the backend API.
 export interface AnalysisResponse {
   filename: string | undefined | null;
-  prediction: { // The backend now returns prediction as an object
+  prediction: {
     prediction: 'cgi' | 'real';
     confidence: number;
-    // Add any other properties within the prediction object if the backend sends them
+    analysis_duration?: number;
+    analysis_breakdown?: Metric[];
+    rambino_raw_score?: number;
+    rambino_features?: unknown[];
+    // Add any other properties the backend might send within this nested object
   };
-  confidence: number; // Keep top-level confidence for backward compatibility or if needed elsewhere
-  analysis_duration?: number;
-  analysis_breakdown?: Metric[];
-  rambino_raw_score?: number;
-  rambino_features?: unknown[];
 }
 
 export interface ReportResponse {

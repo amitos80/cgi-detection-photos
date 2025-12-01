@@ -1,3 +1,60 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --primary-light: #60a5fa;
+  --primary-DEFAULT: #3b82f6;
+  --primary-dark: #2563eb;
+  --secondary-light: #a78bfa;
+  --secondary-DEFAULT: #8b5cf6;
+  --secondary-dark: #7c3aed;
+  --accent-success: #22c55e;
+  --accent-warning: #fcd34d;
+  --accent-danger: #ef4444;
+  --accent-info: #3b82f6;
+  --dark: #1f2937;
+  --light: #f9fafb;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light); 
+    color: var(--dark); 
+    @apply leading-normal;
+  }
+
+  h1 {
+    @apply text-4xl font-bold leading-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-bold leading-snug;
+  }
+  
+  h3 {
+    @apply text-2xl font-semibold leading-normal;
+  }
+
+  h4 {
+    @apply text-xl font-semibold leading-normal;
+  }
+
+  h5 {
+    @apply text-lg font-medium leading-relaxed;
+  }
+
+  h6 {
+    @apply text-base font-medium leading-relaxed;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  a {
+    color: var(--primary-DEFAULT);
+  }
+}

@@ -16,7 +16,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onClear }) => {
       <img src={imageUrl} alt="Image Preview" className="max-h-full max-w-full object-contain" />
       <button
         onClick={onClear}
-        className="absolute top-3 right-3 bg-accent-danger text-white rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold opacity-90 hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-accent-danger"
+        className="absolute top-3 right-3 rounded-full w-8 h-8 flex items-center justify-center text-xl font-semibold opacity-90 hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-accent-danger"
+        style={{ backgroundColor: 'var(--accent-danger)', color: 'white' }}
         aria-label="Clear image"
       >
         &times;

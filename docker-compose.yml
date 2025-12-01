@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    mem_limit: 2048M
     environment:
       NODE_ENV: production
       PYTHON_SERVICE_URL: http://cgi-detector-service:8000/analyze

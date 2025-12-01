@@ -88,29 +88,23 @@ export function useCgiDetection(): UseCgiDetection {
       setReportStatus("");
       startProgressSimulator();
     },
-          onSuccess: (data: AnalysisResponse) => { // Explicitly type data as AnalysisResponse
-            console.log('Analysis successful, received data:', data);
-            console.log('data.prediction:', data?.prediction);
-            console.log('data.filename:', data?.filename);
+          onSuccess: (data: AnalysisResponse) => {
+            // Data from the server has the detailed breakdown nested inside the 'prediction' object.
+            const { prediction: predictionDetails } = data;
 
-            // Extract nested prediction and confidence
-            const actualPrediction = data.prediction?.prediction;
-            const actualConfidence = data.prediction?.confidence;
-
-            // Construct the PredictionResult object from the flattened data
+            // Construct the PredictionResult object for the state
             const predictionResult: PredictionResult = {
-              prediction: actualPrediction,
-              confidence: actualConfidence,
-              analysis_duration: data?.analysis_duration,
-              analysis_breakdown: data?.analysis_breakdown,
-              // Include other fields from API if they exist and are relevant for PredictionResult state
-              rambino_raw_score: data?.rambino_raw_score,
-              rambino_features: data?.rambino_features,
+              prediction: predictionDetails?.prediction,
+              confidence: predictionDetails?.confidence,
+              analysis_duration: predictionDetails?.analysis_duration,
+              analysis_breakdown: predictionDetails?.analysis_breakdown,
+              rambino_raw_score: predictionDetails?.rambino_raw_score,
+              rambino_features: predictionDetails?.rambino_features,
             };
 
             stopProgressSimulator();
             setAnalysisResult(predictionResult); // Set the correctly structured result
-            setAnalysisFilename(data?.filename ?? null);
+            setAnalysisFilename(data.filename ?? null);
           },    onError: (error) => {
       stopProgressSimulator();
       setAnalysisResult(null); // Clear previous results

@@ -6,31 +6,63 @@ export default {
     "./src/**/*.css", // Explicitly include CSS files for Tailwind to scan
   ],
   theme: {
-    extend: {
       colors: {
         primary: {
-          light: '#60a5fa', // Equivalent to blue-400 for a lighter shade
-          DEFAULT: '#3b82f6', // Equivalent to blue-500
-          dark: '#2563eb', // Equivalent to blue-600 for a darker shade
+          light: 'rgb(var(--color-primary-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-primary-DEFAULT) / <alpha-value>)',
+          dark: 'rgb(var(--color-primary-dark) / <alpha-value>)',
         },
         secondary: {
-          light: '#a78bfa', // Equivalent to violet-400
-          DEFAULT: '#8b5cf6', // Equivalent to violet-500
-          dark: '#7c3aed', // Equivalent to violet-600
+          light: 'rgb(var(--color-secondary-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-secondary-DEFAULT) / <alpha-value>)',
+          dark: 'rgb(var(--color-secondary-dark) / <alpha-value>)',
         },
         accent: {
-          success: '#22c55e', // Equivalent to green-500
-          warning: '#fcd34d', // Equivalent to amber-300
-          danger: '#ef4444', // Equivalent to red-500
-          info: '#3b82f6', // Reusing primary default for info
+          success: 'rgb(var(--color-accent-success) / <alpha-value>)',
+          warning: 'rgb(var(--color-accent-warning) / <alpha-value>)',
+          danger: 'rgb(var(--color-accent-danger) / <alpha-value>)',
+          info: 'rgb(var(--color-accent-info) / <alpha-value>)',
         },
-        dark: '#1f2937', // Equivalent to gray-800
-        light: '#f9fafb', // Equivalent to gray-50
+        dark: 'rgb(var(--color-dark) / <alpha-value>)',
+        light: 'rgb(var(--color-light) / <alpha-value>)',
+      },
+      spacing: {
+        '1': '4px',
+        '2': '8px',
+        '3': '12px',
+        '4': '16px',
+        '5': '20px',
+        '6': '24px',
+        '8': '32px',
+        '10': '40px',
+        '12': '48px',
+        '16': '64px',
+        '20': '80px',
+        '24': '96px',
+        '32': '128px',
+        '40': '160px',
+        '48': '192px',
+        '56': '224px',
+        '64': '256px',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      boxShadow: {
+        'soft': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.02)', // subtle shadow
+        'medium': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', // slightly more pronounced
+        'elevate': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', // for elevated elements
+      },
+      transitionProperty: {
+        'width': 'width',
+        'height': 'height',
+        'spacing': 'margin, padding',
+      },
+      transitionDuration: {
+        'DEFAULT': '200ms',
+        '400': '400ms',
+      },
+      transitionTimingFunction: {
+        'in-out': 'ease-in-out',
+      },
     },
-  },
-  plugins: [],
-}
