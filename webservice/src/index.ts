@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from 'express';
-import path, { dirname } from 'path';
+import path from 'path';
 import multer from 'multer';
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
@@ -11,21 +11,21 @@ const port = process.env.PORT || 8000;
 
 // ES Module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 // Configure multer for file uploads
-const upload = multer({ dest: path.join(__dirname, '../temp') });
+const upload = multer({ dest: path.join(__dirname, 'temp') }); // Temp directory within webservice container
 
 // Ensure temp directory exists
-const tempDir = path.join(__dirname, '../temp');
+const tempDir = path.join(__dirname, 'temp');
 fs.mkdir(tempDir, { recursive: true }).catch(console.error);
 
 // Serve static files from the React build output directory
-app.use(express.static(path.join(__dirname, '../../dist')));
+app.use(express.static(path.join(__dirname, '..')));
 
 // Serve the React app's index.html for all routes
-app.get('*', (res: Response) => {
-  res.sendFile(path.join(__dirname, '../../dist/index.html'));
+app.get('*', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 app.post('/analyze', upload.single('file'), async (req: Request, res: Response) => {
@@ -60,9 +60,13 @@ app.post('/analyze', upload.single('file'), async (req: Request, res: Response) 
     const predictionResult = await response.json();
     res.json({ filename: req.file.originalname, prediction: predictionResult });
 
-  } catch (e: any) {
+  } catch (e: unknown) {
+    let errorMessage = 'Processing failed';
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
     console.error('Processing failed:', e);
-    res.status(500).json({ error: 'Processing failed', details: e.message });
+    res.status(500).json({ error: errorMessage, details: errorMessage });
   } finally {
     // Clean up the temporary file
     await fs.unlink(filePath).catch(console.error);
@@ -104,9 +108,13 @@ app.post('/report', upload.single('file'), async (req: Request, res: Response) =
     const feedbackResult = await response.json();
     res.json({ message: 'Report submitted successfully', feedback: feedbackResult });
 
-  } catch (e: any) {
+  } catch (e: unknown) {
+    let errorMessage = 'Failed to submit report';
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
     console.error('Reporting failed:', e);
-    res.status(500).json({ error: 'Failed to submit report', details: e.message });
+    res.status(500).json({ error: errorMessage, details: errorMessage });
   } finally {
     await fs.unlink(filePath).catch(console.error);
   }

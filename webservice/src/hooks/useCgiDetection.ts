@@ -2,6 +2,12 @@ import { useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { analyzeImage, reportIncorrectResult, type PredictionResult, type AnalysisResponse, type ReportResponse } from '../api';
 
+declare global {
+  interface Window {
+    progressInterval?: NodeJS.Timeout;
+  }
+}
+
 const analysisSteps = [
   "Initializing Analysis...",
   "Running Error Level Analysis (ELA)",
@@ -59,11 +65,11 @@ export function useCgiDetection(): UseCgiDetection {
     }, 1000); // Update every 1 second
 
     // Store interval ID to clear it later
-    (window as any).progressInterval = interval;
+    window.progressInterval = interval;
   };
 
   const stopProgressSimulator = () => {
-    clearInterval((window as any).progressInterval);
+    clearInterval(window.progressInterval);
     setCurrentProgress(100);
     setProgressText("Analysis Complete!");
     setTimeout(() => {
@@ -87,10 +93,14 @@ export function useCgiDetection(): UseCgiDetection {
             console.log('data.prediction:', data?.prediction);
             console.log('data.filename:', data?.filename);
 
+            // Extract nested prediction and confidence
+            const actualPrediction = data.prediction?.prediction;
+            const actualConfidence = data.prediction?.confidence;
+
             // Construct the PredictionResult object from the flattened data
             const predictionResult: PredictionResult = {
-              prediction: data?.prediction,
-              confidence: data?.confidence,
+              prediction: actualPrediction,
+              confidence: actualConfidence,
               analysis_duration: data?.analysis_duration,
               analysis_breakdown: data?.analysis_breakdown,
               // Include other fields from API if they exist and are relevant for PredictionResult state
@@ -148,8 +158,8 @@ export function useCgiDetection(): UseCgiDetection {
     setCurrentProgress(0);
     setProgressText("");
     setReportStatus("");
-    if ((window as any).progressInterval) {
-      clearInterval((window as any).progressInterval);
+    if (window.progressInterval) {
+      clearInterval(window.progressInterval);
       console.log('Progress simulator cleared.');
     }
   }, []);

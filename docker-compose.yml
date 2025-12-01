@@ -2,12 +2,12 @@ services:
   webservice:
     build:
       context: ./webservice
-      dockerfile: original_backend_files/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
       NODE_ENV: production
-      PYTHON_SERVICE_URL: http://cgi-detector-service:8000/predict
+      PYTHON_SERVICE_URL: http://cgi-detector-service:8000/analyze
       PYTHON_SERVICE_URL_FEEDBACK: http://cgi-detector-service:8000/feedback
     depends_on:
       - cgi-detector-service

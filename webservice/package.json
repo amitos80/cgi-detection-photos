@@ -14,7 +14,11 @@
     "@tanstack/react-router": "^1.52.0",
     "@tanstack/react-router-devtools": "^1.52.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

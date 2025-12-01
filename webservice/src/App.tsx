@@ -5,6 +5,11 @@ import AnalysisResults from './components/AnalysisResults';
 import ReportForm from './components/ReportForm';
 import { useCgiDetection } from './hooks/useCgiDetection';
 
+/**
+ * The main application component that orchestrates the CGI detection process.
+ * It handles file selection, image preview, analysis, result display, and reporting.
+ * @returns {JSX.Element} The main App component.
+ */
 function App() {
   const {
     selectedFile,
@@ -24,9 +29,10 @@ function App() {
   } = useCgiDetection();
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-2xl">
-        <h1 className="text-3xl font-bold text-blue-700 mb-8 text-center">CGI Detection</h1>        {!imagePreviewUrl ? (
+    <div className="min-h-screen bg-light dark:bg-dark flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-dark-800 p-8 rounded-xl shadow-lg max-w-2xl w-full">
+        <h1 className="text-3xl font-bold text-primary-dark mb-8 text-center">CGI Detection</h1>
+        {!imagePreviewUrl ? (
           <ImageUpload onFileSelect={handleFileSelect} />
         ) : (
           <>
@@ -34,7 +40,7 @@ function App() {
             <button
               onClick={handleAnalyze}
               disabled={analyzeMutation.isPending}
-              className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-primary text-white font-semibold rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
             >
               {analyzeMutation.isPending ? 'Analyzing...' : 'Analyze Image'}
             </button>
@@ -51,7 +57,7 @@ function App() {
           <ReportForm onReportSubmit={handleReportSubmit} reportStatus={reportStatus} />
         )}
 
-        {reportMutation.isError && <p className="text-red-500 mt-2">Error reporting result: {reportMutation.error?.message}</p>}
+        {reportMutation.isError && <p className="text-accent-danger mt-2">Error reporting result: {reportMutation.error?.message}</p>}
 
       </div>
     </div>
