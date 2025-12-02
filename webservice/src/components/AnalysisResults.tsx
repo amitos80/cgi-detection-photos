@@ -21,7 +21,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) =
   return (
     <div className="mt-8 p-6 bg-light rounded-xl shadow-lg border border-gray-200 dark:bg-dark-800 dark:border-dark-700">
       <h2 className="text-2xl font-bold text-dark mb-5 border-b border-gray-200 pb-3 dark:text-light dark:border-dark-700 truncate">
-        Analysis breakdown for image: <span className="text-primary-dark">{filename || 'Unknown File'}</span> 
+        Analysis breakdown for image: <span className="text-primary-dark">{filename || 'Unknown File'}</span>
       </h2>
 
       <div className="flex items-center justify-between mb-5 p-4 bg-primary-light rounded-lg dark:bg-primary-dark">
