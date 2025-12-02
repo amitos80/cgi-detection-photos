@@ -13,10 +13,11 @@ interface ReportFormProps {
  */
 const ReportForm: React.FC<ReportFormProps> = ({ onReportSubmit, reportStatus }) => {
 
-  const [correctionType, setCorrectionType] = useState<'false_cgi' | 'false_real'>('false_cgi');
+  const [correctionType, setCorrectionType] = useState<'false_cgi' | 'false_real' | ''>('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+		if (correctionType === '') return;
     onReportSubmit(correctionType);
   };
 
@@ -29,7 +30,10 @@ const ReportForm: React.FC<ReportFormProps> = ({ onReportSubmit, reportStatus })
 			    name="correctionType"
 			    id="correctionType"
 			    value={correctionType}
-			    onChange={(e) => setCorrectionType(e.target.value as 'false_cgi' | 'false_real')}
+			    onChange={(e) => {
+						console.log('onChange ', e.target.value, e.target.value as 'false_cgi' | 'false_real')
+				    setCorrectionType(e.target.value as 'false_cgi' | 'false_real')
+			    }}
 			    required
 			    className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary-dark sm:text-sm dark:bg-dark-700 dark:border-dark-600 dark:text-light"
 		    >
@@ -37,10 +41,13 @@ const ReportForm: React.FC<ReportFormProps> = ({ onReportSubmit, reportStatus })
 			    <option value="false_real">A CGI image (falsely marked as Real)</option>
 		    </select>
 		    <button
+			    disabled={correctionType === ''}
 			    type="submit"
-			    className="w-full px-5 py-2.5 bg-accent-success text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-accent-success focus:ring-opacity-50 transition-colors duration-200"
+			    className={`w-full px-5 py-2.5 bg-accent-success text-white font-semibold rounded-md bg-blue-600 
+			    focus:outline-none focus:ring-2 focus:ring-accent-success 
+			    focus:ring-opacity-50 transition-colors duration-200` }
 		    >
-			    Submit Report
+			    Submit
 		    </button>
 	    </form>
       {reportStatus && <p className="mt-4 text-center text-sm font-medium text-dark-600 dark:text-light-500">{reportStatus}</p>}
