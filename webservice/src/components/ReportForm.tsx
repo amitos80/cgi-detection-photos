@@ -30,10 +30,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ onReportSubmit, reportStatus })
 			    name="correctionType"
 			    id="correctionType"
 			    value={correctionType}
-			    onChange={(e) => {
-						console.log('onChange ', e.target.value, e.target.value as 'false_cgi' | 'false_real')
-				    setCorrectionType(e.target.value as 'false_cgi' | 'false_real')
-			    }}
+			    onChange={(e) => setCorrectionType(e.target.value as 'false_cgi' | 'false_real')}
 			    required
 			    className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary-dark sm:text-sm dark:bg-dark-700 dark:border-dark-600 dark:text-light"
 		    >
