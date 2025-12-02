@@ -9,7 +9,7 @@ services:
     environment:
       NODE_ENV: production
       PYTHON_SERVICE_URL: http://cgi-detector-service:8000/analyze
-      PYTHON_SERVICE_URL_FEEDBACK: http://cgi-detector-service:8000/feedback
+      PYTHON_SERVICE_URL_FEEDBACK: http://cgi-detector-service:8000/report
     depends_on:
       - cgi-detector-service
     networks:
@@ -21,8 +21,13 @@ services:
       dockerfile: Dockerfile
     expose:
       - "8000"
+    volumes:
+      - cgi_forensics_data:/app/forensics_data
     networks:
       - cgi-detection-network
+
+volumes:
+  cgi_forensics_data:
 
 networks:
   cgi-detection-network:
