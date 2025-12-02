@@ -42,7 +42,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect }) => {
     <div
       id="drop-zone"
       className={`flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl mb-6 transition-all duration-300 ease-in-out cursor-pointer
-        ${isDragOver ? 'border-primary-dark bg-primary-light text-primary-dark shadow-lg' : 'border-gray-300 bg-light hover:border-primary-light'}`}
+        ${isDragOver ? 'border-primary-dark bg-primary-light text-primary-dark' : 'border-gray-300 bg-light hover:border-primary-light'}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

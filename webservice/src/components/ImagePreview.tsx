@@ -12,7 +12,7 @@ interface ImagePreviewProps {
  */
 const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onClear }) => {
   return (
-    <div className="relative w-full h-64 mb-6 rounded-xl overflow-hidden shadow-md flex items-center justify-center bg-gray-50 dark:bg-dark-700">
+    <div className="relative w-full h-64 mb-6 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50 dark:bg-dark-700">
       <img src={imageUrl} alt="Image Preview" className="max-h-full max-w-full object-contain" />
       <button
         onClick={onClear}

@@ -51,7 +51,8 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) =
               const scoreLeft = metric.score * 100;
 
               return (
-                <div key={`visual-${metric.feature}`} className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-100 dark:bg-dark-800 dark:border-dark-700">
+                <div key={`visual-${metric.feature}`} className="bg-gray-50 p-4 rounded-lg
+                shadow-sm border border-gray-100 dark:bg-dark-800 dark:border-dark-700">
                   <p className="font-semibold text-dark dark:text-light mb-2">
 	                  {metric.feature}
 	                  <span className="text-sm text-dark-500 dark:text-light-500">
@@ -63,12 +64,37 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) =
                       style={{ left: `${rangeLeft}%`, width: `${rangeWidth}%` }}
                     ></div>
                     <div
-                      className={`absolute h-full w-1 rounded-full shadow-md opacity-75 
-                      ${(scoreLeft > (rangeLeft + rangeWidth) || scoreLeft < rangeLeft) ? 'bg-red-400' : 'bg-green-500'}`}
+                      className={`absolute h-full w-1 rounded-full opacity-75 
+                      ${(scoreLeft >= rangeWidth || scoreLeft < rangeLeft) ?
+	                      'bg-red-400' :
+	                      'bg-green-500'}`}
                       style={{
-												left: `${scoreLeft > (rangeLeft + rangeWidth) ? rangeLeft + rangeWidth : scoreLeft}%`,
+												left: `${scoreLeft >= 100 ? 99 : scoreLeft}%`,
 										}}
                     ></div>
+                  </div>
+                  <div className="relative w-full h-4 mt-1 text-xs text-dark-600 dark:text-light-600">
+                    <span className="text-green-600" style={{ position: 'absolute', left: `0%`, transform: 'translateX(-50%)' }}>
+                      {min}
+                    </span>
+                    <span className="text-green-600" style={{ position: 'absolute', left: `${max * 100}%`, transform: 'translateX(-50%)' }}>
+                      {max.toFixed(2)}
+                    </span>
+                    <span
+                      className={`font-bold ${
+                        (scoreLeft > (max * 100) ||
+	                        scoreLeft < (min * 100)) ?
+	                        'text-red-500' :
+	                        'text-green-600'
+                      }`}
+                      style={{
+                        position: 'absolute',
+                        left: `${scoreLeft}%`,
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      {metric.score.toFixed(2)}
+                    </span>
                   </div>
                   <p className="mt-2 text-xs text-dark-600 dark:text-light-600">
                     Normal range: <span className="font-medium">{min.toFixed(2)} – {max.toFixed(2)}</span>

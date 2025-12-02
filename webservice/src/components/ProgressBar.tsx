@@ -15,7 +15,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, text, isVisible }) 
   if (!isVisible) return null;
 
   return (
-    <div className="mt-6 p-4 bg-light rounded-xl shadow-md">
+    <div className="mt-6 p-4 bg-light rounded-xl">
       <h4 className="text-xl font-bold text-primary-dark mb-3 text-center">Analyzing Image...</h4>
       <div className="w-full bg-gray-200 rounded-full h-4 relative overflow-hidden dark:bg-dark-600">
         <div

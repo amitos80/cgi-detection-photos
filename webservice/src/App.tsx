@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="min-h-screen bg-light dark:bg-dark flex items-center justify-center p-4">
       <div className="bg-white dark:bg-dark-800 p-8 rounded-xl shadow-lg max-w-2xl w-full">
-        <h1 className="text-3xl font-bold text-primary-dark mb-8 text-center">AI Generative Image</h1>
+        <h1 className="text-3xl font-bold text-primary-dark mb-8 text-center">AI Generated Images Detection</h1>
         {!imagePreviewUrl ? (
           <ImageUpload onFileSelect={handleFileSelect} />
         ) : (

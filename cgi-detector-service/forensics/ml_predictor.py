@@ -216,11 +216,9 @@ def retrain_with_feedback():
 
     # Get base training data (e.g., from an initial fixed dataset or generated dummy data)
     base_features, base_labels = _get_base_training_data()
-    print(f"Base features shape: {base_features.shape}, Base labels shape: {base_labels.shape}")
 
     # Load all feedback data
     feedback_features, feedback_labels = load_feedback_data()
-    print(f"Feedback features shape: {feedback_features.shape}, Feedback labels shape: {feedback_labels.shape}")
 
     # Combine base data with feedback data
     if feedback_features.size > 0:
@@ -233,8 +231,6 @@ def retrain_with_feedback():
     else:
         combined_features = base_features
         combined_labels = base_labels
-
-    print(f"Combined features shape for training: {combined_features.shape}, Combined labels shape: {combined_labels.shape}")
 
     if combined_features.size > 0:
         train_and_save_model(combined_features, combined_labels)
