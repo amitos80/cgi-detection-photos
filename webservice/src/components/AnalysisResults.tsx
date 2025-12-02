@@ -63,7 +63,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) =
                       style={{ left: `${rangeLeft}%`, width: `${rangeWidth}%` }}
                     ></div>
                     <div
-                      className={`absolute h-full w-1.5 rounded-full shadow-md opacity-75 
+                      className={`absolute h-full w-1 rounded-full shadow-md opacity-75 
                       ${(scoreLeft > (rangeLeft + rangeWidth) || scoreLeft < rangeLeft) ? 'bg-red-400' : 'bg-green-500'}`}
                       style={{
 												left: `${scoreLeft > (rangeLeft + rangeWidth) ? rangeLeft + rangeWidth : scoreLeft}%`,
