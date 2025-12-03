@@ -52,7 +52,6 @@ def initialize_progress_file():
 def process_image(filepath):
     """Stateless worker function to process a single image file."""
     try:
-        print(f"Processing image: {filepath}")
         with open(filepath, "rb") as f:
             image_bytes = f.read()
         features = extract_features_from_image_bytes(image_bytes)
@@ -104,8 +103,8 @@ def run_feature_extraction():
 
             with ProcessPoolExecutor() as executor:
                 future_to_filepath = {executor.submit(process_image, filepath): filepath for filepath in tasks}
-
-                for future in as_completed(future_to_filepath):
+                
+                for future in tqdm(as_completed(future_to_filepath), total=len(tasks), desc=f"Chunk {i+1} Files"):
                     filepath, features, error = future.result()
                     file_key = clean_filename(os.path.basename(filepath))
 
