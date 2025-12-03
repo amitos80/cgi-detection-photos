@@ -52,6 +52,7 @@ def initialize_progress_file():
 def process_image(filepath):
     """Stateless worker function to process a single image file."""
     try:
+        print(f"Processing image: {filepath}")
         with open(filepath, "rb") as f:
             image_bytes = f.read()
         features = extract_features_from_image_bytes(image_bytes)
@@ -73,81 +74,70 @@ def run_feature_extraction():
     with open(PROGRESS_FILE, 'r') as f:
         progress_data = json.load(f)
 
-    # Load previously extracted features
     if os.path.exists(FEATURES_FILE):
         print(f"Loading previously extracted features from {FEATURES_FILE}...")
         saved_data = joblib.load(FEATURES_FILE)
         all_features = saved_data.get('features', [])
         all_labels = saved_data.get('labels', [])
+        completed_files = set(saved_data.get('processed_filepaths', []))
     else:
         all_features = []
         all_labels = []
+        completed_files = set()
 
-    # Create a set of completed file paths for quick lookup
-    completed_files = set()
-    if all_features and 'processed_filepaths' in saved_data:
-        completed_files = set(saved_data['processed_filepaths'])
+    processed_filepaths_this_run = []
+    chunks = progress_data.get('chunks', [])
+    
+    with tqdm(total=len(chunks), desc="Overall Progress") as pbar:
+        for i, chunk in enumerate(chunks):
+            tasks = [fp for fp in chunk if fp not in completed_files]
+            
+            if not tasks:
+                print(f"Chunk {i+1}/{len(chunks)} is already fully processed.")
+                pbar.update(1)
+                continue
 
-    # Determine which files need processing
-    tasks = []
-    flat_chunks = [item for sublist in progress_data.get('chunks', []) for item in sublist]
-    for filepath in flat_chunks:
-        if filepath not in completed_files:
-            tasks.append(filepath)
+            print(f"Processing chunk {i+1}/{len(chunks)} with {len(tasks)} images.")
+            
+            newly_extracted_features = []
+            newly_extracted_labels = []
 
-    if not tasks:
+            with ProcessPoolExecutor() as executor:
+                future_to_filepath = {executor.submit(process_image, filepath): filepath for filepath in tasks}
+
+                for future in as_completed(future_to_filepath):
+                    filepath, features, error = future.result()
+                    file_key = clean_filename(os.path.basename(filepath))
+
+                    if features is not None:
+                        progress_data['image_tracking'][file_key] = {"status": "completed"}
+                        newly_extracted_features.append(features)
+                        newly_extracted_labels.append(1 if 'FAKE' in filepath else 0)
+                        processed_filepaths_this_run.append(filepath)
+                    else:
+                        progress_data['image_tracking'][file_key] = {"status": "error", "error": error}
+                    
+                    with open(PROGRESS_FILE, 'w') as f:
+                        json.dump(progress_data, f, indent=4)
+
+            if newly_extracted_features:
+                all_features.extend(newly_extracted_features)
+                all_labels.extend(newly_extracted_labels)
+                completed_files.update(processed_filepaths_this_run)
+
+                joblib.dump({
+                    'features': all_features, 
+                    'labels': all_labels,
+                    'processed_filepaths': list(completed_files)
+                }, FEATURES_FILE)
+                print(f"Saved {len(all_features)} total features after processing chunk {i+1}.")
+
+            pbar.update(1)
+
+    if not processed_filepaths_this_run:
         print("All images have already been processed and features extracted.")
-        return np.array(all_features), np.array(all_labels)
         
-    print(f"Total images remaining to process: {len(tasks)}")
-    print("Breakdown of remaining images per chunk:")
-    
-    task_set = set(tasks)
-    for i, chunk in enumerate(progress_data.get('chunks', [])):
-        remaining_in_chunk = sum(1 for fp in chunk if fp in task_set)
-        if remaining_in_chunk > 0:
-            print(f"- Chunk {i+1}: {remaining_in_chunk}/{len(chunk)} images left")
-
-    newly_extracted_features = []
-    newly_extracted_labels = []
-
-    with ProcessPoolExecutor() as executor:
-        future_to_filepath = {executor.submit(process_image, filepath): filepath for filepath in tasks}
-
-        for future in tqdm(as_completed(future_to_filepath), total=len(tasks), desc="Processing Images"):
-            filepath, features, error = future.result()
-            file_key = clean_filename(os.path.basename(filepath))
-
-            if features is not None:
-                progress_data['image_tracking'][file_key] = {"status": "completed"}
-                newly_extracted_features.append(features)
-                newly_extracted_labels.append(1 if 'FAKE' in filepath else 0)
-                processed_filepaths_this_run.append(filepath)
-            else:
-                progress_data['image_tracking'][file_key] = {"status": "error", "error": error}
-
-            # Safely write the updated progress
-            with open(PROGRESS_FILE, 'w') as f:
-                json.dump(progress_data, f, indent=4)
-
-    if not newly_extracted_features:
-        print("No new features were successfully extracted in this run.")
-        return np.array(all_features), np.array(all_labels)
-
-    # Combine old and new features and save
-    print("Combining new features with previously saved features...")
-    combined_features = all_features + newly_extracted_features
-    combined_labels = all_labels + newly_extracted_labels
-    combined_filepaths = list(completed_files) + processed_filepaths_this_run
-    
-    joblib.dump({
-        'features': combined_features, 
-        'labels': combined_labels,
-        'processed_filepaths': combined_filepaths
-    }, FEATURES_FILE)
-    print(f"Saved {len(combined_features)} total features to {FEATURES_FILE}.")
-        
-    return np.array(combined_features), np.array(combined_labels)
+    return np.array(all_features), np.array(all_labels)
 
 
 if __name__ == "__main__":
