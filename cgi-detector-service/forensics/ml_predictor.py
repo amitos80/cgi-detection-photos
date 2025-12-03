@@ -16,7 +16,7 @@ from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization
 import uuid # For generating unique filenames
 
-MODEL_PATH = "/app/forensics_data/ml_model.joblib"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml_model.joblib")
 FEEDBACK_DATASET_DIR = "/app/forensics_data/feedback_dataset"
 
 _current_ml_model = None # Global variable to hold the loaded model

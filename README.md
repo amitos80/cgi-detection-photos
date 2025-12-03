@@ -322,3 +322,28 @@ This method utilizes advanced statistical modeling of image noise to detect mani
 | **Anomalous Noise Characteristics** | RAMBiNo (Region-based Analysis of Multi-channel Bidimensional Noise) examines the complex statistical properties of noise across various color channels within an image. Real images exhibit consistent and predictable noise characteristics inherent to the camera sensor.
 | **Detection of Statistical Deviations** | Forged or generated images, however, often introduce anomalous noise patterns or alter existing ones in ways that deviate significantly from natural photographic noise. RAMBiNo excels at identifying these subtle statistical inconsistencies, providing strong indicators of manipulation or synthetic origin. |
 
+---
+
+## Training the Model
+
+To ensure a robust and resumable training process, the `train_model.py` script implements a detailed progress tracking and chunking system.
+
+1.  **Progress File (`training_progress.json`):** A central JSON file is used to track the entire training process. It is located at `cgi-detector-service/scripts/training_progress.json`.
+
+2.  **Initialization:**
+    *   On its first run, the script scans the entire dataset.
+    *   It creates a sorted list of all image file paths.
+    *   This list is then divided into "chunks" of 200 images each.
+    *   This chunk division and the full list of files are saved into the `training_progress.json` file.
+
+3.  **Detailed Tracking:** For each image, the script maintains a detailed record:
+    *   A unique, clean key is generated from the filename (e.g., `"my image (1).jpg"` becomes `"my_image_1_jpg"`).
+    *   **Before processing:** The image's status is updated to `"processing"`, a `started_timestamp` is recorded, and a top-level `currently_being_processed` field is set to the image's key.
+    *   **After processing:** The image's record is updated with an `ended_timestamp`, a final `status` (`"completed"` or `"error"`), and any relevant error messages. The `currently_being_processed` field is then cleared.
+
+4.  **Resumability:**
+    *   If the script is stopped and restarted, it reads the `training_progress.json` file to determine the exact state of the process.
+    *   It automatically skips any images that are already marked as `"completed"`.
+    *   If an image was left in the `"processing"` state (indicating an unexpected stop), the script will re-attempt to process it to ensure no data is lost.
+
+5.  **Execution Flow:** The script processes images sequentially through the defined chunks, updating the JSON file at the start and end of each image's processing cycle. Once all features for all images have been successfully extracted, it proceeds with the main model training phase.
