@@ -99,11 +99,17 @@ def run_feature_extraction():
         print("All images have already been processed and features extracted.")
         return np.array(all_features), np.array(all_labels)
         
-    print(f"Found {len(tasks)} new or unfinished images to process.")
+    print(f"Total images remaining to process: {len(tasks)}")
+    print("Breakdown of remaining images per chunk:")
+    
+    task_set = set(tasks)
+    for i, chunk in enumerate(progress_data.get('chunks', [])):
+        remaining_in_chunk = sum(1 for fp in chunk if fp in task_set)
+        if remaining_in_chunk > 0:
+            print(f"- Chunk {i+1}: {remaining_in_chunk}/{len(chunk)} images left")
 
     newly_extracted_features = []
     newly_extracted_labels = []
-    processed_filepaths_this_run = []
 
     with ProcessPoolExecutor() as executor:
         future_to_filepath = {executor.submit(process_image, filepath): filepath for filepath in tasks}
