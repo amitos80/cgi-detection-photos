@@ -116,8 +116,8 @@ def run_feature_extraction():
                     else:
                         progress_data['image_tracking'][file_key] = {"status": "error", "error": error}
                     
-                    with open(PROGRESS_FILE, 'w') as f:
-                        json.dump(progress_data, f, indent=4)
+            with open(PROGRESS_FILE, 'w') as f:
+                json.dump(progress_data, f, indent=4)
 
             if newly_extracted_features:
                 all_features.extend(newly_extracted_features)
