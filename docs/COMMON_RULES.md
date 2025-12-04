@@ -87,7 +87,13 @@ When adding new configuration options, update all relevant places:
 2. Configuration schemas in `src/config/`
 3. Documentation in README.md
 
-## Shell/Terminal Useful Command List (use this command list as caching for shell commands - you will construct a command only and only if you read the whole list and there didnt find any command that performs what you need it to)
+## Using Shell/Terminal Rules
+
+1. Prevent Waiting (Hang/Stuck forever) on Interactive Shell for output by:
+    - use flags where possible for planned interactive shell 
+    - use reasonable timeout for completeing command execution
+
+## Shell/Terminal Rules Useful Command List (use this command list as caching for shell commands - you will construct a command only and only if you read the whole list and there didnt find any command that performs what you need it to)
 
 1. Calculate how many files are left to process in order to complete training on dataset 
    ***Command:``` Shell jq '(.chunks | flatten | length) - (.image_tracking | keys | length)' cgi-detector-service/scripts/training_progress.json [current working directory /Users/amit/Projects/cgi-detection-photos] (Recalculating the number of files left to process by subtracting the number of tracked images from the total number of images in all chunks.)```
@@ -95,4 +101,4 @@ When adding new configuration options, update all relevant places:
    ***Result Example: ```94437```
 
 
-All configuration keys use consistent naming and MUST be documented.
+All configuration keys use consistent naming and MUST be documented in the nearest README.md 
