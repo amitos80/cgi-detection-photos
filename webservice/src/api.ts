@@ -36,9 +36,11 @@ export interface ReportResponse {
   feedback: unknown; // Adjust this type based on actual feedback structure
 }
 
-export const analyzeImage = async (file: File): Promise<AnalysisResponse> => {
+export const analyzeImage = async (files: File[]): Promise<AnalysisResponse[]> => {
   const formData = new FormData();
-  formData.append('file', file);
+  files.forEach((file) => {
+    formData.append('files', file);
+  });
 
   const response = await fetch('/analyze', {
     method: 'POST',

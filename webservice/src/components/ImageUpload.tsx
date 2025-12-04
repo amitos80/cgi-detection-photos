@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 interface ImageUploadProps {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (files: File[]) => void;
 }
 
 /**
@@ -27,14 +27,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect }) => {
     setIsDragOver(false);
     const files = event.dataTransfer.files;
     if (files.length > 0) {
-      onFileSelect(files[0]);
+      onFileSelect(Array.from(files));
     }
   }, [onFileSelect]);
 
   const handleFileInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      onFileSelect(files[0]);
+      onFileSelect(Array.from(files));
     }
   }, [onFileSelect]);
 
@@ -51,12 +51,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect }) => {
       <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
       </svg>
-      <p className="text-lg text-dark mt-2">Drag & drop an image here</p>
-      <p className="text-sm text-gray-500 mt-1">or click to <span className="text-primary font-medium">browse</span></p>
+      <p className="text-lg text-dark mt-2">Drag & drop images here</p>
+      <p className="text-sm text-gray-500 mt-1">or click to <span className="text-primary font-medium">browse for images</span></p>
       <input
         id="file-input"
         type="file"
         accept="image/*"
+        multiple
         className="hidden"
         onChange={handleFileInputChange}
       />

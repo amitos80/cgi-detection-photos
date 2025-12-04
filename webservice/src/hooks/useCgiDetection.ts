@@ -22,27 +22,27 @@ const analysisSteps = [
 ];
 
 interface UseCgiDetection {
-  selectedFile: File | null;
-  imagePreviewUrl: string | null;
-  analysisResult: PredictionResult | null;
-  analysisFilename: string | null;
+  selectedFiles: File[];
+  imagePreviewUrls: string[];
+  analysisResults: PredictionResult[];
+  analysisFilenames: string[];
   progressBarVisible: boolean;
   progressText: string;
   currentProgress: number;
   reportStatus: string;
-  analyzeMutation: ReturnType<typeof useMutation<AnalysisResponse, Error, File>>;
+  analyzeMutation: ReturnType<typeof useMutation<AnalysisResponse[], Error, File[]>>;
   reportMutation: ReturnType<typeof useMutation<ReportResponse, Error, { file: File; userCorrection: 'false_cgi' | 'false_real'; originalPrediction: PredictionResult }>>;
-  handleFileSelect: (file: File) => void;
+  handleFileSelect: (files: File[]) => void;
   handleClearImage: () => void;
   handleAnalyze: () => void;
-  handleReportSubmit: (correctionType: 'false_cgi' | 'false_real') => void;
+  // handleReportSubmit: (correctionType: 'false_cgi' | 'false_real') => void; // Temporarily disable reporting for multiple files
 }
 
 export function useCgiDetection(): UseCgiDetection {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<PredictionResult | null>(null);
-  const [analysisFilename, setAnalysisFilename] = useState<string | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
+  const [analysisResults, setAnalysisResults] = useState<PredictionResult[]>([]);
+  const [analysisFilenames, setAnalysisFilenames] = useState<string[]>([]);
   const [progressBarVisible, setProgressBarVisible] = useState(false);
   const [progressText, setProgressText] = useState("");
   const [currentProgress, setCurrentProgress] = useState(0);
@@ -77,38 +77,40 @@ export function useCgiDetection(): UseCgiDetection {
     }, 1000);
   };
 
-  const analyzeMutation = useMutation<AnalysisResponse, Error, File>({
+  const analyzeMutation = useMutation<AnalysisResponse[], Error, File[]>({
     mutationFn: analyzeImage,
     onMutate: () => {
       setProgressBarVisible(true);
       setProgressText(analysisSteps[0]);
       setCurrentProgress(0);
-      setAnalysisResult(null);
-      setAnalysisFilename(null);
+      setAnalysisResults([]);
+      setAnalysisFilenames([]);
       setReportStatus("");
       startProgressSimulator();
     },
-          onSuccess: (data: AnalysisResponse) => {
-            // Data from the server has the detailed breakdown nested inside the 'prediction' object.
-            const { prediction: predictionDetails } = data;
-
-            // Construct the PredictionResult object for the state
-            const predictionResult: PredictionResult = {
-              prediction: predictionDetails?.prediction,
-              confidence: predictionDetails?.confidence,
-              analysis_duration: predictionDetails?.analysis_duration,
-              analysis_breakdown: predictionDetails?.analysis_breakdown,
-              rambino_raw_score: predictionDetails?.rambino_raw_score,
-              rambino_features: predictionDetails?.rambino_features,
-            };
-
-            stopProgressSimulator();
-            setAnalysisResult(predictionResult); // Set the correctly structured result
-            setAnalysisFilename(data.filename ?? null);
-          },    onError: (error) => {
+    onSuccess: (data: AnalysisResponse[]) => {
       stopProgressSimulator();
-      setAnalysisResult(null); // Clear previous results
-      setAnalysisFilename(null);
+      const results: PredictionResult[] = [];
+      const filenames: string[] = [];
+      data.forEach((item) => {
+        const { prediction: predictionDetails } = item;
+        results.push({
+          prediction: predictionDetails?.prediction,
+          confidence: predictionDetails?.confidence,
+          analysis_duration: predictionDetails?.analysis_duration,
+          analysis_breakdown: predictionDetails?.analysis_breakdown,
+          rambino_raw_score: predictionDetails?.rambino_raw_score,
+          rambino_features: predictionDetails?.rambino_features,
+        });
+        filenames.push(item.filename ?? 'Unknown');
+      });
+      setAnalysisResults(results);
+      setAnalysisFilenames(filenames);
+    },
+    onError: (error) => {
+      stopProgressSimulator();
+      setAnalysisResults([]);
+      setAnalysisFilenames([]);
       setReportStatus(`Error: ${error.message}`);
       console.error('Error during analysis:', error);
     },
@@ -129,25 +131,31 @@ export function useCgiDetection(): UseCgiDetection {
     },
   });
 
-  const handleFileSelect = useCallback((file: File) => {
-    setSelectedFile(file);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImagePreviewUrl(e.target?.result as string);
-    };
-    reader.readAsDataURL(file);
+  const handleFileSelect = useCallback((files: File[]) => {
+    setSelectedFiles(files);
+    const urls: string[] = [];
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        urls.push(e.target?.result as string);
+        if (urls.length === files.length) {
+          setImagePreviewUrls(urls);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
     // Clear previous results
-    setAnalysisResult(null);
-    setAnalysisFilename(null);
+    setAnalysisResults([]);
+    setAnalysisFilenames([]);
     setReportStatus("");
   }, []);
 
   const handleClearImage = useCallback(() => {
-    console.log('Clearing image and analysis results.');
-    setSelectedFile(null);
-    setImagePreviewUrl(null);
-    setAnalysisResult(null);
-    setAnalysisFilename(null);
+    console.log('Clearing images and analysis results.');
+    setSelectedFiles([]);
+    setImagePreviewUrls([]);
+    setAnalysisResults([]);
+    setAnalysisFilenames([]);
     setProgressBarVisible(false);
     setCurrentProgress(0);
     setProgressText("");
@@ -159,24 +167,24 @@ export function useCgiDetection(): UseCgiDetection {
   }, []);
 
   const handleAnalyze = useCallback(() => {
-    if (selectedFile) {
-      analyzeMutation.mutate(selectedFile);
+    if (selectedFiles.length > 0) {
+      analyzeMutation.mutate(selectedFiles);
     }
-  }, [selectedFile, analyzeMutation]);
+  }, [selectedFiles, analyzeMutation]);
 
-  const handleReportSubmit = useCallback((correctionType: 'false_cgi' | 'false_real') => {
-    if (selectedFile && analysisResult) {
-      reportMutation.mutate({ file: selectedFile, userCorrection: correctionType, originalPrediction: analysisResult });
-    } else {
-      setReportStatus("Error: No analysis result or file to report.");
-    }
-  }, [selectedFile, analysisResult, reportMutation]);
+  // const handleReportSubmit = useCallback((correctionType: 'false_cgi' | 'false_real') => {
+  //   if (selectedFile && analysisResult) {
+  //     reportMutation.mutate({ file: selectedFile, userCorrection: correctionType, originalPrediction: analysisResult });
+  //   } else {
+  //     setReportStatus("Error: No analysis result or file to report.");
+  //   }
+  // }, [selectedFile, analysisResult, reportMutation]);
 
   return {
-    selectedFile,
-    imagePreviewUrl,
-    analysisResult,
-    analysisFilename,
+    selectedFiles,
+    imagePreviewUrls,
+    analysisResults,
+    analysisFilenames,
     progressBarVisible,
     progressText,
     currentProgress,
@@ -186,6 +194,6 @@ export function useCgiDetection(): UseCgiDetection {
     handleFileSelect,
     handleClearImage,
     handleAnalyze,
-    handleReportSubmit,
+    // handleReportSubmit,
   };
 }
