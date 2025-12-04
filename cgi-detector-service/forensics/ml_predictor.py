@@ -16,7 +16,7 @@ from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization
 import uuid # For generating unique filenames
 
-MODEL_PATH = "/app/forensics_data/ml_model.joblib"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml_model.joblib")
 FEEDBACK_DATASET_DIR = "/app/forensics_data/feedback_dataset"
 
 _current_ml_model = None # Global variable to hold the loaded model
@@ -178,7 +178,7 @@ def load_feedback_data():
                         all_labels.append(1 if label_dir_name == 'cgi' else 0)
                     except Exception as e:
                         print(f"Error processing feedback image {image_path}: {e}")
-    
+
     if not all_features:
         return np.array([]), np.array([])
 
@@ -287,7 +287,7 @@ def train_and_save_model(features: np.ndarray, labels: np.ndarray):
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(model, MODEL_PATH)
     print(f"RandomForestClassifier ML model saved to {MODEL_PATH}")
-    
+
     # Save training data
     training_data_path = MODEL_PATH.replace('.joblib', '_training_data.joblib')
     joblib.dump({'features': features, 'labels': labels}, training_data_path)

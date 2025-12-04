@@ -87,4 +87,12 @@ When adding new configuration options, update all relevant places:
 2. Configuration schemas in `src/config/`
 3. Documentation in README.md
 
+## Shell/Terminal Useful Command List (use this command list as caching for shell commands - you will construct a command only and only if you read the whole list and there didnt find any command that performs what you need it to)
+
+1. Calculate how many files are left to process in order to complete training on dataset 
+   ***Command:``` Shell jq '(.chunks | flatten | length) - (.image_tracking | keys | length)' cgi-detector-service/scripts/training_progress.json [current working directory /Users/amit/Projects/cgi-detection-photos] (Recalculating the number of files left to process by subtracting the number of tracked images from the total number of images in all chunks.)```
+   ***Syntax Example:``` [CWD] ✗ jq '(.chunks | flatten | length) - (.image_tracking | keys | length)' cgi-detector-service/scripts/training_progress.json .```
+   ***Result Example: ```94437```
+
+
 All configuration keys use consistent naming and MUST be documented.
