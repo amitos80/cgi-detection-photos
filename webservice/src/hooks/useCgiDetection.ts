@@ -88,11 +88,13 @@ export function useCgiDetection(): UseCgiDetection {
       setReportStatus("");
       startProgressSimulator();
     },
-    onSuccess: (data: AnalysisResponse[]) => {
+    onSuccess: (data: AnalysisResponse[] | AnalysisResponse) => {
       stopProgressSimulator();
       const results: PredictionResult[] = [];
       const filenames: string[] = [];
-      data.forEach((item) => {
+      const dataArray = Array.isArray(data) ? data : [data]; // Ensure data is an array
+
+      dataArray.forEach((item, index) => {
         const { prediction: predictionDetails } = item;
         results.push({
           prediction: predictionDetails?.prediction,
@@ -101,6 +103,7 @@ export function useCgiDetection(): UseCgiDetection {
           analysis_breakdown: predictionDetails?.analysis_breakdown,
           rambino_raw_score: predictionDetails?.rambino_raw_score,
           rambino_features: predictionDetails?.rambino_features,
+          imagePreviewUrl: imagePreviewUrls[index], // Associate image preview URL
         });
         filenames.push(item.filename ?? 'Unknown');
       });

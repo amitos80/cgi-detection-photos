@@ -4,7 +4,7 @@ from PIL import Image
 from io import BytesIO
 from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, jpeg_dimples
-from . import specialized_detectors  # <-- ADD THIS IMPORT
+from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
 
 _ml_model = ml_predictor.get_model() # Load ML model once at startup via get_model
@@ -169,7 +169,6 @@ def run_analysis(image_bytes: bytes):
                 print(f"Error running {name} analysis: {e}")
                 results[name] = 0.0 # Default/error value
 
-    # Assign collected scores to individual variables for downstream calculations.
     ela_score = results.get('ela', 0.0)
     cfa_score = results.get('cfa', 0.0)
     hos_score = results.get('hos', 0.0)
@@ -269,18 +268,18 @@ def run_analysis(image_bytes: bytes):
             "insight": "Analyzes lighting direction consistency across regions, shadow alignment, and lighting in high-contrast areas. High scores indicate inconsistent lighting typical of composites or CGI.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         },
-        {
-            "feature": "Specialized CGI/AIGC Detector",
-            "score": specialized_score,
-            "normal_range": [0.0, 0.4],
-            "insight": (
-                "Runs specialized detection for GAN, diffusion, face synthesis, and 3D rendering artifacts. "
-                "High scores indicate evidence of generative-AI or CGI. "
-                f"Type most likely: {specialized_likely_type}. "
-                f"Breakdown: {specialized_detector_scores}"
-            ),
-            "url": ""
-        },
+        # {
+        #     "feature": "Specialized CGI/AIGC Detector",
+        #     "score": specialized_score,
+        #     "normal_range": [0.0, 0.4],
+        #     "insight": (
+        #         "Runs specialized detection for GAN, diffusion, face synthesis, and 3D rendering artifacts. "
+        #         "High scores indicate evidence of generative-AI or CGI. "
+        #         f"Type most likely: {specialized_likely_type}. "
+        #         f"Breakdown: {specialized_detector_scores}"
+        #     ),
+        #     "url": ""
+        # },
         {
             "feature": "Deepfake Detection",
             "score": deepfake_score,
@@ -317,7 +316,7 @@ def run_analysis(image_bytes: bytes):
         result["rambino_features"] = rambino_features_list
 
     # Attach full specialized detector breakdown for inspection, if desired
-    result["specialized_detector_scores"] = specialized_detector_scores
-    result["specialized_likely_type"] = specialized_likely_type
+    # result["specialized_detector_scores"] = specialized_detector_scores
+    # result["specialized_likely_type"] = specialized_likely_type
 
     return result

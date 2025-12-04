@@ -15,6 +15,7 @@ export interface PredictionResult {
   analysis_breakdown?: Metric[];
   rambino_raw_score?: number;
   rambino_features?: unknown[];
+  imagePreviewUrl?: string; // Add this line
 }
 
 // This interface represents the actual flat structure returned by the backend API.
@@ -61,7 +62,7 @@ export const analyzeImage = async (files: File[]): Promise<AnalysisResponse[]> =
   return response.json();
 };
 
-interface ReportPayload {
+export interface ReportPayload {
   file: File;
   userCorrection: 'false_cgi' | 'false_real';
   originalPrediction: PredictionResult;

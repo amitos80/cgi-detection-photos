@@ -1,9 +1,13 @@
 import React from 'react';
-import type { PredictionResult } from '../api';
+import type { PredictionResult, ReportPayload } from '../api';
+import ReportForm from './ReportForm'; // Import ReportForm
 
 interface AnalysisResultsProps {
   filename: string;
   result: PredictionResult | null;
+  file: File; // Add file prop
+  onReportSubmit: (payload: ReportPayload) => void; // Update onReportSubmit prop to accept ReportPayload
+  reportStatus: string; // Add reportStatus prop
 }
 
 /**
@@ -12,14 +16,25 @@ interface AnalysisResultsProps {
  * @param {AnalysisResultsProps} props - The props for the AnalysisResults component.
  * @returns {JSX.Element | null} The AnalysisResults component or null if no result is provided.
  */
-const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) => {
+const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result, file, onReportSubmit, reportStatus }) => {
   if (!result) return null;
 
   const predictionTextClass = result.prediction === 'cgi' ? 'text-accent-danger' : 'text-accent-success';
   const confidence = result.confidence !== null && result.confidence !== undefined ? (result.confidence * 100).toFixed(2) : 'N/A';
 
+  const handleReportSubmit = (correctionType: 'false_cgi' | 'false_real') => {
+    if (result) {
+      onReportSubmit({ file, userCorrection: correctionType, originalPrediction: result }); // Construct and pass ReportPayload
+    }
+  };
+
   return (
     <div className="mt-8 p-6 bg-light rounded-xl shadow-lg border border-gray-200 dark:bg-dark-800 dark:border-dark-700">
+      {result.imagePreviewUrl && (
+        <div className="mb-6 flex justify-center">
+          <img src={result.imagePreviewUrl} alt="Image Preview" className="max-w-full h-auto rounded-lg shadow-md" style={{ maxWidth: '300px', maxHeight: '300px' }} />
+        </div>
+      )}
       <h2 className="text-2xl font-bold text-dark mb-5 border-b border-gray-200 pb-3 dark:text-light dark:border-dark-700 truncate">
         <span className="text-primary-dark">{filename || 'Unknown File'}</span>
       </h2>
@@ -107,6 +122,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result }) =
           </div>
         </div>
       )}
+      <ReportForm onReportSubmit={handleReportSubmit} reportStatus={reportStatus} />
     </div>
   );
 };

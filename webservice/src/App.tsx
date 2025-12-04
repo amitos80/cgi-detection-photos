@@ -11,13 +11,16 @@ import { useCgiDetection } from './hooks/useCgiDetection';
  */
 function App() {
   const {
+    selectedFiles, // Add selectedFiles
     imagePreviewUrls,
     analysisResults,
     analysisFilenames,
     progressBarVisible,
     progressText,
     currentProgress,
+    reportStatus, // Add reportStatus
     analyzeMutation,
+    reportMutation, // Add reportMutation
     handleFileSelect,
     handleClearImage,
     handleAnalyze,
@@ -50,7 +53,14 @@ function App() {
         {analysisResults.length > 0 && (
           <div className="space-y-4">
             {analysisResults.map((result, index) => (
-              <AnalysisResults key={index} filename={analysisFilenames[index] || 'Unknown File'} result={result} />
+              <AnalysisResults
+                key={index}
+                filename={analysisFilenames[index] || 'Unknown File'}
+                result={result}
+                file={selectedFiles[index]} // Pass the File object
+                onReportSubmit={reportMutation.mutate} // Pass the mutate function
+                reportStatus={reportStatus} // Pass reportStatus
+              />
             ))}
           </div>
         )}
