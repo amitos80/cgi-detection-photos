@@ -1,6 +1,7 @@
 import time
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request, Form
 from forensics import engine, ml_predictor
+from concurrent.futures import ThreadPoolExecutor
 
 app = FastAPI()
 
@@ -13,32 +14,53 @@ async def add_process_time_header(request: Request, call_next):
     print(f"Request to {request.url.path} completed in {process_time:.4f} seconds")
     return response
 
-@app.post("/analyze")
-async def predict_cgi(file: UploadFile = File(...)):
+def _analyze_single_image(file_data: bytes, filename: str):
     """
-    Receives an uploaded image, runs it through the forensic analysis engine,
-    and returns the results including analysis duration.
+    Helper function to analyze a single image and return its results.
     """
     start_time = time.time()
-    contents = await file.read()
-
     try:
-        print(f"DEBUG: Starting engine.run_analysis...")
-        results = engine.run_analysis(contents)
-        print(f"DEBUG: engine.run_analysis returned. Type: {type(results)}, Keys: {results.keys() if isinstance(results, dict) else 'N/A'}")
-        end_time = time.time()
-        
-        analysis_duration = round(end_time - start_time, 2)
+        results = engine.run_analysis(file_data)
+        analysis_duration = round(time.time() - start_time, 2)
         results['analysis_duration'] = analysis_duration
-        print(f"Image analysis completed in {analysis_duration:.2f} seconds")
-
+        return {"filename": filename, "prediction": results}
     except Exception as e:
-        print(f"ERROR: An exception occurred during analysis: {e}")
+        print(f"ERROR: An exception occurred during analysis of {filename}: {e}")
         import traceback
-        traceback.print_exc() # Print the full traceback
-        raise HTTPException(status_code=500, detail=f"An error occurred during analysis: {e}")
+        traceback.print_exc()
+        return {"filename": filename, "error": str(e)}
 
-    return results
+@app.post("/analyze")
+async def predict_cgi(files: list[UploadFile] = File(...)):
+    if len(files) > 5:
+        raise HTTPException(status_code=400, detail="Maximum 5 images allowed per request.")
+
+    if len(files) == 1:
+        file = files[0]
+        contents = await file.read()
+        result = _analyze_single_image(contents, file.filename)
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=f"An error occurred during analysis: {result['error']}")
+        return result
+    else:
+        with ThreadPoolExecutor() as executor:
+            tasks = []
+            for file in files:
+                contents = await file.read()
+                tasks.append(executor.submit(_analyze_single_image, contents, file.filename))
+            
+            results = []
+            for future in tasks:
+                results.append(future.result())
+        
+        # Check for errors in any of the results
+        for result in results:
+            if "error" in result:
+                # If any image failed, return a 500 with details of the first error encountered
+                raise HTTPException(status_code=500, detail=f"An error occurred during analysis of {result['filename']}: {result['error']}")
+        
+        return results
+
 
 @app.post("/report")
 async def receive_feedback(

@@ -15,6 +15,7 @@ export interface PredictionResult {
   analysis_breakdown?: Metric[];
   rambino_raw_score?: number;
   rambino_features?: unknown[];
+  imagePreviewUrl?: string; // Add this line
 }
 
 // This interface represents the actual flat structure returned by the backend API.
@@ -36,9 +37,11 @@ export interface ReportResponse {
   feedback: unknown; // Adjust this type based on actual feedback structure
 }
 
-export const analyzeImage = async (file: File): Promise<AnalysisResponse> => {
+export const analyzeImage = async (files: File[]): Promise<AnalysisResponse[]> => {
   const formData = new FormData();
-  formData.append('file', file);
+  files.forEach((file) => {
+    formData.append('files', file);
+  });
 
   const response = await fetch('/analyze', {
     method: 'POST',
@@ -59,7 +62,7 @@ export const analyzeImage = async (file: File): Promise<AnalysisResponse> => {
   return response.json();
 };
 
-interface ReportPayload {
+export interface ReportPayload {
   file: File;
   userCorrection: 'false_cgi' | 'false_real';
   originalPrediction: PredictionResult;

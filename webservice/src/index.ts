@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configure multer for file uploads
-const upload = multer({ dest: path.join(__dirname, 'temp') }); // Temp directory within webservice container
+const upload = multer({ dest: path.join(__dirname, 'temp'), limits: { fieldSize: 10 * 1024 * 1024 } }); // Temp directory within webservice container
 
 // Ensure temp directory exists
 const tempDir = path.join(__dirname, 'temp');
@@ -28,24 +28,25 @@ app.get('*', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-app.post('/analyze', upload.single('file'), async (req: Request, res: Response) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded.' });
+app.post('/analyze', upload.array('files'), async (req: Request, res: Response) => {
+  if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
+    return res.status(400).json({ error: 'No files uploaded.' });
   }
 
-  const filePath = req.file.path;
+  const uploadedFiles = req.files as Express.Multer.File[];
+
   try {
-    const imageBuffer = await fs.readFile(filePath);
-
-    // Create a form and append the file
     const form = new FormData();
-    form.append('file', imageBuffer, {
-        filename: req.file.originalname,
-        contentType: req.file.mimetype,
-    });
+    for (const file of uploadedFiles) {
+      const imageBuffer = await fs.readFile(file.path);
+      form.append('files', imageBuffer, {
+        filename: file.originalname,
+        contentType: file.mimetype,
+      });
+    }
 
-    // Forward the image to the Python AI microservice
-    const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://cgi-detector-service:8000/predict';
+    // Forward the images to the Python AI microservice
+    const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://cgi-detector-service:8000/analyze';
     const response = await fetch(pythonServiceUrl, {
       method: 'POST',
       body: form,
@@ -58,7 +59,7 @@ app.post('/analyze', upload.single('file'), async (req: Request, res: Response) 
     }
 
     const predictionResult = await response.json();
-    res.json({ filename: req.file.originalname, prediction: predictionResult });
+    res.json(predictionResult);
 
   } catch (e: unknown) {
     let errorMessage = 'Processing failed';
@@ -68,8 +69,10 @@ app.post('/analyze', upload.single('file'), async (req: Request, res: Response) 
     console.error('Processing failed:', e);
     res.status(500).json({ error: errorMessage, details: errorMessage });
   } finally {
-    // Clean up the temporary file
-    await fs.unlink(filePath).catch(console.error);
+    // Clean up all temporary files
+    for (const file of uploadedFiles) {
+      await fs.unlink(file.path).catch(console.error);
+    }
   }
 });
 
@@ -93,7 +96,7 @@ app.post('/report', upload.single('file'), async (req: Request, res: Response) =
     form.append('userCorrection', userCorrection);
     form.append('originalPrediction', originalPrediction);
 
-    const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://cgi-detector-service:8000/feedback';
+    const pythonServiceUrl = process.env.PYTHON_SERVICE_URL_FEEDBACK || 'http://cgi-detector-service:8000/report';
     const response = await fetch(pythonServiceUrl, {
       method: 'POST',
       body: form,
