@@ -6,6 +6,7 @@ from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, jpeg_dimples
 from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
+from . import watermarking
 
 _ml_model = ml_predictor.get_model() # Load ML model once at startup via get_model
 
@@ -120,6 +121,7 @@ def run_analysis(image_bytes: bytes):
         futures['deepfake'] = executor.submit(deepfake_detector.detect_deepfake, processed_image_bytes)
         futures['reflection_inconsistency'] = executor.submit(reflection_consistency.detect_reflection_inconsistencies, processed_image_bytes)
         futures['double_quantization'] = executor.submit(double_quantization.detect_double_quantization, processed_image_bytes)
+        futures['watermark'] = executor.submit(watermarking.analyze_watermark, processed_image_bytes)
 
         # RAMBiNo analysis requires specific image preprocessing (grayscale conversion to NumPy array).
         # This helper function encapsulates the RAMBiNo-specific logic, including image conversion,
@@ -159,6 +161,12 @@ def run_analysis(image_bytes: bytes):
                         results['specialized'] = 0.0
                         specialized_detector_scores = {}
                         specialized_likely_type = 'Unknown'
+                elif name == 'watermark':
+                    try:
+                        results['watermark'] = future.result()
+                    except Exception as e:
+                        print(f"Error running watermark analysis subprocess: {e}")
+                        results['watermark'] = 0.0 # Default/error value
                 else:
                     try:
                         results[name] = future.result()
@@ -181,12 +189,13 @@ def run_analysis(image_bytes: bytes):
     deepfake_score = results.get('deepfake', {}).get('confidence', 0.0)
     reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
     double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
+    watermark_score = results.get('watermark', 0.0)
 
     # Create feature vector for ML model
     ml_features = [
         ela_score, cfa_score, hos_score, jpeg_ghost_score, jpeg_dimples_score, rambino_score,
         geometric_score, lighting_score, specialized_score,
-        deepfake_score, reflection_score, double_quantization_score
+        deepfake_score, reflection_score, double_quantization_score, watermark_score
     ]
 
     # Replace any NaN values in ml_features with 0.0 to prevent prediction errors
@@ -300,6 +309,13 @@ def run_analysis(image_bytes: bytes):
             "normal_range": [0.0, 0.7],
             "insight": "Detects re-encoding artifacts in video frames. High scores suggest video manipulation.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/video-forensics/"
+        },
+        {
+            "feature": "Digital Watermark Detection",
+            "score": watermark_score,
+            "normal_range": [0.0, 0.1],
+            "insight": "Analyzes images for hidden digital watermarks using LSB and FFT. High scores suggest the presence of a watermark.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
         }
     ]
 
