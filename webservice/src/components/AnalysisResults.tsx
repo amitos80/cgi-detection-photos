@@ -80,24 +80,25 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ filename, result, fil
                     ></div>
                     <div
                       className={`absolute h-full w-1 rounded-full opacity-75 
-                      ${(scoreLeft > rangeWidth || scoreLeft < rangeLeft) ?
-	                      'bg-red-400' :
-	                      'bg-green-500'}`}
+                      ${(scoreLeft >= rangeWidth ?
+	                      'bg-red-400' : scoreLeft <= min ?
+		                      'bg-yellow-500' : 'bg-green-500'
+                      )}`}
                       style={{
 												left: `${scoreLeft >= 100 ? 99 : scoreLeft}%`,
 										}}
                     ></div>
                   </div>
                   <div className="relative w-full h-4 mt-1 text-xs text-dark-600 dark:text-light-600">
-                    <span className="text-green-600" style={{ position: 'absolute', left: `0%`, transform: 'translateX(-50%)' }}>
+	                  {scoreLeft > min && <span className="text-green-600" style={{ position: 'absolute', left: `0%`, transform: 'translateX(-50%)' }}>
                       {min}
-                    </span>
+                    </span>}
                     <span className="text-green-600" style={{ position: 'absolute', left: `${max * 100}%`, transform: 'translateX(-50%)' }}>
                       {max.toFixed(2)}
                     </span>
                     <span
                       className={`font-bold ${
-                        (scoreLeft > (max * 100) ||
+                        (scoreLeft >= (max * 100) ||
 	                        scoreLeft < (min * 100)) ?
 	                        'text-red-500' :
 	                        'text-green-600'

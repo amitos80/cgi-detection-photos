@@ -196,20 +196,32 @@ def _get_base_training_data():
     it generates dummy data.
     """
     training_data_path = MODEL_PATH.replace('.joblib', '_training_data.joblib')
+    print(f"DEBUG: _get_base_training_data - Checking for training data at {training_data_path}")
     if os.path.exists(training_data_path):
-        print(f"Loading base training data from {training_data_path}...")
+        print(f"DEBUG: _get_base_training_data - Loading base training data from {training_data_path}...")
         try:
             training_data = joblib.load(training_data_path)
-            return training_data['features'], training_data['labels']
+            loaded_features = training_data['features']
+            loaded_labels = training_data['labels']
+            print(f"DEBUG: _get_base_training_data - Loaded features shape: {loaded_features.shape}")
+
+            if loaded_features.shape[1] == 12: # If old 12-feature data is found
+                print("DEBUG: _get_base_training_data - Old 12-feature base training data found, regenerating with 13 features.")
+                base_features = np.random.rand(100, 13)
+                base_labels = np.random.randint(0, 2, 100)
+                return base_features, base_labels
+            else:
+                print("DEBUG: _get_base_training_data - Using loaded training data.")
+                return loaded_features, loaded_labels
         except Exception as e:
-            print(f"Could not load training data, starting fresh: {e}")
+            print(f"DEBUG: _get_base_training_data - Could not load training data, starting fresh: {e}")
             # Fallback to dummy data if loading fails
-            base_features = np.random.rand(100, 12)
+            base_features = np.random.rand(100, 13)
             base_labels = np.random.randint(0, 2, 100)
             return base_features, base_labels
     else:
-        print("Generating initial dummy training data...")
-        base_features = np.random.rand(100, 12)
+        print("DEBUG: _get_base_training_data - Generating initial dummy training data with 13 features...")
+        base_features = np.random.rand(100, 13)
         base_labels = np.random.randint(0, 2, 100)
         return base_features, base_labels
 
@@ -251,10 +263,28 @@ def load_model():
     global _current_ml_model
     if _current_ml_model is None or not os.path.exists(MODEL_PATH):
         if not os.path.exists(MODEL_PATH):
-            print(f"Model not found at {MODEL_PATH}. Performing initial training...")
+            print(f"DEBUG: load_model - Model not found at {MODEL_PATH}. Performing initial training...")
             retrain_with_feedback() # Perform initial training
+        else:
+            print(f"DEBUG: load_model - Model exists at {MODEL_PATH}, but not loaded. Loading now...")
         _current_ml_model = joblib.load(MODEL_PATH)
-        print(f"ML model loaded from {MODEL_PATH}")
+        print(f"DEBUG: load_model - ML model loaded from {MODEL_PATH}")
+
+        # After loading, validate feature count
+        if hasattr(_current_ml_model, 'n_features_in_') and _current_ml_model.n_features_in_ == 12:
+            print("DEBUG: load_model - Loaded model has 12 features, but 13 are expected. Forcing retraining...")
+            os.remove(MODEL_PATH)
+            training_data_path = MODEL_PATH.replace('.joblib', '_training_data.joblib')
+            if os.path.exists(training_data_path):
+                os.remove(training_data_path)
+            _current_ml_model = None # Clear current model to force retraining
+            retrain_with_feedback()
+            # After retraining, the new 13-feature model will be loaded by the subsequent get_model() call
+            # This recursive call to get_model() will now find a valid 13-feature model or train one.
+            return get_model()
+
+    else:
+        print("DEBUG: load_model - ML model already loaded.")
     return _current_ml_model
 
 def get_model():
@@ -279,6 +309,7 @@ def train_and_save_model(features: np.ndarray, labels: np.ndarray):
     Trains a RandomForestClassifier and saves it and its training data to files.
     """
     print("Training RandomForestClassifier ML model...")
+    print(f"DEBUG: train_and_save_model - Features shape for training: {features.shape}")
     # Split data for demonstration
     X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
 

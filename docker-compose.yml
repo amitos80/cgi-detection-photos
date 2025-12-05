@@ -17,17 +17,19 @@ services:
 
   cgi-detector-service:
     build:
-      context: ./cgi-detector-service
+      context: ./src/cgi-detector-service
       dockerfile: Dockerfile
     expose:
       - "8000"
     volumes:
       - cgi_forensics_data:/app/forensics_data
+      - cgi_models_data:/app/forensics
     networks:
       - cgi-detection-network
 
 volumes:
   cgi_forensics_data:
+  cgi_models_data:
 
 networks:
   cgi-detection-network:
