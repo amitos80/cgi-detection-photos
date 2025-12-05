@@ -14,6 +14,7 @@ from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, jpeg_dimples
 from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization
+from . import watermarking
 import uuid # For generating unique filenames
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml_model.joblib")
@@ -108,6 +109,7 @@ def extract_features_from_image_bytes(image_bytes: bytes) -> np.ndarray:
         futures['reflection_inconsistency'] = executor.submit(reflection_consistency.detect_reflection_inconsistencies, processed_image_bytes)
         futures['double_quantization'] = executor.submit(double_quantization.detect_double_quantization, processed_image_bytes)
         futures['rambino'] = executor.submit(run_rambino_analysis, processed_image_bytes)
+        futures['watermark'] = executor.submit(watermarking.analyze_watermark, processed_image_bytes)
 
         results = {}
         for name, future in futures.items():
@@ -118,6 +120,8 @@ def extract_features_from_image_bytes(image_bytes: bytes) -> np.ndarray:
                 elif name == 'specialized_detector':
                     specialized_result = future.result()
                     results['specialized'] = specialized_result.get('overall_score', 0.0)
+                elif name == 'watermark':
+                    results['watermark'] = future.result()
                 else:
                     results[name] = future.result()
             except Exception as e:
@@ -136,11 +140,12 @@ def extract_features_from_image_bytes(image_bytes: bytes) -> np.ndarray:
     deepfake_score = results.get('deepfake', {}).get('confidence', 0.0)
     reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
     double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
+    watermark_score = results.get('watermark', 0.0)
 
     ml_features = [
         ela_score, cfa_score, hos_score, jpeg_ghost_score, jpeg_dimples_score, rambino_score,
         geometric_score, lighting_score, specialized_score,
-        deepfake_score, reflection_score, double_quantization_score
+        deepfake_score, reflection_score, double_quantization_score, watermark_score
     ]
     return np.asarray(ml_features).reshape(1, -1)
 
