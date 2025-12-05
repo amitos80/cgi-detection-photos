@@ -36,6 +36,17 @@ and server (`server/`) components.
 - NEVER use `@ts-expect-error` or `@ts-ignore` to suppress type errors
 - Maximum number of lines in a files is 200 (extract parts to other file or split file if needed)
 
+## Development Progress Reporting
+
+- Every time a Step of a Task in **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```sh ./communication_scripts/step_done.sh```
+- Every time a Task from **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```sh ./communication_scripts/task_done.sh```
+- Every time a Development Plan **[./development-progress-tracking/CURRENT_DEVELOPMENT_PLAN.md]** is done run the following command in shell: ```sh ./communication_scripts/development_plan_completed.sh```
+- Every time you have a question for me run the following command in shell: ```sh ./communication_scripts/question.sh```
+- Every time you have a question for me run the following command in shell: ```sh ./communication_scripts/question.sh```
+- Every time you finished a task and you go to idle because the is nothing else to complete run the following command in shell: ```sh ./communication_scripts/context_loaded.sh```
+- Every time context is being generated from **[./GEMINI.md]** to MCP server run the following command in shell: ```sh ./communication_scripts/context_loaded.sh```
+
+
 ## Testing
 
 - Vitest for unit testing

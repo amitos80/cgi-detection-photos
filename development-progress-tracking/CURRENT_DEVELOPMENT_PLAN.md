@@ -37,7 +37,8 @@ The new `watermarking.py` module needs to be integrated into the main analysis p
 3.  **Collect Results**: Retrieve the `watermark_score` from the executed task.
 4.  **Update Feature Vector**: Add the `watermark_score` to the `ml_features` list that is fed to the machine learning model.
 5.  **Update Analysis Breakdown**: Add a new dictionary to the `analysis_breakdown` list to provide users with information about the watermark analysis, its score, and what it means.
-    x
+    5.  **Update Analysis Breakdown**: Add a new dictionary to the `analysis_breakdown` list to provide users with information about the watermark analysis, its score, and what it means.
+
 ## 4. Machine Learning Model Update (`ml_predictor.py`)
 
 The addition of a new feature requires an update to the ML model pipeline.
