@@ -1,43 +1,45 @@
 import cProfile
 import pstats
-from io import BytesIO
-from PIL import Image
-import sys
+import io
 import os
-# Add the project root to sys.path to allow absolute imports from cgi_detector_service
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from cgi_detector_service.forensics.watermarking import analyze_watermark
+import numpy as np
+import cv2
+from cgi_detector_service.forensics import watermarking
 
-# Helper function to create a dummy image
-def create_dummy_image(width, height, color=(128, 128, 128)) -> bytes:
-    img = Image.new("RGB", (width, height), color)
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    return buffered.getvalue()
+def create_dummy_image_bytes(width=512, height=512, format='png') -> bytes:
+    """Helper to create a dummy image for profiling."""
+    img = np.random.randint(0, 256, (height, width, 3), dtype=np.uint8)
+    _, encoded_image = cv2.imencode(f'.{format}', img)
+    return encoded_image.tobytes()
 
-def profile_analyze_watermark():
-    print("Starting profiling for analyze_watermark...")
-    dummy_image_bytes = create_dummy_image(800, 600) # Create a medium-sized image
+def profile_watermarking_analysis():
+    """
+    Profiles the watermarking analysis function with a dummy image.
+    """
+    print("Starting profiling for watermarking.analyze_watermark...")
+    image_bytes = create_dummy_image_bytes()
 
-    # Profile the function call
-    profiler = cProfile.Profile()
-    profiler.enable()
+    pr = cProfile.Profile()
+    pr.enable()
 
-    # Run the function multiple times for a more reliable profile
-    for _ in range(50):
-        analyze_watermark(dummy_image_bytes)
+    # Run the function to be profiled
+    _ = watermarking.analyze_watermark(image_bytes)
 
-    profiler.disable()
-    print("Profiling finished.")
+    pr.disable()
 
-    # Save and print the profiling results
-    stats_path = "watermark_profiling_results.prof"
-    with open(stats_path, "w") as f:
-        stats = pstats.Stats(profiler, stream=f)
-        stats.sort_stats("cumulative")
-        stats.print_stats()
+    s = io.StringIO()
+    sortby = 'cumulative'
+    ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+    ps.print_stats()
 
-    print(f"Profiling results saved to {stats_path}")
+    print(s.getvalue())
+    print("Profiling complete.")
 
-if __name__ == "__main__":
-    profile_analyze_watermark()
+    # Optionally save to a file
+    output_dir = os.path.join(os.path.dirname(__file__), "..", "..") # Go up to project root
+    output_file = os.path.join(output_dir, "watermarking_profile.prof")
+    pr.dump_stats(output_file)
+    print(f"Profiling data saved to {output_file}")
+
+if __name__ == '__main__':
+    profile_watermarking_analysis()

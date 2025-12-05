@@ -1,6 +1,245 @@
 {
-   "chunks": [],
-   "image_tracking": {},
-   "currently_being_processed": '',
-   "current_chunkId": ''
+    "chunks": [
+        [
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Biden_and_Putin_fake.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Boris_Johns_fake.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_122dic122dic122d.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_8argkz8argkz8arg.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_d41qurd41qurd41q.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_d5xe0xd5xe0xd5xe.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_mvlyz3mvlyz3mvly.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_pyh807pyh807pyh8.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_q8kks4q8kks4q8kk.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Gemini_Generated_Image_v02ovsv02ovsv02o.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/Rishi_Sunak_sat_on_a_pil_fake.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/WhatsApp Image 2025-12-02 at 16.03.47.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/WhatsApp Image 2025-12-02 at 17.41.09 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/WhatsApp Image 2025-12-02 at 17.41.10 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/WhatsApp Image 2025-12-02 at 17.41.10.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/WhatsApp Image 2025-12-03 at 21.29.16 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/eremy_Corb_fake.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/guitarAI.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/interview_news_2015_gemini.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/jerusalem.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/my_building_front_chatgpt.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/my_building_front_gemini.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/nyc.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/ramathagolan.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/streettlv.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/talifraser_fake.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/FAKE/telaviv_1959.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/IMG-20230723-WA0004.jpg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/Screenshot 2025-12-01 at 18.36.16.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/Screenshot 2025-12-01 at 18.41.31.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/Screenshot 2025-12-04 at 11.16.01.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/Screenshot 2025-12-04 at 11.42.10.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/Screenshot 2025-12-04 at 11.44.18.png",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.04.59.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.01 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.01 (3).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.01 (4).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.02 (2).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.02 (3).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.02.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.04 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.04.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.05 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.05 (2).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-02 at 21.05.05.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-18 at 18.00.37 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-18 at 18.00.37 (2).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-09-18 at 18.00.37.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-11-20 at 22.26.28.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-12-02 at 16.33.25.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image 2025-12-03 at 21.29.16 (2).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image Jul 16 2025.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image Jul 17 2025 (1).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image Jul 17 2025 (2).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image Jul 17 2025 (3).jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/WhatsApp Image Jul 17 2025.jpeg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/interview_news_2015.jpg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/my_building_front.jpg",
+            "/Users/amit/Projects/cgi-detection-photos/dataset/train/REAL/my_building_front_orig.jpeg"
+        ]
+    ],
+    "image_tracking": {
+        "Biden_and_Putin_fake_png": {
+            "status": "completed"
+        },
+        "Boris_Johns_fake_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_122dic122dic122d_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_mvlyz3mvlyz3mvly_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_d41qurd41qurd41q_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_8argkz8argkz8arg_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_d5xe0xd5xe0xd5xe_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_pyh807pyh807pyh8_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_q8kks4q8kks4q8kk_png": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_02_at_16_03_47_jpeg": {
+            "status": "completed"
+        },
+        "guitarAI_jpeg": {
+            "status": "completed"
+        },
+        "eremy_Corb_fake_png": {
+            "status": "completed"
+        },
+        "Gemini_Generated_Image_v02ovsv02ovsv02o_png": {
+            "status": "completed"
+        },
+        "Rishi_Sunak_sat_on_a_pil_fake_png": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_03_at_21_29_16_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_02_at_17_41_10_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_02_at_17_41_09_1_jpeg": {
+            "status": "completed"
+        },
+        "my_building_front_chatgpt_png": {
+            "status": "completed"
+        },
+        "my_building_front_gemini_png": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_02_at_17_41_10_jpeg": {
+            "status": "completed"
+        },
+        "jerusalem_png": {
+            "status": "completed"
+        },
+        "nyc_png": {
+            "status": "completed"
+        },
+        "streettlv_png": {
+            "status": "completed"
+        },
+        "ramathagolan_png": {
+            "status": "completed"
+        },
+        "interview_news_2015_gemini_png": {
+            "status": "completed"
+        },
+        "IMG_20230723_WA0004_jpg": {
+            "status": "completed"
+        },
+        "telaviv_1959_png": {
+            "status": "completed"
+        },
+        "talifraser_fake_png": {
+            "status": "completed"
+        },
+        "Screenshot_2025_12_01_at_18_41_31_png": {
+            "status": "completed"
+        },
+        "Screenshot_2025_12_04_at_11_42_10_png": {
+            "status": "completed"
+        },
+        "Screenshot_2025_12_04_at_11_16_01_png": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_04_59_jpeg": {
+            "status": "completed"
+        },
+        "Screenshot_2025_12_01_at_18_36_16_png": {
+            "status": "completed"
+        },
+        "Screenshot_2025_12_04_at_11_44_18_png": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_02_2_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_02_3_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_01_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_01_3_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_02_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_01_4_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_04_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_05_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_05_2_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_05_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_02_at_21_05_04_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_18_at_18_00_37_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_18_at_18_00_37_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_11_20_at_22_26_28_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_09_18_at_18_00_37_2_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_Jul_16_2025_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_03_at_21_29_16_2_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_Jul_17_2025_1_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_2025_12_02_at_16_33_25_jpeg": {
+            "status": "completed"
+        },
+        "my_building_front_orig_jpeg": {
+            "status": "completed"
+        },
+        "my_building_front_jpg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_Jul_17_2025_2_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_Jul_17_2025_jpeg": {
+            "status": "completed"
+        },
+        "WhatsApp_Image_Jul_17_2025_3_jpeg": {
+            "status": "completed"
+        },
+        "interview_news_2015_jpg": {
+            "status": "completed"
+        }
+    },
+    "currently_being_processed": null
 }
