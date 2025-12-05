@@ -14,16 +14,31 @@ async def add_process_time_header(request: Request, call_next):
     print(f"Request to {request.url.path} completed in {process_time:.4f} seconds")
     return response
 
+from PIL import Image
+from io import BytesIO
+# ... (rest of imports)
+
 def _analyze_single_image(file_data: bytes, filename: str):
     """
     Helper function to analyze a single image and return its results.
     """
     start_time = time.time()
     try:
+        # Validate image size
+        image = Image.open(BytesIO(file_data))
+        width, height = image.size
+        if width < 480 or height < 480:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Image resolution too low for {filename}. Minimum resolution is 480x480 pixels."
+            )
+
         results = engine.run_analysis(file_data)
         analysis_duration = round(time.time() - start_time, 2)
         results['analysis_duration'] = analysis_duration
         return {"filename": filename, "prediction": results}
+    except HTTPException as e:
+        raise e  # Re-raise HTTPException directly
     except Exception as e:
         print(f"ERROR: An exception occurred during analysis of {filename}: {e}")
         import traceback

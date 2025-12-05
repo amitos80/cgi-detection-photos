@@ -65,10 +65,13 @@ function App() {
           </div>
         )}
 
+        {analyzeMutation.isError && analysisResults.length === 0 && (
+          <p className="text-accent-danger mt-4 text-center text-lg font-medium">Error: {analyzeMutation.error?.message}</p>
+        )}
+
         {/* {analysisResults.length > 0 && selectedFiles.length > 0 && (
           <ReportForm onReportSubmit={handleReportSubmit} reportStatus={reportStatus} />
         )} */}
-
         {/* {reportMutation.isError && <p className="text-accent-danger mt-2">Error reporting result: {reportMutation.error?.message}</p>} */}
 
       </div>
