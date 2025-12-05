@@ -329,6 +329,14 @@ This method utilizes advanced statistical modeling of image noise to detect mani
 To ensure a robust and resumable training process, the `train_model.py` script implements a detailed progress tracking and chunking system.
 
 1.  **Progress File (`training_progress.json`):** A central JSON file is used to track the entire training process. It is located at `cgi-detector-service/scripts/training_progress.json`.
+2.  **When starting to train a new dataset always initial the file (`training_progress.json`):**: 
+    ***ZERO Progress should reflect in training_progress.json like that*** 
+    ```{
+           "chunks": [],
+           "image_tracking": {},
+           "currently_being_processed": "",
+           "current_chunkId": -1
+        }```
 
 2.  **Initialization:**
     *   On its first run, the script scans the entire dataset.
