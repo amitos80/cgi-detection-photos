@@ -21,7 +21,13 @@ def _analyze_single_image(file_data: bytes, filename: str):
     start_time = time.time()
     try:
         results = engine.run_analysis(file_data)
-        analysis_duration = round(time.time() - start_time, 2)
+        if "error" in results:
+            return {"filename": filename, "error": results["error"]}
+            
+        analysis_duration = round(time.time() - start_t
+        
+        
+        ime, 2)
         results['analysis_duration'] = analysis_duration
         return {"filename": filename, "prediction": results}
     except Exception as e:
@@ -40,6 +46,8 @@ async def predict_cgi(files: list[UploadFile] = File(...)):
         contents = await file.read()
         result = _analyze_single_image(contents, file.filename)
         if "error" in result:
+            if "Image resolution is too low" in result["error"]:
+                raise HTTPException(status_code=400, detail=f"Analysis of {result['filename']} failed: {result['error']}")
             raise HTTPException(status_code=500, detail=f"An error occurred during analysis: {result['error']}")
         return result
     else:

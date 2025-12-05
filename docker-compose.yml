@@ -12,6 +12,8 @@ services:
       PYTHON_SERVICE_URL_FEEDBACK: http://cgi-detector-service:8000/report
     depends_on:
       - cgi-detector-service
+    links:
+      - "cgi-detector-service"
     networks:
       - cgi-detection-network
 

@@ -89,6 +89,13 @@ def run_analysis(image_bytes: bytes):
     # Open and downsize the image
     try:
         original_image = Image.open(BytesIO(image_bytes))
+        
+        # Check for minimum image dimensions before proceeding
+        if original_image.width < 128 or original_image.height < 128:
+            return {
+                "error": "Image resolution is too low for an accurate analysis."
+            }
+            
         downsized_image = downsize_image_to_480p(original_image)
 
         # Convert the downsized image back to bytes for analysis functions
