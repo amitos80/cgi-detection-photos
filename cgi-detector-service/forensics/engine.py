@@ -6,7 +6,7 @@ from concurrent.futures import ProcessPoolExecutor
 from . import ela, cfa, hos, jpeg_ghost, rambino, geometric_3d, lighting_text, jpeg_dimples
 from . import specialized_detectors
 from . import deepfake_detector, reflection_consistency, double_quantization, ml_predictor
-from . import watermarking
+from . import watermarking, statistical_anomaly
 
 _ml_model = ml_predictor.get_model() # Load ML model once at startup via get_model
 
@@ -122,6 +122,7 @@ def run_analysis(image_bytes: bytes):
         futures['reflection_inconsistency'] = executor.submit(reflection_consistency.detect_reflection_inconsistencies, processed_image_bytes)
         futures['double_quantization'] = executor.submit(double_quantization.detect_double_quantization, processed_image_bytes)
         futures['watermark'] = executor.submit(watermarking.analyze_watermark, processed_image_bytes)
+        futures['statistical_anomaly'] = executor.submit(statistical_anomaly.analyze_statistical_anomaly, processed_image_bytes)
 
         # RAMBiNo analysis requires specific image preprocessing (grayscale conversion to NumPy array).
         # This helper function encapsulates the RAMBiNo-specific logic, including image conversion,
@@ -190,12 +191,13 @@ def run_analysis(image_bytes: bytes):
     reflection_score = results.get('reflection_inconsistency', {}).get('confidence', 0.0)
     double_quantization_score = results.get('double_quantization', {}).get('confidence', 0.0)
     watermark_score = results.get('watermark', 0.0)
+    statistical_anomaly_score = results.get('statistical_anomaly', 0.0)
 
     # Create feature vector for ML model
     ml_features = [
         ela_score, cfa_score, hos_score, jpeg_ghost_score, jpeg_dimples_score, rambino_score,
         geometric_score, lighting_score, specialized_score,
-        deepfake_score, reflection_score, double_quantization_score, watermark_score
+        deepfake_score, reflection_score, double_quantization_score, watermark_score, statistical_anomaly_score
     ]
 
     # Replace any NaN values in ml_features with 0.0 to prevent prediction errors
@@ -315,6 +317,13 @@ def run_analysis(image_bytes: bytes):
             "score": watermark_score,
             "normal_range": [0.0, 0.1],
             "insight": "Analyzes images for hidden digital watermarks using LSB and FFT. High scores suggest the presence of a watermark.",
+            "url": "https://farid.berkeley.edu/research/digital-forensics/"
+        },
+        {
+            "feature": "Statistical Anomaly Detection",
+            "score": statistical_anomaly_score,
+            "normal_range": [0.0, 0.3],
+            "insight": "Detects subtle statistical inconsistencies in image regions that deviate from natural characteristics, often indicative of AI generation.",
             "url": "https://farid.berkeley.edu/research/digital-forensics/"
         }
     ]
