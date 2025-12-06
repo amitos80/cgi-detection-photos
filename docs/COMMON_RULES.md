@@ -1,40 +1,28 @@
-# Common Rules For All Projects Must Be Enforced
+# Common Rules For All Projects Must Be Complied With At All Times
 
-This project is a full-stack web application with TypeScript frontend and Node.js backend.
-The core functionality lives in the `src/` folder, with separate client (`client/`)
-and server (`server/`) components.
+## Shell/Terminal Work Guidelines Mandatory Rules
 
-## Build & Commands
-
-- Typecheck and lint everything: `pnpm check`
-- Fix linting/formatting: `pnpm check:fix`
-- Run tests: `pnpm test --run --no-color`
-- Run single test: `pnpm test --run src/file.test.ts`
-- Start development server: `pnpm dev`
-- Build for production: `pnpm build`
-- Preview production build: `pnpm preview`
-
-### Development Environment
-
-- Frontend dev server: http://localhost:3000
-- Backend dev server: http://localhost:3001
-- Database runs on port 5432
-- Redis cache on port 6379
+1. Infinite wait for command's input/status/etc prevention:
+   a. use flags for minimal shell-interactions, important examples:
+      1. flags -y or --yes: Automatically answers "yes" to any confirmation prompts. This is common in package managers like apt, yum, or brew
+      2. flags -f or --force: Forces an action without asking for confirmation, even if the operation is potentially dangerous (e.g., in rm or cp)
+      3. flags -q or --quiet: Suppresses non-error output, useful for scripts where you only need to know if the command succeeded or failed (e.g., grep -q)
+      4. flags -s or --silent: Similar to --quiet, often suppressing even error messages in some commands
+      5. flags -n or --no-act / --dry-run: Instructs the program to show what it would do without actually performing the action. This is a safety measure, not a way to run the command non-interactively in production
+   
+   6. b. infinit wait detection by using timeouts
+      1. before executing a shell/terminal command always start a timeout of the most reasonable value for the command to finish running  
+      2. if a timeout passed before the command finished, abort the command   
+      3. notify the user in the by running the following command in shell/terminal: say "shell command timeout passed, aborted command"
 
 ## Code Style
 
-- TypeScript: Strict mode with exactOptionalPropertyTypes, noUncheckedIndexedAccess
 - Tabs for indentation (2 spaces for YAML/JSON/MD)
-- Single quotes, no semicolons, trailing commas
 - Use JSDoc docstrings for documenting TypeScript definitions, not `//` comments
-- 100 character line limit
-- Imports: Use consistent-type-imports
-- Use descriptive variable/function names
+- The number of characters in a single line show never exceeds 120 
 - In CamelCase names, use "URL" (not "Url"), "API" (not "Api"), "ID" (not "Id")
-- Prefer functional programming patterns
-- Use TypeScript interfaces for public APIs
-- NEVER use `@ts-expect-error` or `@ts-ignore` to suppress type errors
-- Maximum number of lines in a files is 200 (extract parts to other file or split file if needed)
+- NEVER supress/ignore errors without asking for permission first (i.e: `@ts-expect-error` or `@ts-ignore` to suppress type errors)
+
 
 ## Testing
 
@@ -46,16 +34,6 @@ and server (`server/`) components.
 - Omit "should" from test names (e.g., `it("validates input")` not `it("should validate input")`)
 - Test files: `*.test.ts` or `*.spec.ts`
 - Mock external dependencies appropriately
-
-## Architecture
-
-- Frontend: React with TypeScript
-- Backend: Express.js with TypeScript
-- Database: PostgreSQL with Prisma ORM
-- State management: Zustand
-- Styling: Tailwind CSS
-- Build tool: Vite
-- Package manager: pnpm
 
 ## AI
 
@@ -85,20 +63,5 @@ and server (`server/`) components.
 When adding new configuration options, update all relevant places:
 1. Environment variables in `.env.example`
 2. Configuration schemas in `src/config/`
-3. Documentation in README.md
+3. Documentation in the nearest (to the files/added/deleted/changed) README.md
 
-## Using Shell/Terminal Rules
-
-1. Prevent Waiting (Hang/Stuck forever) on Interactive Shell for output by:
-    - use flags where possible for planned interactive shell 
-    - use reasonable timeout for completeing command execution
-
-## Shell/Terminal Rules Useful Command List (use this command list as caching for shell commands - you will construct a command only and only if you read the whole list and there didnt find any command that performs what you need it to)
-
-1. Calculate how many files are left to process in order to complete training on dataset 
-   ***Command:``` Shell jq '(.chunks | flatten | length) - (.image_tracking | keys | length)' cgi-detector-service/scripts/training_progress.json [current working directory /Users/amit/Projects/cgi-detection-photos] (Recalculating the number of files left to process by subtracting the number of tracked images from the total number of images in all chunks.)```
-   ***Syntax Example:``` [CWD] ✗ jq '(.chunks | flatten | length) - (.image_tracking | keys | length)' cgi-detector-service/scripts/training_progress.json .```
-   ***Result Example: ```94437```
-
-
-All configuration keys use consistent naming and MUST be documented in the nearest README.md 

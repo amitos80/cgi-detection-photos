@@ -1,0 +1,3176 @@
+{
+    "dataset_root": "my_dataset",
+    "strategy": "module",
+    "modules_tested": [
+        "cfa",
+        "deepfake_detector",
+        "double_quantization",
+        "ela",
+        "geometric_3d",
+        "hos",
+        "jpeg_dimples",
+        "jpeg_ghost",
+        "lighting_text",
+        "rambino",
+        "reflection_consistency",
+        "specialized_detectors",
+        "statistical_anomaly",
+        "watermarking"
+    ],
+    "sample_size_per_class": null,
+    "sampling_strategy": "stratified",
+    "real_images": {
+        "total": 32,
+        "correctly_classified": 0,
+        "details": [
+            {
+                "filename": "IMG-20230723-WA0004.jpg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.13127623796463012,
+                    "geometric_3d": 0.23358813647145937,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.180994629859924e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.37025193455753425
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "Screenshot 2025-12-01 at 18.36.16.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.3369033098220825,
+                    "geometric_3d": 0.2633642287437738,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.793309330940247e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.23626702690217738
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "Screenshot 2025-12-01 at 18.41.31.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.3506851434707642,
+                    "geometric_3d": 0.26324811521986946,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6401262581348419e-07,
+                    "lighting_text": 0.4298229036675113,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2174544484204347
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "Screenshot 2025-12-04 at 11.16.01.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.29332737922668456,
+                    "geometric_3d": 0.21937777714732848,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 6.907469034194947e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2510361146325415
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "Screenshot 2025-12-04 at 11.42.10.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.7789541244506836,
+                    "geometric_3d": 0.24400211085847162,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 9.076372534036636e-08,
+                    "lighting_text": 0.5233316329707429,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2906884236532388
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Screenshot 2025-12-04 at 11.44.18.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.8743705749511719,
+                    "geometric_3d": 0.2329794045887642,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.316854387521744e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.36392289306283065
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.04.59.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.027783897519111634,
+                    "geometric_3d": 0.23539375397703075,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.997937448322773e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.300924080787767
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.01 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.025784611701965332,
+                    "geometric_3d": 0.2310729526306009,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7106892541050912e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3471684944856764
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.01 (3).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.04341561198234558,
+                    "geometric_3d": 0.23344208165840896,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.62970756739378e-08,
+                    "lighting_text": 0.49931310121444816,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3974916327711519
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.01 (4).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.03883388936519623,
+                    "geometric_3d": 0.2383071991251875,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.088109776377678e-08,
+                    "lighting_text": 0.6430991164945673,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.34870238999139436
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.02 (2).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06616302728652954,
+                    "geometric_3d": 0.24758021476628772,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.6549240350723265e-08,
+                    "lighting_text": 0.7073674423038865,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.25101701749630356
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.02 (3).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.031474778056144716,
+                    "geometric_3d": 0.2518076149541694,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.5259751118719578e-08,
+                    "lighting_text": 0.37206938351050184,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29225638000240706
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.02.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.037566110491752625,
+                    "geometric_3d": 0.2456687082626629,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.172461152076721e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3077780955005875
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.04 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08330811262130737,
+                    "geometric_3d": 0.24244981012202058,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.3195871859788896e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3929159681446464
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.04.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.043157166242599486,
+                    "geometric_3d": 0.2312520760013534,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.335255965590477e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4112247767163816
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.05 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.041563332080841064,
+                    "geometric_3d": 0.2639295336211662,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.156214654445648e-07,
+                    "lighting_text": 0.37570998139032924,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4051858825035971
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.05 (2).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09295710921287537,
+                    "geometric_3d": 0.23206077941172415,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6736276149749755e-06,
+                    "lighting_text": 0.3969486201130014,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3929208807559279
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-02 at 21.05.05.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.07827633619308472,
+                    "geometric_3d": 0.23766451365088123,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 5.5583588778972623e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4035963898968289
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-18 at 18.00.37 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.1161954402923584,
+                    "geometric_3d": 0.2755837298388573,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.7485020011663436e-08,
+                    "lighting_text": 0.6042442349610637,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.31052572547834684
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-18 at 18.00.37 (2).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06332072019577026,
+                    "geometric_3d": 0.26375844796463527,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.141911700367928e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4448169355384768
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-09-18 at 18.00.37.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08719077706336975,
+                    "geometric_3d": 0.2721332463021914,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7999833822250365e-06,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.27389532950898554
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-11-20 at 22.26.28.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09190583229064941,
+                    "geometric_3d": 0.23882807661830543,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.77716363966465e-08,
+                    "lighting_text": 0.47772202664971297,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.35171523602412935
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-02 at 16.33.25.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08191897869110107,
+                    "geometric_3d": 0.2198875063593097,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.7170754969120024e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3639222968336519
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-03 at 21.29.16 (2).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09559206366539001,
+                    "geometric_3d": 0.24797747299252457,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.353373408317566e-06,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.41276199041789496
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image Jul 16 2025.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.03472148478031158,
+                    "geometric_3d": 0.22559410601733693,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7608720809221267e-08,
+                    "lighting_text": 0.7218827459869965,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3105301997624872
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image Jul 17 2025 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06316050291061401,
+                    "geometric_3d": 0.2929243898870989,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.440563440322876e-06,
+                    "lighting_text": 0.744498211193179,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.38696020137250814
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "WhatsApp Image Jul 17 2025 (2).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09359006285667419,
+                    "geometric_3d": 0.24819803265035795,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.159566596150398e-08,
+                    "lighting_text": 0.43683070960230574,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3578500566436719
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image Jul 17 2025 (3).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.07531080842018127,
+                    "geometric_3d": 0.34465243917451416,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.0583625882864e-08,
+                    "lighting_text": 0.4359845138369411,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4154215526798522
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "WhatsApp Image Jul 17 2025.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06391050219535828,
+                    "geometric_3d": 0.4272628352335906,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.791902780532837e-07,
+                    "lighting_text": 0.726794109225809,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3990485818693664
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "interview_news_2015.jpg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.12442123889923096,
+                    "geometric_3d": 0.2371985291269993,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.725230693817139e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2398198505161952
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "my_building_front.jpg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.33861827850341797,
+                    "geometric_3d": 0.24455980768363317,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.6149308308959007e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3807068086072065
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 3
+            },
+            {
+                "filename": "my_building_front_orig.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.18653231859207153,
+                    "geometric_3d": 0.24574908363279124,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.198692739009857e-08,
+                    "lighting_text": 0.20832419600161767,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.39141047243814503
+                },
+                "classification": "fake",
+                "is_correct": false,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            }
+        ]
+    },
+    "fake_images": {
+        "total": 30,
+        "correctly_classified": 30,
+        "details": [
+            {
+                "filename": "Biden_and_Putin_fake.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5669675350189209,
+                    "geometric_3d": 0.2399918954543197,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.377575129270554e-08,
+                    "lighting_text": 0.43643986018901404,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.40359500429348705
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "Boris_Johns_fake.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 1.0,
+                    "geometric_3d": 0.23384472297529002,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.424323797225952e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4005447661100553
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_122dic122dic122d.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.865145492553711,
+                    "geometric_3d": 0.23230119671992,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7547668516635894e-07,
+                    "lighting_text": 0.6,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.33037505948663765
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_8argkz8argkz8arg.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9818168640136719,
+                    "geometric_3d": 0.22812177108835685,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.427059650421143e-08,
+                    "lighting_text": 0.42635235366547564,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.42501575146440473
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "Gemini_Generated_Image_d41qurd41qurd41q.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9792319297790527,
+                    "geometric_3d": 0.2254648184136096,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.412890881299973e-08,
+                    "lighting_text": 0.4773946690028602,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.28889834496613104
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_d5xe0xd5xe0xd5xe.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.7357280254364014,
+                    "geometric_3d": 0.22466438313341205,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.79059873521328e-08,
+                    "lighting_text": 0.5576825927639657,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2586424164247346
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_mvlyz3mvlyz3mvly.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.826270580291748,
+                    "geometric_3d": 0.22441117537904565,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.480669558048248e-08,
+                    "lighting_text": 0.6,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3101233678664256
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_pyh807pyh807pyh8.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.725045108795166,
+                    "geometric_3d": 0.2161449180170893,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.064860567450523e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.34716104026036937
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "Gemini_Generated_Image_q8kks4q8kks4q8kk.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5671107292175293,
+                    "geometric_3d": 0.23160242678525014,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.341564983129502e-08,
+                    "lighting_text": 0.5724061632190426,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.24644482651067784
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "Gemini_Generated_Image_v02ovsv02ovsv02o.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.8419960021972657,
+                    "geometric_3d": 0.228405701407023,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.775310888886452e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.22201615478158065
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "Rishi_Sunak_sat_on_a_pil_fake.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5247183322906495,
+                    "geometric_3d": 0.24384312729820193,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.0630009174346923e-06,
+                    "lighting_text": 0.6292240682350241,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2450062916782742
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-02 at 16.03.47.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.08761613965034484,
+                    "geometric_3d": 0.2226867466197731,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.739789366722107e-07,
+                    "lighting_text": 0.5183585465611333,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.19607544247625763
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-02 at 17.41.09 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.039868777990341185,
+                    "geometric_3d": 0.2262231942205818,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.10886113345623e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.35969523883292287
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-02 at 17.41.10 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.020845919847488403,
+                    "geometric_3d": 0.37450009062613054,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 7.762777619063855e-09,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3287051120000906
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-02 at 17.41.10.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.032838758826255796,
+                    "geometric_3d": 0.30008049935240316,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.9992321729660033e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3021814535551726
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "WhatsApp Image 2025-12-03 at 21.29.16 (1).jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06999038457870484,
+                    "geometric_3d": 0.2569855637515094,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.130848124623299e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3640094911985347
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "borisj_fake.webp",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.36530251502990724,
+                    "geometric_3d": 0.27569768926372706,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.3864909559488294e-08,
+                    "lighting_text": 0.07072237401460282,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3730824744758498
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "eremy_Corb_fake.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.6528185367584228,
+                    "geometric_3d": 0.2241505631906355,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.339846134185791e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.341036717168286
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "guitarAI.jpeg",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.1797327756881714,
+                    "geometric_3d": 0.2613975231391763,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6923699378967286e-06,
+                    "lighting_text": 0.15217299063074297,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29253110013656364
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "heic_to_tiff_talifraser_fake.tiff",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.16689655780792237,
+                    "geometric_3d": 0.21484863759806183,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.1511036455631256e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3630784569952596
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            },
+            {
+                "filename": "interview_news_2015_gemini.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.5315306186676025,
+                    "geometric_3d": 0.23544755151771218,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.415861427783967e-08,
+                    "lighting_text": 0.45439729774531556,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29984435009268834
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 4
+            },
+            {
+                "filename": "jerusalem.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9300538063049316,
+                    "geometric_3d": 0.23964175605787857,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.440963178873062e-08,
+                    "lighting_text": 0.40876352303102365,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3851273192548569
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "my_building_front_chatgpt.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6739269733428955,
+                    "geometric_3d": 0.25889357204375113,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.450299501419067e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.32785841425777945
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "my_building_front_gemini.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5107150554656983,
+                    "geometric_3d": 0.2495988499676569,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.521996438503265e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3913879800974631
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "nyc.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.943026065826416,
+                    "geometric_3d": 0.24564485256038676,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 6.3260536193847654e-06,
+                    "lighting_text": 0.6585328346202991,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.26636846786820273
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "ramathagolan.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9502638816833496,
+                    "geometric_3d": 0.23122777997835958,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.417721092700958e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.31315423262749387
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "streettlv.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6648229122161865,
+                    "geometric_3d": 0.23591703948648546,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 7.143763452768325e-08,
+                    "lighting_text": 0.6256549708751988,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29373197194810213
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 5
+            },
+            {
+                "filename": "talifraser_fake.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6210591316223144,
+                    "geometric_3d": 0.23499744206753403,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.344748616218567e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.37460473468151106
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "telaviv_1959.png",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.86669921875,
+                    "geometric_3d": 0.2341001367517388,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 9.667256474494935e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2920109624207619
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 6
+            },
+            {
+                "filename": "unicorn.webp",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.24551041126251222,
+                    "geometric_3d": 0.22378017323147115,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.101498052477836e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3668197160255357
+                },
+                "classification": "fake",
+                "is_correct": true,
+                "assertions_met": false,
+                "failed_assertions_count": 7
+            }
+        ]
+    },
+    "overall_metrics": {
+        "accuracy": 0.4838709677419355,
+        "precision_fake": 0.4838709677419355,
+        "recall_fake": 1.0,
+        "f1_score_fake": 0.6521739130434783
+    },
+    "test_assertions": {
+        "passed": 0,
+        "failed": 62,
+        "details": [
+            {
+                "image": "IMG-20230723-WA0004.jpg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.13127623796463012,
+                    "geometric_3d": 0.23358813647145937,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.180994629859924e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.37025193455753425
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Screenshot 2025-12-01 at 18.36.16.png",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.3369033098220825,
+                    "geometric_3d": 0.2633642287437738,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.793309330940247e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.23626702690217738
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Screenshot 2025-12-01 at 18.41.31.png",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.3506851434707642,
+                    "geometric_3d": 0.26324811521986946,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6401262581348419e-07,
+                    "lighting_text": 0.4298229036675113,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2174544484204347
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Screenshot 2025-12-04 at 11.16.01.png",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.29332737922668456,
+                    "geometric_3d": 0.21937777714732848,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 6.907469034194947e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2510361146325415
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Screenshot 2025-12-04 at 11.42.10.png",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.7789541244506836,
+                    "geometric_3d": 0.24400211085847162,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 9.076372534036636e-08,
+                    "lighting_text": 0.5233316329707429,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2906884236532388
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'ela' assertion failed for real image: score 0.7790 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.5233 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Screenshot 2025-12-04 at 11.44.18.png",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.8743705749511719,
+                    "geometric_3d": 0.2329794045887642,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.316854387521744e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.36392289306283065
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'ela' assertion failed for real image: score 0.8744 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.04.59.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.027783897519111634,
+                    "geometric_3d": 0.23539375397703075,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.997937448322773e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.300924080787767
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.01 (1).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.025784611701965332,
+                    "geometric_3d": 0.2310729526306009,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7106892541050912e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3471684944856764
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.01 (3).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.04341561198234558,
+                    "geometric_3d": 0.23344208165840896,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.62970756739378e-08,
+                    "lighting_text": 0.49931310121444816,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3974916327711519
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.01 (4).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.03883388936519623,
+                    "geometric_3d": 0.2383071991251875,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.088109776377678e-08,
+                    "lighting_text": 0.6430991164945673,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.34870238999139436
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.6431 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.02 (2).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06616302728652954,
+                    "geometric_3d": 0.24758021476628772,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.6549240350723265e-08,
+                    "lighting_text": 0.7073674423038865,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.25101701749630356
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.7074 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.02 (3).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.031474778056144716,
+                    "geometric_3d": 0.2518076149541694,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.5259751118719578e-08,
+                    "lighting_text": 0.37206938351050184,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29225638000240706
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.02.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.037566110491752625,
+                    "geometric_3d": 0.2456687082626629,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.172461152076721e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3077780955005875
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.04 (1).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08330811262130737,
+                    "geometric_3d": 0.24244981012202058,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.3195871859788896e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3929159681446464
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.04.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.043157166242599486,
+                    "geometric_3d": 0.2312520760013534,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.335255965590477e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4112247767163816
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.05 (1).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.041563332080841064,
+                    "geometric_3d": 0.2639295336211662,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.156214654445648e-07,
+                    "lighting_text": 0.37570998139032924,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4051858825035971
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.05 (2).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09295710921287537,
+                    "geometric_3d": 0.23206077941172415,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6736276149749755e-06,
+                    "lighting_text": 0.3969486201130014,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3929208807559279
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-02 at 21.05.05.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.07827633619308472,
+                    "geometric_3d": 0.23766451365088123,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 5.5583588778972623e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4035963898968289
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-18 at 18.00.37 (1).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.1161954402923584,
+                    "geometric_3d": 0.2755837298388573,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.7485020011663436e-08,
+                    "lighting_text": 0.6042442349610637,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.31052572547834684
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.6042 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-18 at 18.00.37 (2).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06332072019577026,
+                    "geometric_3d": 0.26375844796463527,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.141911700367928e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4448169355384768
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-09-18 at 18.00.37.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08719077706336975,
+                    "geometric_3d": 0.2721332463021914,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7999833822250365e-06,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.27389532950898554
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-11-20 at 22.26.28.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09190583229064941,
+                    "geometric_3d": 0.23882807661830543,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.77716363966465e-08,
+                    "lighting_text": 0.47772202664971297,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.35171523602412935
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-02 at 16.33.25.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.08191897869110107,
+                    "geometric_3d": 0.2198875063593097,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.7170754969120024e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3639222968336519
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-03 at 21.29.16 (2).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09559206366539001,
+                    "geometric_3d": 0.24797747299252457,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.353373408317566e-06,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.41276199041789496
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image Jul 16 2025.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.03472148478031158,
+                    "geometric_3d": 0.22559410601733693,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7608720809221267e-08,
+                    "lighting_text": 0.7218827459869965,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3105301997624872
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.7219 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image Jul 17 2025 (1).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06316050291061401,
+                    "geometric_3d": 0.2929243898870989,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.440563440322876e-06,
+                    "lighting_text": 0.744498211193179,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.38696020137250814
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.7445 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image Jul 17 2025 (2).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.09359006285667419,
+                    "geometric_3d": 0.24819803265035795,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.159566596150398e-08,
+                    "lighting_text": 0.43683070960230574,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3578500566436719
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image Jul 17 2025 (3).jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.07531080842018127,
+                    "geometric_3d": 0.34465243917451416,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.0583625882864e-08,
+                    "lighting_text": 0.4359845138369411,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4154215526798522
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image Jul 17 2025.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06391050219535828,
+                    "geometric_3d": 0.4272628352335906,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.791902780532837e-07,
+                    "lighting_text": 0.726794109225809,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3990485818693664
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for real image: score 0.7268 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "interview_news_2015.jpg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.12442123889923096,
+                    "geometric_3d": 0.2371985291269993,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.725230693817139e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2398198505161952
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for real image: score 0.5000 did not meet criteria.",
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "my_building_front.jpg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.33861827850341797,
+                    "geometric_3d": 0.24455980768363317,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.6149308308959007e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3807068086072065
+                },
+                "failed_assertions": [
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "my_building_front_orig.jpeg",
+                "ground_truth": "real",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.18653231859207153,
+                    "geometric_3d": 0.24574908363279124,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.198692739009857e-08,
+                    "lighting_text": 0.20832419600161767,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.39141047243814503
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for real image: score 0.5000 did not meet criteria.",
+                    "Module 'double_quantization' assertion failed for real image: score 0.7000 did not meet criteria.",
+                    "Module 'reflection_consistency' assertion failed for real image: score 0.6000 did not meet criteria.",
+                    "Module 'statistical_anomaly' assertion failed for real image: score 0.5000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Biden_and_Putin_fake.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5669675350189209,
+                    "geometric_3d": 0.2399918954543197,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.377575129270554e-08,
+                    "lighting_text": 0.43643986018901404,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.40359500429348705
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Boris_Johns_fake.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 1.0,
+                    "geometric_3d": 0.23384472297529002,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.424323797225952e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.4005447661100553
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_122dic122dic122d.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.865145492553711,
+                    "geometric_3d": 0.23230119671992,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.7547668516635894e-07,
+                    "lighting_text": 0.6,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.33037505948663765
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3304 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_8argkz8argkz8arg.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9818168640136719,
+                    "geometric_3d": 0.22812177108835685,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.427059650421143e-08,
+                    "lighting_text": 0.42635235366547564,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.42501575146440473
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_d41qurd41qurd41q.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9792319297790527,
+                    "geometric_3d": 0.2254648184136096,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.412890881299973e-08,
+                    "lighting_text": 0.4773946690028602,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.28889834496613104
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2889 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_d5xe0xd5xe0xd5xe.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.7357280254364014,
+                    "geometric_3d": 0.22466438313341205,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.79059873521328e-08,
+                    "lighting_text": 0.5576825927639657,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2586424164247346
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2586 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_mvlyz3mvlyz3mvly.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.826270580291748,
+                    "geometric_3d": 0.22441117537904565,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.480669558048248e-08,
+                    "lighting_text": 0.6,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3101233678664256
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3101 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_pyh807pyh807pyh8.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.725045108795166,
+                    "geometric_3d": 0.2161449180170893,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.064860567450523e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.34716104026036937
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3472 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_q8kks4q8kks4q8kk.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5671107292175293,
+                    "geometric_3d": 0.23160242678525014,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.341564983129502e-08,
+                    "lighting_text": 0.5724061632190426,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.24644482651067784
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2464 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Gemini_Generated_Image_v02ovsv02ovsv02o.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.8419960021972657,
+                    "geometric_3d": 0.228405701407023,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 3.775310888886452e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.22201615478158065
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2220 did not meet criteria."
+                ]
+            },
+            {
+                "image": "Rishi_Sunak_sat_on_a_pil_fake.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5247183322906495,
+                    "geometric_3d": 0.24384312729820193,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.0630009174346923e-06,
+                    "lighting_text": 0.6292240682350241,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2450062916782742
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2450 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-02 at 16.03.47.jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.08761613965034484,
+                    "geometric_3d": 0.2226867466197731,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.739789366722107e-07,
+                    "lighting_text": 0.5183585465611333,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.19607544247625763
+                },
+                "failed_assertions": [
+                    "Module 'ela' assertion failed for fake image: score 0.0876 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.1961 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-02 at 17.41.09 (1).jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.039868777990341185,
+                    "geometric_3d": 0.2262231942205818,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 2.10886113345623e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.35969523883292287
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.0399 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3597 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-02 at 17.41.10 (1).jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.020845919847488403,
+                    "geometric_3d": 0.37450009062613054,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 7.762777619063855e-09,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3287051120000906
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.0208 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3287 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-02 at 17.41.10.jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.032838758826255796,
+                    "geometric_3d": 0.30008049935240316,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.9992321729660033e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3021814535551726
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.0328 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3022 did not meet criteria."
+                ]
+            },
+            {
+                "image": "WhatsApp Image 2025-12-03 at 21.29.16 (1).jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.06999038457870484,
+                    "geometric_3d": 0.2569855637515094,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.130848124623299e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3640094911985347
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.0700 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3640 did not meet criteria."
+                ]
+            },
+            {
+                "image": "borisj_fake.webp",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.36530251502990724,
+                    "geometric_3d": 0.27569768926372706,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.3864909559488294e-08,
+                    "lighting_text": 0.07072237401460282,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3730824744758498
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.3653 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.0707 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3731 did not meet criteria."
+                ]
+            },
+            {
+                "image": "eremy_Corb_fake.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.6528185367584228,
+                    "geometric_3d": 0.2241505631906355,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.339846134185791e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.341036717168286
+                },
+                "failed_assertions": [
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3410 did not meet criteria."
+                ]
+            },
+            {
+                "image": "guitarAI.jpeg",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.1797327756881714,
+                    "geometric_3d": 0.2613975231391763,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 1.6923699378967286e-06,
+                    "lighting_text": 0.15217299063074297,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29253110013656364
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.1797 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.1522 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2925 did not meet criteria."
+                ]
+            },
+            {
+                "image": "heic_to_tiff_talifraser_fake.tiff",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.16689655780792237,
+                    "geometric_3d": 0.21484863759806183,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.1511036455631256e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3630784569952596
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.1669 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3631 did not meet criteria."
+                ]
+            },
+            {
+                "image": "interview_news_2015_gemini.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.5,
+                    "double_quantization": 0.7,
+                    "ela": 0.5315306186676025,
+                    "geometric_3d": 0.23544755151771218,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.415861427783967e-08,
+                    "lighting_text": 0.45439729774531556,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29984435009268834
+                },
+                "failed_assertions": [
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2998 did not meet criteria."
+                ]
+            },
+            {
+                "image": "jerusalem.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9300538063049316,
+                    "geometric_3d": 0.23964175605787857,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.440963178873062e-08,
+                    "lighting_text": 0.40876352303102365,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3851273192548569
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3851 did not meet criteria."
+                ]
+            },
+            {
+                "image": "my_building_front_chatgpt.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6739269733428955,
+                    "geometric_3d": 0.25889357204375113,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.450299501419067e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.32785841425777945
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3279 did not meet criteria."
+                ]
+            },
+            {
+                "image": "my_building_front_gemini.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.5107150554656983,
+                    "geometric_3d": 0.2495988499676569,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.521996438503265e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3913879800974631
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3914 did not meet criteria."
+                ]
+            },
+            {
+                "image": "nyc.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.943026065826416,
+                    "geometric_3d": 0.24564485256038676,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 6.3260536193847654e-06,
+                    "lighting_text": 0.6585328346202991,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.26636846786820273
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2664 did not meet criteria."
+                ]
+            },
+            {
+                "image": "ramathagolan.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.9502638816833496,
+                    "geometric_3d": 0.23122777997835958,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.417721092700958e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.31315423262749387
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3132 did not meet criteria."
+                ]
+            },
+            {
+                "image": "streettlv.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6648229122161865,
+                    "geometric_3d": 0.23591703948648546,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 7.143763452768325e-08,
+                    "lighting_text": 0.6256549708751988,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.29373197194810213
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2937 did not meet criteria."
+                ]
+            },
+            {
+                "image": "talifraser_fake.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.6210591316223144,
+                    "geometric_3d": 0.23499744206753403,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 8.344748616218567e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.37460473468151106
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3746 did not meet criteria."
+                ]
+            },
+            {
+                "image": "telaviv_1959.png",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.86669921875,
+                    "geometric_3d": 0.2341001367517388,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 9.667256474494935e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.2920109624207619
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.2920 did not meet criteria."
+                ]
+            },
+            {
+                "image": "unicorn.webp",
+                "ground_truth": "fake",
+                "classification": "fake",
+                "scores": {
+                    "cfa": 1.0,
+                    "deepfake_detector": 0.0,
+                    "double_quantization": 0.7,
+                    "ela": 0.24551041126251222,
+                    "geometric_3d": 0.22378017323147115,
+                    "hos": 0.1,
+                    "jpeg_dimples": 0.0,
+                    "jpeg_ghost": 4.101498052477836e-08,
+                    "lighting_text": 0.3,
+                    "rambino": 0.0,
+                    "reflection_consistency": 0.6,
+                    "specialized_detectors": 0.0,
+                    "statistical_anomaly": 0.5,
+                    "watermarking": 0.3668197160255357
+                },
+                "failed_assertions": [
+                    "Module 'deepfake_detector' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'ela' assertion failed for fake image: score 0.2455 did not meet criteria.",
+                    "Module 'hos' assertion failed for fake image: score 0.1000 did not meet criteria.",
+                    "Module 'jpeg_dimples' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'jpeg_ghost' assertion failed for fake image: score 0.0000 did not meet criteria.",
+                    "Module 'lighting_text' assertion failed for fake image: score 0.3000 did not meet criteria.",
+                    "Module 'watermarking' assertion failed for fake image: score 0.3668 did not meet criteria."
+                ]
+            }
+        ]
+    },
+    "errors": []
+}

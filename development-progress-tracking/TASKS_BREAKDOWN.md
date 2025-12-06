@@ -1,28 +1,21 @@
-# Development Plan Tasks: Watermark Detection Feature
+# Development Plan Tasks: Comprehensive Model Testing with `my_dataset`
 
-This document breaks down the tasks required to implement the watermark detection feature as outlined in the [CURRENT_DEVELOPMENT_PLAN.md](./CURRENT_DEVELOPMENT_PLAN.md).
+This document breaks down the tasks required to implement the comprehensive model testing plan as outlined in the [CURRENT_DEVELOPMENT_PLAN.md](./CURRENT_DEVELOPMENT_PLAN.md).
 
-## 1. New Module: `watermarking.py`
-- [ ] Create the file `cgi-detector-service/forensics/watermarking.py`.
-- [ ] Implement the main `analyze_watermark(image_bytes: bytes) -> float` function.
-- [ ] Implement Least Significant Bit (LSB) analysis within the `analyze_watermark` function.
-- [ ] Implement Frequency Domain (FFT) analysis within the `analyze_watermark` function.
+## Task 1: Enhance `run_dataset_tests.py`
+- [ ] **Step 1:** Implement the `service` strategy for making HTTP requests to the `/analyze` endpoint.
+- [ ] **Step 2:** Add a command-line argument to specify the service URL.
+- [ ] **Step 3:** Implement the `ml_predictor` strategy for loading the model and making predictions.
+- [ ] **Step 4:** Add feature extraction logic for the `ml_predictor` strategy.
+- [ ] **Step 5:** Enhance the test reporting to generate a JSON or CSV file with detailed results.
 
-## 2. Integration with Analysis Engine (`engine.py`)
-- [ ] Import the `watermarking` module in `cgi-detector-service/forensics/engine.py`.
-- [ ] Add a call to `watermarking.analyze_watermark` within the `ProcessPoolExecutor` in `run_analysis`.
-- [ ] Retrieve the `watermark_score` from the completed task.
-- [ ] Add the `watermark_score` to the `ml_features` list.
-- [ ] Add a new dictionary to the `analysis_breakdown` list for the watermark analysis results.
+## Task 2: Create `TESTING.md` Documentation
+- [ ] **Step 1:** Create a new file named `TESTING.md` in the `docs` directory.
+- [ ] **Step 2:** Document the prerequisites and setup instructions for running the tests.
+- [ ] **Step 3:** Provide detailed instructions on how to execute the tests using the `module`, `service`, and `ml_predictor` strategies.
+- [ ] **Step 4:** Explain how to interpret the test results and the generated report file.
 
-## 3. Machine Learning Model Update (`ml_predictor.py`)
-- [ ] Update `extract_features_from_image_bytes` in `cgi-detector-service/forensics/ml_predictor.py` to include the `watermark_score`.
-- [ ] Retrain the ML model (`ml_model.joblib`) with a dataset that includes the new watermark feature.
-
-## 4. Testing and Profiling
-- [ ] Create the test file `cgi-detector-service/scripts/test_watermarking.py`.
-- [ ] Add test cases to `test_watermarking.py` using images with and without watermarks.
-- [ ] Create the profiling file `cgi-detector-service/forensics/profile_watermarking.py`.
-
-## 5. Project Scaffolding
-- [ ] Update `cgi-detector-service/forensics/__init__.py` to expose the new `watermarking` module.
+## Task 3: Execute and Validate Tests
+- [ ] **Step 1:** Execute the developed tests against `my_dataset` using all three strategies.
+- [ ] **Step 2:** Debug any failures encountered in the test script, the service, or the models.
+- [ ] **Step 3:** Validate that the test results are accurate and reflect the models' performance.

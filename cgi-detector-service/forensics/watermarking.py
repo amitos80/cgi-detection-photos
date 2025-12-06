@@ -157,8 +157,8 @@ if __name__ == '__main__':
     _, encoded_lsb_image = cv2.imencode('.png', img_watermarked_lsb)
     lsb_watermarked_image_bytes = encoded_lsb_image.tobytes()
 
-    print("
---- Testing with a simple LSB-watermarked image (expected higher LSB score) ---")
+    print("""
+--- Testing with a simple LSB-watermarked image (expected higher LSB score) ---""")
     score_lsb_watermarked = analyze_watermark(lsb_watermarked_image_bytes)
     print(f"Watermark score for LSB watermarked image: {score_lsb_watermarked:.4f}")
     assert score_lsb_watermarked > 0.5, "LSB watermarked image should have a higher score"

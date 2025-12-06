@@ -1,9 +1,19 @@
-# The Developer's Pact: Our Core Project Standards
-_This document outlines the core principles and conventions we will follow in this project. All AI assistants and human developers must adhere to these rules for building high-quality, maintainable software._
+# The Developer's Pact: Must Comply With All Principles For All Tasks
+ This document outlines the core principles and conventions we will follow in this project. All AI assistants and human developers must adhere to these rules for building high-quality, maintainable software._
 
-### Principle 1: Always Breakdown a Task into TODO step instruction to ./development-progress-tracking/CURRENT_TASK.md
+
+
+### Principle 2: Always Breakdown a Task into TODO step instruction to ./development-progress-tracking/CURRENT_TASK.md
 - **When Development Plan Gets Approved: Start by creating a small detailed instruction step TODOs for the current task you work on**
-- **When stating to implement a task: work closly with the task list and update completed steps status**
+- **When starting to implement a task: with the task list and update the completed steps status**
+
+### Principle 1: Communication Protocol
+- **Every time a Step of a Task in **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```say "step done"```**
+- **Every time a Task from **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```say "task cone"```**
+- **Every time a Development Plan **[./development-progress-tracking/CURRENT_DEVELOPMENT_PLAN.md]** is done run the following command in shell: ```say "development plan completed"```**
+- **Every time you have a question for me run the following command in shell: ```say "question"```**
+- **Every time you finished a task and you go to idle because the is nothing else to complete run the following command in shell: ```say "idle"```**
+- **Every time context is being generated from **[./GEMINI.md]** to MCP server run the following command in shell: ```say "context loaded to MCP server"```**
 
 ### Principle 2: Architecture & Structure
 - **Modularity is Key:** No single file should exceed 500 lines. If it grows too large, your first step is to propose a refactoring plan to break it into smaller, logical modules.
