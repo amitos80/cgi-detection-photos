@@ -22,7 +22,22 @@
 - The number of characters in a single line show never exceeds 120 
 - In CamelCase names, use "URL" (not "Url"), "API" (not "Api"), "ID" (not "Id")
 - NEVER supress/ignore errors without asking for permission first (i.e: `@ts-expect-error` or `@ts-ignore` to suppress type errors)
+- Modularity is Key: No single file should exceed 200 lines. If it grows too large, your first step is to propose a refactoring plan to break it into smaller, logical modules.
+- Consistent Organization: We group files by feature. For example, a new `user` feature would have its logic in `src/users/`, its API routes in `src/api/routes/users.py`, and its tests in `tests/users/`.
+- Clean Imports: Use absolute imports for clarity (e.g., `from src.utils import helpers`). Avoid circular dependencies.
+- Environment First: All sensitive keys, API endpoints, or configuration variables must be managed through a `.env` file and loaded using `python-dotenv`. Never hardcode them.
+- Follow the Standards: All Python code must be formatted with `black` and adhere to `PEP8` guidelines.
+- Type Safety: Use type hints for all function signatures and variables. We use `mypy` to enforce this.
+- Data Certainty: Use `pydantic` for all data validation, especially for API request and response models. This is our single source of truth for data shapes.
 
+
+## Code Quality & Reliability
+- Test Everything That Matters: Every new function, class, or API endpoint must be accompanied by unit tests in the `tests/` directory.
+- The Test Triad* For each feature, provide at least three tests:
+    1. A "happy path" test for expected behavior.
+    2. An "edge case" test for unusual but valid inputs.
+    3. A "failure case" test for expected errors or invalid inputs.
+- Docstrings are Non-Negotiable: Every function must have a Google-style docstring explaining its purpose, arguments (`Args:`), and return value (`Returns:`).
 
 ## Testing
 
@@ -35,10 +50,6 @@
 - Test files: `*.test.ts` or `*.spec.ts`
 - Mock external dependencies appropriately
 
-## AI
-
-- For AI-related development, especially for Retrieval-Augmented Generation (RAG), refer to the chunking strategy guidelines in [CHUNKING.md](./CHUNKING.md).
-
 ## Security
 
 - Use appropriate data types that limit exposure of sensitive information
@@ -49,19 +60,13 @@
 - Regular dependency updates
 - Follow principle of least privilege
 
-## Git Workflow
-
-- ALWAYS run `pnpm check` before committing
-- Fix linting errors with `pnpm check:fix`
-- Run `pnpm build` to verify typecheck passes
-- NEVER use `git push --force` on the main branch
-- Use `git push --force-with-lease` for feature branches if needed
-- Always verify current branch before force operations
-
 ## Configuration
 
 When adding new configuration options, update all relevant places:
 1. Environment variables in `.env.example`
 2. Configuration schemas in `src/config/`
-3. Documentation in the nearest (to the files/added/deleted/changed) README.md
 
+## Documentation
+
+When adding new features, changing existing features etc
+1. Write/Edit the documentation in the nearest (to the files/added/deleted/changed) README.md
