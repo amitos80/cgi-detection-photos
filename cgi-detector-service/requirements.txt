@@ -10,3 +10,4 @@ mediapipe==0.10.14
 opencv-python==4.8.1.78
 joblib
 scikit-learn
+tqdm
