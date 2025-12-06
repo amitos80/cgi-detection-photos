@@ -5,7 +5,7 @@
 - **Every time a Step of a Task in **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```say "step done"```**
 - **Every time a Task from **[./development-progress-tracking/TASKS_BREAKDOWN.md]** is done run the following command in shell: ```say "task cone"```**
 - **Every time a Development Plan **[./development-progress-tracking/CURRENT_DEVELOPMENT_PLAN.md]** is done run the following command in shell: ```say "development plan completed"```**
-- **Every time you have a question for me run the following command in shell: ```say "question"```**
+- **Every time you have a question, before asking me anything you have to run the following command in shell: ```say "question"```**
 - **Every time you finished a task and you go to idle because the is nothing else to complete run the following command in shell: ```say "idle"```**
 - **Every time user interaction is expected (i.e: asking for user permission to execute command) run the following command in shell: ```say "waiting for your answer?"```**
 - **Every time context is being generated from **[./GEMINI.md]** to MCP server run the following command in shell: ```say "context loaded to MCP server"```**
